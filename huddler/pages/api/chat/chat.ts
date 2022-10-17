@@ -38,7 +38,7 @@ const SocketHandler = (req, res) => {
             ? socket.to(room).emit("update-input", {
                 huddle_id: Number(room),
                 message: msg,
-                username: username.username,
+                username: username,
               })
             : socket.broadcast.emit("update-input", msg);
         } catch (error) {
