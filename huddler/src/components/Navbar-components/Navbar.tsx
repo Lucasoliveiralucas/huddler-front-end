@@ -41,10 +41,8 @@ function Navbar() {
   return (
     <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-10">
       <Link href={'/home'}>
-        {/* <div className="w-50"> */}
-          <Image className="w-48" src={huddler_logo} alt='logo' />
-        {/* </div> */}
-        </Link>
+        <Image className="w-48" src={huddler_logo} alt='logo' />
+      </Link>
       <div className="w-20 h-20 relative">
       {currentUser &&
         <Image
