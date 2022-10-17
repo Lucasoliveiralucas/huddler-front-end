@@ -6,6 +6,8 @@ import { AiOutlineCompass } from 'react-icons/ai';
 import { useAuth } from '../../contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useOnclickOutside from 'react-cool-onclickoutside';
+
 const serviceDropdown = [
   { name: 'Explore', path: '/home', icon: <AiOutlineCompass /> },
   { name: 'Profile', path: '/profile', icon: <CgProfile /> },
@@ -30,6 +32,9 @@ const Dropdown = ({ setShowDropDown }: Props) => {
   const router = useRouter();
   let dropDownRef = useRef<HTMLElement>();
 
+  const ref = useOnclickOutside(() => {
+   setShowDropDown(false)
+  });
   const handleLogoutClick = () => {
     console.log('hit hereeee');
     // if (currentUser) return logOut();
@@ -56,6 +61,7 @@ const Dropdown = ({ setShowDropDown }: Props) => {
   return (
     <div>
       <div
+      ref={ref}
         className='mt-24 w-full rounded-[5px] shadow-md'
         // id='dropdown'
         // onMouseLeave={() => setShowDropDown(false)}
@@ -106,4 +112,6 @@ const Dropdown = ({ setShowDropDown }: Props) => {
 };
 
 export default Dropdown;
+
+
 

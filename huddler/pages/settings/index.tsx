@@ -12,21 +12,7 @@ import { Auth } from 'aws-amplify';
 import { getUserById } from '../../src/utils/APIServices/userServices';
 import { useAuth } from '../../src/contexts/AuthContext';
 
-// let aws_id = '';
 
-// Auth.currentAuthenticatedUser()
-//   .then((user) => {
-//     console.log('User: ', user);
-//     aws_id = user.username;
-//     console.log('this is aws', aws_id);
-//   })
-//   .catch((err) => console.log(err));
-// //mock user
-// const user: User = {
-//   name: 'Florian',
-//   email: 'flo@flo.flo',
-//   firstName: 'Florio',
-// };
 
 const SettingsPage = () => {
   const router = useRouter();
@@ -57,17 +43,17 @@ const SettingsPage = () => {
       {option === 'information' && userData && (
         <PersonalInformation userData={userData} />
       )}
-      {/* {option === 'password' && <ChangePassword />}
+      {option === 'password' && <ChangePassword />}
       {option === 'location' && (
         <UpdateLocation
-          currentUserLongitude={userData.longitude!}
-          currentUserLatitude={userData.latitude!}
+          currentUserLongitude={userData.default_longitude!}
+          currentUserLatitude={userData.default_latitude!}
         />
       )}
       {option === 'interests' && (
-        <UpdateInterests currentUserInterests={userData.interests!} />
+        <UpdateInterests userData={userData} />
       )}
-      {option === 'delete' && <DeleteUser currentUserId={userData.id!} />} */}
+      {option === 'delete' && <DeleteUser userData={userData} />}
     </main>
   );
 };

@@ -32,10 +32,11 @@ const CategoriesContainer = ({
 
   const loadCategories = async () => {
     const categories = await getAllCategories();
+    console.log('these are categorieees', categories)
     setDisplayCategories(sortByName(categories));
     return categories;
   };
-
+  console.log('these are display categories', displayCategories)
   const handleClick = (e: any, category: Category) => {
     if (e.target.dataset.selected === 'false') {
       e.target.className = selectedClass;
@@ -54,7 +55,7 @@ const CategoriesContainer = ({
     return;
   };
 
-  return (
+  return (userCategories || categoriesPicked) && (
     <div className='grid grid-cols-4 grid-flow-auto gap-4 py-4 w-full'>
       {displayCategories.map((category: Category, i) => (
         <h1

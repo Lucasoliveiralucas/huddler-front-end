@@ -7,7 +7,10 @@ import {
 } from '../../utils/APIServices/userServices';
 import CategoriesContainer from '../CategoriesContainer';
 
-const UpdateInterests = () => {
+type Props = {
+  userData: any
+}
+const UpdateInterests = ({userData}: Props) => {
   // get current user interests either as a prop of the current user object if we have global access to the authenticated user, or by calling here to the API to retrieve the categories of the user.
   // for now and to test, we use a hardcoded example
   // const initialCategories = [
@@ -17,20 +20,21 @@ const UpdateInterests = () => {
   //   { id: 34, name: 'Outdoors                 ' },
   //   { id: 70, name: 'Literature               ' },
   // ];
+  let [userCategories, setUserCategories] = useState<any>();
 
-  // useEffect(() => {
-  //   loadUserCategories();
-  // }, []);
+  useEffect(() => {
+    loadUserCategories();
+  }, []);
 
-  let [userCategories, setUserCategories] = useState<any>([...initialCategories]);
   
-  // const loadUserCategories = async () => {
-  //   const categories = await getUserCategories(3);
-  //   setUserCategories([categories]);
-  // };
+  const loadUserCategories = async () => {
+    const categories = await getUserCategories(userData.aws_id);
+    console.log('categories', categories)
+    setUserCategories([...categories]);
+  };
 
-  // const initialCategories = [userCategories]
-  console.log(initialCategories)
+  const initialCategories = userCategories && [...userCategories]
+ 
   const handleSubmit = () => {
     //update user categories
 
@@ -50,12 +54,12 @@ const UpdateInterests = () => {
     console.log('to delete', toDelete);
 
     toAdd.forEach((category) => {
-      // postUserCategory(3, category.id);
+      postUserCategory(userData.aws_id, category.id);
     });
 
     toDelete.forEach((category) => {
       // deleteCategory
-      // deleteOneUserCategory(3, category.id);
+      deleteOneUserCategory(userData.aws_id, category.id);
     });
 
     return;
@@ -87,5 +91,6 @@ const UpdateInterests = () => {
 };
 
 export default UpdateInterests;
+
 
 

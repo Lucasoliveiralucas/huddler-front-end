@@ -17,7 +17,7 @@ function MainForm() {
   const [page, setPage] = useState(1);
   const [userImg, setUserImg] = useState({});
 
-  const { currentUser } = useAuth()
+  const { setCurrentUser, currentUser } = useAuth()
   const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
   const [categoriesPicked, setCategoriesPicked] = useState<Category[]>([]);
   const [userData, setUserData] = useState<any>(...currentUser);
@@ -57,6 +57,7 @@ function MainForm() {
       // postUserCategory(aws_idRef.current, category.id as number);
       // @ts-ignore
       postUserCategory(userData.aws_id, category.id as number);
+      setCurrentUser(userData)
     });
     Router.replace('./home');
   };

@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
 
       setIsAuthenticated(true);
       setCognitoUser(userLoggedIn);
-      setCognitoUser(userLoggedIn);
       const user = await getUserById(userLoggedIn.username);
       setCurrentUser(user);
       Hub.listen('auth', (data) => {
@@ -57,15 +56,26 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser(null);
     setCognitoUser(null);
     router.replace('/');
+    return;
+  }; 
+  
+  const changePassword = async (user: any, oldPsw: any, newPsw: any) => {
+    console.log('Password is being changed')
+    return await Auth.changePassword(user, oldPsw, newPsw);
   };
 
   const value = {
     currentUser,
     isAuthenticated,
     isLoading,
+    cognitoUser,
+    setCurrentUser,
+    changePassword,
     logOut,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+
 
