@@ -1,17 +1,16 @@
 import React from 'react';
-import avatar from '../../../public/placeholder.jpg';
+import noImage  from '../../../public/noImage.jpg';
 import Image from 'next/future/image';
 import { User } from '../../../src/types';
+import { StaticImageData } from 'next/image';
 
-// const user: User = {
-//   name: 'Florio',
-//   image: avatar,
-//   email: '',
-//   createdOn: 0,
-// };
+type Props = {
+  user: User,
+};
 
-function Avatar({ user }) {
-  console.log('avatar',user)
+function Avatar({ user }: Props) {
+  console.log(user);
+  const image:string | StaticImageData = user.image && noImage;
   return (
     <div className='w-full flex flex-col py-8 justify-center'>
       <h1 className='text-[2rem] self-center'>
@@ -21,7 +20,7 @@ function Avatar({ user }) {
       <div className='rounded-full self-center shadow-md w-72 h-72 2xl:w-96 2xl:h-96 relative'>
         <Image
           className='rounded-full'
-          src={user.image}
+          src={image}
           placeholder='empty'
           alt='avatar'
           sizes='auto'

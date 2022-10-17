@@ -38,8 +38,6 @@ function Profile({ aws_id,
   goingTo,
   recommended,
   huddles, }: Props) {
-  console.log(goingTo)
-  console.log(user);
 
   //This is for updating the huddles i'm going to row
   const [update, setUpdate] = useState(false);
@@ -192,11 +190,11 @@ export const getServerSideProps = async ({req, res}) => {
     const { username } = await Auth.currentUserInfo();
     const recommended: Huddle[] = await recommendedForUser(username);
     const goingTo:Huddle[] = await getUserGoingHuddles(username);
-    const user: User = await getUserById(username);
+    const user: User[] = await getUserById(username);
     return {
       props: {
         aws_id: username,
-        user,
+        user: user.pop(),
         goingTo,
         recommended,
         huddles,
