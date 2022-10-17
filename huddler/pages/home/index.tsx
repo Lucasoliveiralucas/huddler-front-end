@@ -1,41 +1,45 @@
 import React, { useEffect, useState } from "react";
-import Huddles from "../../src/components/Home-components/Huddles";
 import Map from "../../src/components/Home-components/Map";
 import { getAllHuddles } from "../../src/utils/APIServices/huddleServices";
 import {
   fetcher,
-  getSession,
   recommendedForUser,
 } from "../../src/utils/helperFunctions";
 import { Huddle, User } from "../../src/types";
 import HuddlesNew from "../../src/components/Home-components/HuddlesNew";
-import useSWR from "swr";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import MobileMap from "../../src/components/Home-components/MobileMap";
-import { useAuth } from "../../src/contexts/AuthContext";
-import { Auth, withSSRContext } from "aws-amplify";
-import { getUserById } from "../../src/utils/APIServices/userServices";
+import { withSSRContext } from "aws-amplify";
+import { getUserById, getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
 import { GetServerSideProps } from "next/types";
 
 type Props = {
   recommended: Huddle[];
   huddlesUserIsGoing: Huddle[];
   huddles: Huddle[];
+  goingTo: Huddle[];
   user: User;
 };
 
-function Home({ recommended, huddles, user }: Props) {
-  let id = '';
+function Home({ recommended, huddles, user, goingTo }: Props) {
   const [filterChoice, setFilterChoice] = useState<Huddle[]>(huddles); //by default recommended
-  const [update, setUpdate] = useState(false); //for going to event or not
   const [mobileShowMap, setMobileShowMap] = useState(false);
-  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>();
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>(goingTo);
 
   useEffect(() => {
+    setHuddlesUserIsGoing(goingTo)
     if (recommended.length) {
       setFilterChoice(recommended)
     }
-  }, [])
+    console.log(huddlesUserIsGoing)
+  }, []);
+
+  
+  const updateList = async () => {
+    const response = await getUserGoingHuddles(user.aws_id)
+    setHuddlesUserIsGoing(await response);
+    console.log(huddlesUserIsGoing)
+  }
 
   const setToAllHuddles = async () => {
     try {
@@ -44,9 +48,6 @@ function Home({ recommended, huddles, user }: Props) {
     } catch (err) { }
     return;
   };
-  // if user uses another filter let's call a function that does it.
-  // if (userHuddleError) return <div>failed to load</div>;
-  // if (!userCreatedHuddles || !recommended) return <div>loading...</div>;
 
   return (
     <div className="sm:block md:flex xl:gap-10 mt-6 relative h-full md:px-24 lg:px-1 2xl:px-5">
@@ -79,14 +80,14 @@ function Home({ recommended, huddles, user }: Props) {
 
         <HuddlesNew
           huddles={filterChoice}
-          update={update}
+          updateList={updateList}
           huddlesUserIsGoing={huddlesUserIsGoing}
           id={user.aws_id}
         />
       </div>
 
       <div className="mt-16 hidden lg:flex ">
-        <Map huddles={filterChoice} update={update} id={user.aws_id} />
+        <Map huddles={filterChoice} id={user.aws_id} updateList={updateList} />
       </div>
     </div>
   );
@@ -104,12 +105,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const { username } = await Auth.currentUserInfo();
     const recommended: Huddle[] = await recommendedForUser(username);
     const user: User[] = await getUserById(username);
+    const goingTo: Huddle[] = await getUserGoingHuddles(username);
+
     return {
       props: {
         aws_id: username,
         username,
         user: user.pop(),    
         recommended,
+        goingTo,
         huddles,
       }
     }

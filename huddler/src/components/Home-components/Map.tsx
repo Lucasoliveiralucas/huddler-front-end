@@ -19,14 +19,14 @@ type Props = {
   huddles?: Huddle[];
   currentPage: string;
   setLocation: React.Dispatch<React.SetStateAction<any>>;
-  update: boolean;
+  updateList: Function;
   id: string;
 };
 export default function Map({
   huddles,
   currentPage,
+  updateList,
   setLocation,
-  update,
   id,
 }: Props) {
   const { currentUser } = useAuth();
@@ -106,7 +106,7 @@ export default function Map({
   return isLoaded ? (
     <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
-        <div className="flex">
+        {/* <div className="flex">
           {containerSize.width == "40vw" ? (
             <button
               className="p-2 bg-white  shadow-md rounded-sm"
@@ -137,7 +137,7 @@ export default function Map({
               Create
             </button>
           )}
-        </div>
+        </div> */}
         <div className="z-10 mt-3 w-60">
           <PlacesAutocomplete
             hook={setCenter}
@@ -157,7 +157,6 @@ export default function Map({
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
-            update={update}
             id={id}
           />
         </div>
@@ -204,14 +203,16 @@ export default function Map({
             <></>
           )}
           <MapInfoWindow
-            user={user}
+            id={id}
             showHuddle={showHuddle}
             setShowHuddle={setShowHuddle}
+            updateList={updateList}
+
           />
         </GoogleMap>
       </div>
     </div>
   ) : (
-    <></>
+    <p>Loading...</p>
   );
 }

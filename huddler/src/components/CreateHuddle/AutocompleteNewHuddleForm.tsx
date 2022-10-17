@@ -31,6 +31,7 @@ const AutocompleteHuddleForm = ({
   useEffect(() => {
     setValue(stockValue);
   }, [stockValue]);
+
   const {
     ready,
     value,
@@ -91,7 +92,6 @@ const AutocompleteHuddleForm = ({
     <div ref={ref}>
       <input
         className="outline-palette-orange outline-1 shadow-sm rounded-md w-[100%]"
-        defaultValue={value}
         value={value}
         onChange={handleInput}
         disabled={!ready}

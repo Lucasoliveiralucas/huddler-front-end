@@ -17,13 +17,12 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 
 type Props = {
+  id: string;
   data: {
     name: string;
     lat: string;
     lng: string;
-    id: string;
   };
-  update: boolean;
   setCenter: React.Dispatch<
     React.SetStateAction<{
       lat: number;

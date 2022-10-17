@@ -10,20 +10,19 @@ import NewHuddleCard from "./NewHuddleCard";
 
 type Props = {
     huddles: Huddle[];
-    update: boolean;
+    updateList: any;
     setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
     huddlesUserIsGoing: Huddle[];
     id: string;
 };
 
-function Huddles({ huddles, update, setUpdate, id }: Props) {
-    console.log('2',id)
+function Huddles({ huddles, updateList, setUpdate, id, huddlesUserIsGoing }: Props) {
     
     const [active, setActive] = useState<Huddle | {}>();
-    const { data: huddlesUserIsGoing, error: userGoingError } = useSWR(
-        `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${id}`,
-        fetcher
-    );
+    // const { data: huddlesUserIsGoing, error: userGoingError } = useSWR(
+    //     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${id}`,
+    //     fetcher
+    // );
 
     const handleActive = (huddle: Huddle) => {
         if (active === huddle) {
@@ -46,6 +45,7 @@ function Huddles({ huddles, update, setUpdate, id }: Props) {
                         huddle={huddle}
                         huddlesUserIsGoing={huddlesUserIsGoing}
                         id={id}
+                        updateList={updateList}
                     />
                 </div>
             ))}
