@@ -29,7 +29,7 @@ function Profile({
 
   //This is for updating the huddles i'm going to row
   const [update, setUpdate] = useState(false);
-  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>([]);
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>(goingTo);
   const [lastRow, setLastRow] = useState({
     name: "Recommended",
     huddles: recommended,
@@ -97,7 +97,7 @@ function Profile({
                 Upcoming Huddle
               </h1>
               <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
-                {userCreatedHuddles && <HuddleCarouselItem
+                {huddlesUserIsGoing.length && <HuddleCarouselItem
                   setUpdate={setUpdate}
                   update={update}
                   huddle={huddlesUserIsGoing[0]}
