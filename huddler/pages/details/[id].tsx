@@ -5,8 +5,11 @@ import { Huddle, User } from "../../src/types";
 import { dateFormatter } from "../../src/utils/helperFunctions";
 import { getUsersGoingToHuddle } from "../../src/utils/APIServices/huddleServices";
 import { getUserById } from "../../src/utils/APIServices/userServices";
+import io from "socket.io-client";
+let socket;
 
 const Details = () => {
+  const [chatMessages, setChatMessages] = useState<string[]>([]);
   const [users, setUsers] = useState<any>();
   const [creator, setCreator] = useState<User>();
   const huddle: Huddle = useRouter().query;
@@ -18,9 +21,30 @@ const Details = () => {
     const createdBy = await getUserById(huddle.fk_author_id);
     setCreator(createdBy[0]);
   };
+  const socketInitializer = async () => {
+    await fetch("/api/chat");
+    socket = io();
+
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    socket.on("update-input", (msg) => {
+      console.log(chatMessages);
+      // console.log(msg);
+      if (chatMessages) setChatMessages([...chatMessages, msg]);
+      else setChatMessages(msg);
+      console.log(chatMessages);
+    });
+  };
   useEffect(() => {
+    socketInitializer();
     getter();
   }, []);
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    socket.emit("input-change", e.target[0].value);
+  };
   return (
     <div className="flex">
       <div
@@ -45,28 +69,34 @@ const Details = () => {
         <p>{huddle.address}</p>
         <p className="mt-4">Created By: {creator?.username}</p>
         <p className="my-2">Who's going:</p>
-        {/* {users ? (
-          users.map((user: any) => {
-            return <p className="cursor-pointer mb-1">{user.username}</p>;
+        {users ? (
+          users.map((user: any, i: number) => {
+            return (
+              <p key={i} className="cursor-pointer mb-1">
+                {user.username}
+              </p>
+            );
           })
         ) : (
           <></>
-        )} */}
+        )}
       </div>
       <div id="huddle-chat" className="grid grid-cols-1 w-full mb-24">
         <div className="border border-palette-orange mx-14 my-24 p-4 rounded-2xl bg-white bg-opacity-20 relative">
           <div>
-            <ul>
-              <li>hello</li>
-              <li>hi</li>
-            </ul>
+            {chatMessages ? (
+              chatMessages.map((msg, i) => {
+                return <li key={i}>{msg}</li>;
+              })
+            ) : (
+              <></>
+            )}
           </div>
-          <div>
-            <input
-              type="text"
-              className="absolute inset-x-0 bottom-0 mb-6 rounded-xl h-12 w-full"
-            ></input>
-            <button>Enter</button>
+          <div className="absolute inset-x-0 bottom-0 mb-6 rounded-xl h-12 w-full">
+            <form onSubmit={(e) => submitHandler(e)}>
+              <input type="text"></input>
+              <button type="submit">Enter</button>
+            </form>
           </div>
         </div>
       </div>

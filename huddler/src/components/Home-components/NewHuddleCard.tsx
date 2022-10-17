@@ -14,14 +14,10 @@ import { AiOutlineConsoleSql } from "react-icons/ai";
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  id:string ;
+  id: string;
 };
 
-function NewHuddleCard({
-  huddle,
-  huddlesUserIsGoing,
-  id
-}: Props) {
+function NewHuddleCard({ huddle, huddlesUserIsGoing, id }: Props) {
   const dateTime = dateFormatter(huddle.day_time);
   // dateFormatter(huddle.day_time);
   const [going, setGoing] = useState(false);
@@ -82,7 +78,7 @@ function NewHuddleCard({
             <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
               <Image
                 fill
-                src={huddle.image}              
+                src={huddle.image}
                 alt={huddle.name}
                 sizes="100vw"
                 placeholder="empty"
@@ -109,15 +105,15 @@ function NewHuddleCard({
             {/* Mobile */}
             <div className="grid md:hidden grid-cols-2 gap-2 py-1">
               {data.categories.map((category, i) => {
-                return (
-                  i <= 1 && (
-                    <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                      key={category.id + (i - i)}
-                    >
-                      {category.name}
-                    </p>
-                  )
+                return i > 1 ? (
+                  <></>
+                ) : (
+                  <p
+                    className="text-center py-1 bg-palette-dark rounded-md text-white"
+                    key={category.id}
+                  >
+                    {category.name}
+                  </p>
                 );
               })}
             </div>
