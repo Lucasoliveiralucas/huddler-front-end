@@ -5,6 +5,8 @@ import bg_img1 from "../public/bg_images/Bike_img.jpg";
 import bg_img2 from "../public/bg_images/Park_img.jpg";
 import bg_img3 from "../public/bg_images/Motorcycle_img.jpeg";
 import bg_img4 from "../public/bg_images/terrace_img.jpeg";
+import Slider from "../src/components/Slider";
+
 const LandingPage: NextPage = () => {
 
   const background = [
@@ -15,13 +17,17 @@ const LandingPage: NextPage = () => {
   ]
 
   return (
+    // <><Slider></Slider>
     <div className="flex w-full h-full justify-center relative">
+      {/* Slider component here */}
       <Image alt={"image"} src={background[2]} sizes="100%" priority={true} />
+      {/* <Slider></Slider> */}
       <div>
         <button className="cursor-pointer">Log in</button>
       </div>
       <Register />
     </div>
+    // </>
   );
 };
 export default LandingPage;
