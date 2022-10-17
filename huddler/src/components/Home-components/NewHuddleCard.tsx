@@ -14,13 +14,14 @@ import { AiOutlineConsoleSql } from "react-icons/ai";
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
+  id:number ;
 };
 
 function NewHuddleCard({
   huddle,
   huddlesUserIsGoing,
+  id
 }: Props) {
-  const { currentUser } = useAuth();
   const dateTime = dateFormatter(huddle.day_time);
   // dateFormatter(huddle.day_time);
   const [going, setGoing] = useState(false);
@@ -57,7 +58,7 @@ function NewHuddleCard({
               className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
-                removeUserGoingToHuddle(currentUser, huddle.id);
+                removeUserGoingToHuddle(id, huddle.id);
               }}
             >
               Leave
@@ -67,7 +68,7 @@ function NewHuddleCard({
               className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
-                postUserGoingToHuddle(currentUser, huddle.id);
+                postUserGoingToHuddle(id, huddle.id);
               }}
             >
               Join

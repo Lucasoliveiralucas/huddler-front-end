@@ -13,13 +13,15 @@ type Props = {
     update: boolean;
     setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
     huddlesUserIsGoing: Huddle[];
+    id: number;
 };
 
-function Huddles({ huddles, update, setUpdate }: Props) {
+function Huddles({ huddles, update, setUpdate, id }: Props) {
+    console.log('2',id)
     
     const [active, setActive] = useState<Huddle | {}>();
     const { data: huddlesUserIsGoing, error: userGoingError } = useSWR(
-        `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${67}`,
+        `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${id}`,
         fetcher
     );
 
@@ -41,10 +43,9 @@ function Huddles({ huddles, update, setUpdate }: Props) {
                 >
                     {/* <HuddleCarouselItem */}
                     <NewHuddleCard
-                        setUpdate={setUpdate}
-                        update={update}
                         huddle={huddle}
                         huddlesUserIsGoing={huddlesUserIsGoing}
+                        id={id}
                     />
                 </div>
             ))}

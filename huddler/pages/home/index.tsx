@@ -7,23 +7,24 @@ import {
   getSession,
   recommendedForUser,
 } from "../../src/utils/helperFunctions";
-import { Huddle } from "../../src/types";
+import { Huddle, User } from "../../src/types";
 import HuddlesNew from "../../src/components/Home-components/HuddlesNew";
 import useSWR from "swr";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import MobileMap from "../../src/components/Home-components/MobileMap";
 import { useAuth } from "../../src/contexts/AuthContext";
 import { Auth, withSSRContext } from "aws-amplify";
+import { getUserById } from "../../src/utils/APIServices/userServices";
+import { GetServerSideProps } from "next/types";
 
 type Props = {
   recommended: Huddle[];
   huddlesUserIsGoing: Huddle[];
   huddles: Huddle[];
-  authenticated: boolean;
+  user: User;
 };
 
-function Home({ recommended, huddles, authenticated }: Props) {
-  const { currentUser } = useAuth();
+function Home({ recommended, huddles, user }: Props) {
   let id = '';
   const [filterChoice, setFilterChoice] = useState<Huddle[]>(huddles); //by default recommended
   const [update, setUpdate] = useState(false); //for going to event or not
@@ -31,9 +32,7 @@ function Home({ recommended, huddles, authenticated }: Props) {
   const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>();
 
   useEffect(() => {
-    if (authenticated && recommended.length) {
-      // id = await currentUser.pop()
-      console.log(currentUser)
+    if (recommended.length) {
       setFilterChoice(recommended)
     }
   }, [])
@@ -45,10 +44,10 @@ function Home({ recommended, huddles, authenticated }: Props) {
     } catch (err) { }
     return;
   };
+  console.log(user.id);
   // if user uses another filter let's call a function that does it.
   // if (userHuddleError) return <div>failed to load</div>;
   // if (!userCreatedHuddles || !recommended) return <div>loading...</div>;
-  console.log(currentUser)
 
   return (
     <div className="sm:block md:flex xl:gap-10 mt-6 relative h-full md:px-24 lg:px-1 2xl:px-5">
@@ -83,6 +82,7 @@ function Home({ recommended, huddles, authenticated }: Props) {
           huddles={filterChoice}
           update={update}
           huddlesUserIsGoing={huddlesUserIsGoing}
+          id={user.id}
         />
       </div>
 
@@ -95,8 +95,8 @@ function Home({ recommended, huddles, authenticated }: Props) {
 
 export default Home;
 
-export const getServerSideProps = async (context) => {
-  const { Auth } = withSSRContext(context);
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const { Auth } = withSSRContext({req});
 
   try {
     const huddles: Huddle[] = await fetcher(
@@ -104,20 +104,21 @@ export const getServerSideProps = async (context) => {
     );
     const { username } = await Auth.currentUserInfo();
     const recommended: Huddle[] = await recommendedForUser(username);
+    const user: User[] = await getUserById(username);
     return {
       props: {
-        authenticated: true,
+        aws_id: username,
         username,
+        user: user.pop(),    
         recommended,
         huddles,
-      },
-    };
+      }
+    }
   } catch (err) {
+    res.writeHead(302, { Location: '/' })
+    res.end()
     return {
-      props: {
-        authenticated: false,
-        recommended: [],
-      },
-    };
+      props: {}
+    }
   }
-};
+}
