@@ -22,28 +22,32 @@ const Details = () => {
     setCreator(createdBy[0]);
   };
   const socketInitializer = async () => {
-    await fetch("/api/chat");
+    await fetch(`/api/chat/chat`);
     socket = io();
 
     socket.on("connect", () => {
       console.log("connected");
     });
-
+    //join user the huddle room
+    socket.emit("join-room", huddle.id);
+    //gets the messaage
+    let message;
     socket.on("update-input", (msg) => {
-      console.log(chatMessages);
-      // console.log(msg);
-      if (chatMessages) setChatMessages([...chatMessages, msg]);
-      else setChatMessages(msg);
-      console.log(chatMessages);
+      console.log(msg);
+      message = msg;
+      setChatMessages([...chatMessages, message]);
     });
   };
+
   useEffect(() => {
     socketInitializer();
     getter();
   }, []);
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    socket.emit("input-change", e.target[0].value);
+    setChatMessages([...chatMessages, e.target[0].value]);
+    //emits message e.target.value to room huddle.id
+    socket.emit("input-change", e.target[0].value, huddle.id);
   };
   return (
     <div className="flex">
@@ -69,7 +73,7 @@ const Details = () => {
         <p>{huddle.address}</p>
         <p className="mt-4">Created By: {creator?.username}</p>
         <p className="my-2">Who's going:</p>
-        {users ? (
+        {/* {users ? (
           users.map((user: any, i: number) => {
             return (
               <p key={i} className="cursor-pointer mb-1">
@@ -79,7 +83,7 @@ const Details = () => {
           })
         ) : (
           <></>
-        )}
+        )} */}
       </div>
       <div id="huddle-chat" className="grid grid-cols-1 w-full mb-24">
         <div className="border border-palette-orange mx-14 my-24 p-4 rounded-2xl bg-white bg-opacity-20 relative">
