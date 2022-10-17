@@ -1,34 +1,35 @@
 import React from 'react'
-import avatar from '../../../public/placeholder.jpg';
+import noImage from '../../../public/noImage.jpg';
 import Image from 'next/future/image';
+import { User } from '../../types';
 
-function MobileAvatar() {
+type Props = {
+    user: User,
+};
 
-    const user: User = {
-        name: 'Florio',
-        image: avatar,
-        email: '',
-        createdOn: 0,
-    };
+
+function MobileAvatar({ user }: Props) {
+    const image = (typeof user.image == 'string') ? user.image : noImage;
 
     return (
-      
-        <div className=' w-full flex flex-col py-6 justify-center items-center'>       
-            {/* <div className='rounded-full h-72 w-72 md:w-96 md:h-96 relative flex'>
-              <Image
-                  className='rounded-full'
-                  src={user.image! as string}
-                  placeholder='empty'
-                  alt='avatar'
-                  fill
-                  priority={true}
-                  />
-          </div> */}
-                  <h1 className='p-4 text-[2rem] font-bold'>
-                      Welcome back, {user.name}
-                  </h1>
-      </div>
-  )
+
+        <div className=' w-full flex flex-col py-6 justify-center items-center'>
+            <div className='rounded-full h-72 w-72 md:w-96 md:h-96 relative hidden md:flex'>
+                <Image
+                    className='rounded-full'
+                    src={image}
+                    placeholder='empty'
+                    alt='avatar'
+                    sizes='auto'
+                    priority={true}
+                    fill
+                />
+            </div>
+            <h1 className='p-4 text-[2rem] font-bold'>
+                Welcome back, {user.username}
+            </h1>
+        </div>
+    )
 }
 
 export default MobileAvatar

@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import router, { useRouter } from "next/router";
-
 import Avatar from "../../src/components/Profile components/Avatar";
 import UserInfo from "../../src/components/Profile components/UserInfo";
-import avatar from "../../public/placeholder.jpg";
 import useSWR from "swr";
 import HuddleCarousel from "../../src/components/Profile components/HuddleCarousel";
 import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
@@ -12,18 +9,8 @@ import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
 import { getUserById, getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
 import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
 import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
-
-import { Auth, withSSRContext } from 'aws-amplify';
-import { useAuth } from "../../src/contexts/AuthContext";
-
-let aws_id = ''
-
-// Auth.currentAuthenticatedUser()
-//   .then((user) => {
-//     aws_id = user.username;
-//     console.log('this is aws', aws_id)
-//   })
-//   .catch((err) => console.log(err));
+import { withSSRContext } from 'aws-amplify';
+import { GetServerSideProps } from "next/types";
 
 type Props = {
   aws_id: string;
@@ -33,7 +20,8 @@ type Props = {
   huddles: Huddle[];
 };
 
-function Profile({ aws_id,
+function Profile({
+  aws_id,
   user,
   goingTo,
   recommended,
@@ -58,14 +46,14 @@ function Profile({ aws_id,
     ) || [];
 
   const getter = () => {
-    if(goingTo.length)  {
-    try {
-      const sorted: Huddle[] = goingTo.sort((a: Huddle, b: Huddle) => {
-        return new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf();
-      });
-      setHuddlesUserIsGoing(sorted);
-    } catch (err) {
-      console.log(err)
+    if (goingTo.length) {
+      try {
+        const sorted: Huddle[] = goingTo.sort((a: Huddle, b: Huddle) => {
+          return new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf();
+        });
+        setHuddlesUserIsGoing(sorted);
+      } catch (err) {
+        console.log(err)
       }
     }
   };
@@ -94,8 +82,8 @@ function Profile({ aws_id,
     return <div>loading...</div>;
 
   return (
-    <main className="flex flex-col lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
-      <div className="hidden lg:block">
+    <main className="flex flex-col lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
+      <div className="hidden lg:block w-full">
         <div className="fixed min-w-[20%] h-full">
           <div
             className="flex flex-col h-full items-center
@@ -103,19 +91,18 @@ function Profile({ aws_id,
           >
             <Avatar user={user} />
             <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
-              huddlesUserIsGoing={huddlesUserIsGoing.length}
-              user={user} />
+              huddlesUserIsGoing={huddlesUserIsGoing.length} />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
               <h1 className="text-3xl self-center mt-10 font-bold">
                 Upcoming Huddle
               </h1>
               <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
-                {/* {userCreatedHuddles && <HuddleCarouselItem
+                {userCreatedHuddles && <HuddleCarouselItem
                   setUpdate={setUpdate}
                   update={update}
                   huddle={huddlesUserIsGoing[0]}
                   huddlesUserIsGoing={huddlesUserIsGoing}
-                />} */}
+                />}
               </div>
             </div>
           </div>
@@ -126,14 +113,13 @@ function Profile({ aws_id,
       <div className="lg:hidden w-full pt-4 h-auto flex-col">
         <MobileAvatar user={user} />
         <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
-          huddlesUserIsGoing={huddlesUserIsGoing.length}
-          user={user} />
+          huddlesUserIsGoing={huddlesUserIsGoing.length} />
       </div>
 
-      <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto">
-        <h1 className="py-8 px-4 text-3xl font-bold">Interests:</h1>
+      <div className="h-full w-full col-span-2 3xl:col-span-3 overflow-auto ml-0 lg:ml-48 2xl:ml-0">
+        <h1 className="pt-8 px-4 text-3xl font-bold pl-10 lg:pl-0">Interests:</h1>
         {Array.isArray(tags) &&
-          <div className="flex flex-wrap gap-4 p-4">
+          <div className="flex flex-wrap gap-4 p-4 pl-10 lg:pl-0">
             {tags.map((tag: Category, i: number) => (
               <h1
                 id={tag.name}
@@ -182,14 +168,14 @@ function Profile({ aws_id,
 
 export default Profile;
 
-export const getServerSideProps = async ({req, res}) => {
-  const { Auth } = withSSRContext({req});
+export const getServerSideProps:GetServerSideProps = async ({ req , res }) => {
+  const { Auth } = withSSRContext({ req });
 
   try {
     const huddles: Huddle[] = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted");
     const { username } = await Auth.currentUserInfo();
     const recommended: Huddle[] = await recommendedForUser(username);
-    const goingTo:Huddle[] = await getUserGoingHuddles(username);
+    const goingTo: Huddle[] = await getUserGoingHuddles(username);
     const user: User[] = await getUserById(username);
     return {
       props: {

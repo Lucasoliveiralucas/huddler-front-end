@@ -26,6 +26,9 @@ module.exports = {
         "palette-dark": "#a35709",
         "palette-black": "#1b1a17",
       },
+      screens: {
+        '3xl': '1800px'
+      }
     },
   },
   plugins: [],

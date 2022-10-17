@@ -11,7 +11,7 @@ export interface User {
   id?: number;
   first_name?: string;
   last_name?: string;
-  image?:  | string | StaticImageData;
+  image?: File | File[] | string | string[] | StaticImageData;
   date_of_birth?: string;
   interests?: Category[];
   default_longitude?: number;

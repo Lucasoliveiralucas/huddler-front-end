@@ -2,15 +2,13 @@ import React from 'react';
 import noImage  from '../../../public/noImage.jpg';
 import Image from 'next/future/image';
 import { User } from '../../../src/types';
-import { StaticImageData } from 'next/image';
 
 type Props = {
   user: User,
 };
 
 function Avatar({ user }: Props) {
-  console.log(user);
-  const image:string | StaticImageData = user.image && noImage;
+  const image = (typeof user.image == 'string') ? user.image : noImage;
   return (
     <div className='w-full flex flex-col py-8 justify-center'>
       <h1 className='text-[2rem] self-center'>
