@@ -12,6 +12,8 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [cognitoUser, setCognitoUser] = useState<any>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   // const [loading, setLoading] = useState(true);
   const router = useRouter();
   useEffect(() => {
@@ -21,14 +23,13 @@ export const AuthProvider = ({ children }) => {
   const loadCurrentUser = async () => {
     try {
       const userLoggedIn = await Auth.currentAuthenticatedUser();
-      setCognitoUser(userLoggedIn);
       if (!userLoggedIn) {
-        setCognitoUser(null);
-        setCurrentUser(null);
         router.replace('/');
         return;
       }
-      
+
+      setIsAuthenticated(true);
+      setCognitoUser(userLoggedIn);
       setCognitoUser(userLoggedIn);
       const user = await getUserById(userLoggedIn.username);
       setCurrentUser(user);
@@ -39,6 +40,7 @@ export const AuthProvider = ({ children }) => {
           console.log('User Signed Out');
           setCognitoUser(null);
           setCurrentUser(null);
+          setIsAuthenticated(false);
         }
       });
     } catch (error) {
@@ -46,23 +48,24 @@ export const AuthProvider = ({ children }) => {
         'Error in cognito trying to signup or signin. Check in AuthContext'
       );
     }
+    setIsLoading(false);
   };
 
-  const isAuthenticated = () => (userLoggedIn ? true : false);
-
   const logOut = async () => {
-    return await Auth.signOut();
+    await Auth.signOut();
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    setCognitoUser(null);
+    router.replace('/');
   };
 
   const value = {
     currentUser,
     isAuthenticated,
+    isLoading,
     logOut,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
-
-
 
