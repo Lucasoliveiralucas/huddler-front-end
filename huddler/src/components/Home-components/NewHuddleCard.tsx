@@ -117,15 +117,15 @@ function NewHuddleCard({
             {/* Mobile */}
             <div className="grid md:hidden grid-cols-2 gap-2 py-1">
               {data.categories.map((category, i) => {
-                return (
-                  i <= 1 && (
-                    <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                      key={category.id + (i - i)}
-                    >
-                      {category.name}
-                    </p>
-                  )
+                return i > 1 ? (
+                  <></>
+                ) : (
+                  <p
+                    className="text-center py-1 bg-palette-dark rounded-md text-white"
+                    key={category.id}
+                  >
+                    {category.name}
+                  </p>
                 );
               })}
             </div>
