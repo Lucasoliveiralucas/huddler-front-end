@@ -40,9 +40,9 @@ function Navbar() {
 
   return (
     <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-10">
-      <Link href={'/home'}>
+      <Link href={'/home'} rel="prefetch" as="image" >
         <a className="w-48">
-        <Image src={huddler_logo} alt='logo' />
+          <Image src={huddler_logo} alt='logo' priority={true}  />
         </a>
       </Link>
       <div className="w-20 h-20 relative">

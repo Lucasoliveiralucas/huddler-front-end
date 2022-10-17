@@ -7,7 +7,8 @@ import { MapInfoWindow } from "./MapInfoWindow";
 import { useAuth } from "../../contexts/AuthContext";
 import { getUserById } from "../../utils/APIServices/userServices";
 import { withSSRContext } from "aws-amplify";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps } from "next/types";
+import { NextApiResponse, NextApiRequest } from "next/types";
 const image = require("../../../public/location-pin-svgrepo-com.svg");
 const libraries: (
   | "places"
@@ -19,16 +20,15 @@ const libraries: (
 
 type Props = {
   huddles?: Huddle[];
-  currentPage: string;
-  setLocation: React.Dispatch<React.SetStateAction<any>>;
+  // currentPage: string;
+  // setLocation: React.Dispatch<React.SetStateAction<any>>;
   updateList: Function;
   user: User;
 };
 export default function Map({
   huddles,
-  currentPage,
+  // currentPage,
   updateList,
-  setLocation,
   user,
 }: Props) {
   // const { currentUser } = useAuth();
@@ -220,7 +220,11 @@ export default function Map({
     <p>Loading...</p>
   );
 }
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+type Context = {
+  req: NextApiRequest;
+  res: NextApiResponse;
+}
+export const getServerSideProps = async ({ req, res }:Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {

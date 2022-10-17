@@ -11,12 +11,12 @@ import NewHuddleCard from "./NewHuddleCard";
 type Props = {
     huddles: Huddle[];
     updateList: any;
-    setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+    // setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
     huddlesUserIsGoing: Huddle[];
     id: string;
 };
 
-function Huddles({ huddles, updateList, setUpdate, id, huddlesUserIsGoing }: Props) {
+function Huddles({ huddles, updateList, id, huddlesUserIsGoing }: Props) {
     
     const [active, setActive] = useState<Huddle | {}>();
     // const { data: huddlesUserIsGoing, error: userGoingError } = useSWR(

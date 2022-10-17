@@ -1,7 +1,5 @@
 import { NextResponse, userAgent } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { fetcher } from './src/utils/APIServices/fetcher';
-import { Session } from 'inspector';
 
 export async function middleware(request: NextRequest) {
   //auth

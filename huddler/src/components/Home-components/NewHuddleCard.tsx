@@ -34,7 +34,6 @@ function NewHuddleCard({
   });
 
   useEffect(() => {
-    console.log(huddlesUserIsGoing)
     if (huddlesUserIsGoing) {
       huddlesUserIsGoing.find((h) => h.id === huddle.id)
         ? setGoing(true)
@@ -82,10 +81,10 @@ function NewHuddleCard({
           )}
         </div>
       </div>
-      <div className="grid grid-cols-2 md:flex h-full">
-        <div className="flex">
-          <div className="h-3/4 md:w-[24rem] mr-3">
-            <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
+      <div className="grid grid-cols-2 h-full">
+        <div className="flex flex-col">
+          <div className="h-full md:w-[24rem]">
+            <div className="flex rounded-lg h-32 lg:h-40 md:w-3/4 relative">
               <Image
                 fill
                 src={huddle.image}
@@ -97,15 +96,15 @@ function NewHuddleCard({
                 className="rounded-lg object-contain"
               />
             </div>
+            <p className="hidden md:block">attending: {data.attending}</p>
 
-            <p>attending: {data.attending}</p>
 
-            <div className="hidden md:grid grid-cols-2 gap-2">
+            <div className="hidden md:grid grid-cols-2 gap-2 w-2/3">
               {data.categories.map((category, i) => {
                 return (
                   i <= 3 && (
                     <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+                      className="text-center py-0.5 bg-palette-dark rounded-md text-white "
                       key={category.id + (i - i)}
                     >
                       {category.name}
@@ -114,8 +113,9 @@ function NewHuddleCard({
                 );
               })}
             </div>
+            </div>
             {/* Mobile */}
-            <div className="grid md:hidden grid-cols-2 gap-2 py-1">
+            <div className="grid md:hidden grid-cols-2 gap-1 py-1">
               {data.categories.map((category, i) => {
                 return (
                   i <= 1 && (
@@ -131,7 +131,7 @@ function NewHuddleCard({
             </div>
           </div>
           {/* Description */}
-          <div className="grid max-w-[300px] md:h-56 py-2 w-full space-x-0 ">
+          <div className="grid max-w-[300px] md:h-56 py-2 w-full pl-4 ">
             <p>{huddle.description}</p>
             <p className="text-sm self-end">
               At {huddle.address}
@@ -140,7 +140,6 @@ function NewHuddleCard({
             </p>
           </div>
         </div>
-      </div>
     </div>
   );
 }

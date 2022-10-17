@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
-import { Huddle } from "../../types";
+import { Huddle, User } from "../../types";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
 const image = require("../../../public/location-pin-svgrepo-com.svg");
@@ -16,9 +16,11 @@ const libraries: (
 type Props = {
     huddles?: Huddle[];
     currentPage: string;
-    setLocation: React.Dispatch<React.SetStateAction<any>>;
+    updateList: Function;
+    // setLocation: React.Dispatch<React.SetStateAction<any>>;
+    user: User;
 };
-export default function MobileMap({ huddles, currentPage, setLocation }: Props) {
+export default function MobileMap({ huddles, currentPage, user, updateList }: Props) {
     const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
     const [locationName, setLocationName] = useState("");
     const [selected, setSelected] = useState(false);
@@ -83,7 +85,7 @@ export default function MobileMap({ huddles, currentPage, setLocation }: Props) 
     return isLoaded ? (
         <div className="mt-0">
             <div className="absolute pl-3 z-10 mt-24">
-                <div className="flex">
+                {/* <div className="flex">
                     {containerSize.width == "40vw" ? (
                         <button
                             className="p-2 bg-white  shadow-md rounded-sm"
@@ -114,7 +116,7 @@ export default function MobileMap({ huddles, currentPage, setLocation }: Props) 
                             Create
                         </button>
                     )}
-                </div>
+                </div> */}
                 <div className="z-10 mt-3 w-60">
                     <PlacesAutocomplete
                         hook={setCenter}
