@@ -1,0 +1,7 @@
+.navbar {
+  transition: 0.4s;
+}
+
+.navbar--hidden {
+  transform: translateY(-5rem);
+}
