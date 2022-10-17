@@ -178,8 +178,8 @@ function Profile({ recommended, huddles, authenticated, username, user }: Props)
 
 export default Profile;
 
-export const getServerSideProps = async (context: { req?: any; modules?: any[] | undefined; } | undefined) => {
-  const { Auth } = withSSRContext(context);
+export const getServerSideProps = async ({req, res}) => {
+  const { Auth } = withSSRContext({req});
 
   try {
     const huddles: Huddle[] = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted");
@@ -196,12 +196,10 @@ export const getServerSideProps = async (context: { req?: any; modules?: any[] |
       }
     }
   } catch (err) {
+    res.writeHead(302, { Location: '/' })
+    res.end()
     return {
-      props: {
-        authenticated: false,
-        recommended: [],
-        huddles: [],
-      }
+      props: {}
     }
   }
 }
