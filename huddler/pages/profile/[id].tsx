@@ -88,7 +88,7 @@ function Profile({
             className="flex flex-col h-full items-center
           border-x-[0.2px] shadow-md w-full"
           >
-            <Avatar user={user} />
+            {/* <Avatar user={user} /> */}
             <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
               huddlesUserIsGoing={huddlesUserIsGoing.length} />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
@@ -109,7 +109,7 @@ function Profile({
       </div>
 
       {/* Mobile */}
-      <div className="lg:hidden w-full pt-4 h-auto flex-col">
+      <div className=" lg:hidden w-full pt-4 h-auto flex-col">
         <MobileAvatar user={user} />
         <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
           huddlesUserIsGoing={huddlesUserIsGoing.length} />

@@ -88,14 +88,16 @@ function HuddleCarouselItem({
 
         <div className="flex">
           <div className="w-[24rem] mr-3">
-            <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
+            <div className="rounded-lg h-32 lg:h-40 relative">
               <Image
-                src={huddle.image}
-                fill
-                placeholder="empty"
-                sizes="150px"
-                className="rounded-lg"
-                alt={huddle.name}
+              fill
+              src={huddle.image}
+              alt={huddle.name}
+              sizes="(max-width: 768px) 100px,
+                       (max-width: 1200px) 250px,
+                       300px"
+              placeholder="empty"
+              className="rounded-lg object-contain"
               />
             </div>
             <p>attending: {data.attending}</p>
