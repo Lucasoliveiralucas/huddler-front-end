@@ -8,18 +8,19 @@ import DeleteUser from '../../src/components/Settings-components/DeleteUser';
 import { User } from '../../src/types';
 import OptionsMenu from '../../src/components/Settings-components/OptionsMenu';
 import { useRouter } from 'next/router';
-import { Auth} from 'aws-amplify'
+import { Auth } from 'aws-amplify';
 import { getUserById } from '../../src/utils/APIServices/userServices';
+import { useAuth } from '../../src/contexts/AuthContext';
 
-let aws_id = '';
+// let aws_id = '';
 
-Auth.currentAuthenticatedUser()
-  .then((user) => {
-    console.log('User: ', user);
-    aws_id = user.username;
-    console.log('this is aws', aws_id);
-  })
-  .catch((err) => console.log(err));
+// Auth.currentAuthenticatedUser()
+//   .then((user) => {
+//     console.log('User: ', user);
+//     aws_id = user.username;
+//     console.log('this is aws', aws_id);
+//   })
+//   .catch((err) => console.log(err));
 // //mock user
 // const user: User = {
 //   name: 'Florian',
@@ -28,45 +29,48 @@ Auth.currentAuthenticatedUser()
 // };
 
 const SettingsPage = () => {
-  // const router = useRouter();
+  const router = useRouter();
+
+  //@ts-ignore
+  const { currentUser, isAuthenticated, isLoading } = useAuth();
   // if (!aws_id) router.replace('/');
-  const [currentUser, setCurrentUser] = useState<User>();
+
+  const [userData, setUserData] = useState<any>(currentUser);
   const [option, setOption] = useState('information');
 
-  useEffect(()=>{
-    loadUser()
-  },[])
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.replace('/');
+      return;
+    }
+  }, [isLoading, isAuthenticated]);
 
-  console.log('aws_id', aws_id)
-
-const loadUser = async () => {
-  const user = await getUserById(aws_id)
-  console.log('this is user', user)
-  setCurrentUser(user)
-}
+  useEffect(() => {
+    if (currentUser) {setUserData(currentUser[0]);
+    console.log('this is current user', currentUser[0]);}
+  }, [currentUser]);
 
   return (
     <main className='flex h-screen justify-center items-center'>
       <OptionsMenu setOption={setOption} />
 
-      {option === 'information' && (
-        <PersonalInformation currentUser={currentUser} />
+      {option === 'information' && userData && (
+        <PersonalInformation userData={userData} />
       )}
-      {option === 'password' && <ChangePassword />}
+      {/* {option === 'password' && <ChangePassword />}
       {option === 'location' && (
         <UpdateLocation
-          currentUserLongitude={currentUser.longitude!}
-          currentUserLatitude={currentUser.latitude!}
+          currentUserLongitude={userData.longitude!}
+          currentUserLatitude={userData.latitude!}
         />
       )}
       {option === 'interests' && (
-        <UpdateInterests currentUserInterests={currentUser.interests!} />
+        <UpdateInterests currentUserInterests={userData.interests!} />
       )}
-      {option === 'delete' && <DeleteUser currentUserId={currentUser.id!} />}
+      {option === 'delete' && <DeleteUser currentUserId={userData.id!} />} */}
     </main>
   );
 };
 
 export default SettingsPage;
-
 
