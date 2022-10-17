@@ -87,9 +87,9 @@ export default function Map({
       // const userData = await getUserById(currentUser);
       // console.log(userData);
       // setUser(userData[0]);
-      console.log("over herer", user);
+      console.log("over herer", user.default_latitude);
 
-      user
+      user.default_latitude !== 1
         ? setCenter({
             lat: Number(user.default_latitude),
             lng: Number(user.default_longitude),
@@ -108,7 +108,7 @@ export default function Map({
       });
     }
   }, []);
-  return isLoaded && user ? (
+  return isLoaded ? (
     <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
         {/* <div className="flex">
@@ -220,22 +220,3 @@ export default function Map({
     <p>Loading...</p>
   );
 }
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const { Auth } = withSSRContext({ req });
-
-  try {
-    const { username } = await Auth.currentUserInfo();
-    const user: User[] = await getUserById(username);
-    return {
-      props: {
-        user: user.pop(),
-      },
-    };
-  } catch (err) {
-    res.writeHead(302, { Location: "/" });
-    res.end();
-    return {
-      props: {},
-    };
-  }
-};
