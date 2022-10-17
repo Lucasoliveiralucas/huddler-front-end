@@ -39,13 +39,14 @@ function Navbar() {
   };
 
   return (
-    <div className="h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-10">
+    <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-10">
       <Link href={'/home'}>
         {/* <div className="w-50"> */}
           <Image className="w-48" src={huddler_logo} alt='logo' />
         {/* </div> */}
         </Link>
       <div className="w-20 h-20 relative">
+      {currentUser &&
         <Image
           src={currentUser ? currentUser[0].image : DefaultUserImage}
           alt='user-image'
@@ -53,6 +54,7 @@ function Navbar() {
           className=' rounded-full p-1 cursor-pointer p-3'
           onClick={() => handleClickOnImg()}
         />
+      }
         {showDropDown && <Dropdown setShowDropDown={setShowDropDown} />}
       </div>
     </div>
