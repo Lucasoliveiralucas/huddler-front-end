@@ -94,7 +94,7 @@ export const postHuddleCategory = async (huddleId: number, catId: number) => {
   }
 };
 
-export const postUserGoingToHuddle = async (aws_id: number, huddleId?: number) => {
+export const postUserGoingToHuddle = async (aws_id: string, huddleId?: number) => {
   try {
     const userToHuddle = await fetch(
       'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/usersgoing',
@@ -115,7 +115,7 @@ export const postUserGoingToHuddle = async (aws_id: number, huddleId?: number) =
   }
 };
 
-export const removeUserGoingToHuddle = async (aws_id: number, huddleId?: number) => {
+export const removeUserGoingToHuddle = async (aws_id: string, huddleId?: number) => {
   try {
     const userToHuddle = await fetch(
       'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user_huddle',

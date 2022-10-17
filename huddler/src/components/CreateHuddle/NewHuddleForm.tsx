@@ -21,6 +21,7 @@ type Props = {
     name: string;
     lat: string;
     lng: string;
+    id: string;
   };
   update: boolean;
   setCenter: React.Dispatch<
@@ -35,7 +36,7 @@ type Props = {
   };
 };
 
-const NewHuddleForm = ({ data, setCenter, center }: Props) => {
+const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const router = useRouter();
   const { currentUser } = useAuth();
 
@@ -62,6 +63,7 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(id)
     try {
       const data = await getUploadUrl();
       const uploadUrl = data.uploadURL;
@@ -87,7 +89,7 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
           filename,
         date_of_creation: date,
         link: "",
-        fk_author_id: currentUser, //here we'll require the uid from the authentication
+        fk_author_id: id, //here we'll require the uid from the authentication
       };
       // postHuddle2(newHuddle);
       // Post huddle in DB
@@ -97,7 +99,6 @@ const NewHuddleForm = ({ data, setCenter, center }: Props) => {
 
       // getting id of huddle
       const huddleId = await getIdOfHuddleByDateOfCreation(date);
-      console.log(huddleId);
 
       //posting the categories to new huddle
       addedCategories.forEach((el) => {

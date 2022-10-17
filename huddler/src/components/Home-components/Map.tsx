@@ -20,12 +20,14 @@ type Props = {
   currentPage: string;
   setLocation: React.Dispatch<React.SetStateAction<any>>;
   update: boolean;
+  id: string;
 };
 export default function Map({
   huddles,
   currentPage,
   setLocation,
   update,
+  id,
 }: Props) {
   const { currentUser } = useAuth();
   const [user, setUser] = useState<User>();
@@ -156,6 +158,7 @@ export default function Map({
               lng: "" + center.lng,
             }}
             update={update}
+            id={id}
           />
         </div>
       </div>

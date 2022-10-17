@@ -44,7 +44,6 @@ function Home({ recommended, huddles, user }: Props) {
     } catch (err) { }
     return;
   };
-  console.log(user.id);
   // if user uses another filter let's call a function that does it.
   // if (userHuddleError) return <div>failed to load</div>;
   // if (!userCreatedHuddles || !recommended) return <div>loading...</div>;
@@ -82,12 +81,12 @@ function Home({ recommended, huddles, user }: Props) {
           huddles={filterChoice}
           update={update}
           huddlesUserIsGoing={huddlesUserIsGoing}
-          id={user.id}
+          id={user.aws_id}
         />
       </div>
 
       <div className="mt-16 hidden lg:flex ">
-        <Map huddles={filterChoice} update={update} />
+        <Map huddles={filterChoice} update={update} id={user.aws_id} />
       </div>
     </div>
   );

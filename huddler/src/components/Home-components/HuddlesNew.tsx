@@ -13,7 +13,7 @@ type Props = {
     update: boolean;
     setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
     huddlesUserIsGoing: Huddle[];
-    id: number;
+    id: string;
 };
 
 function Huddles({ huddles, update, setUpdate, id }: Props) {

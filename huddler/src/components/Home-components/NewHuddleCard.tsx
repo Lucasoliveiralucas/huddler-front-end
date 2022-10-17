@@ -14,7 +14,7 @@ import { AiOutlineConsoleSql } from "react-icons/ai";
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  id:number ;
+  id:string ;
 };
 
 function NewHuddleCard({
