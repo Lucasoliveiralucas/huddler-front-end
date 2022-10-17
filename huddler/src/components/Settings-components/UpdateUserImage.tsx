@@ -6,19 +6,21 @@ type Props = {
   setDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
   image?: string;
+  userPersonalInfo: any
 };
 
-const UserImage = ({ setDisabledButton, setError }: Props) => {
+const UserImage = ({ setDisabledButton, setError, userPersonalInfo }: Props) => {
   const [userImage, setUserImage] = useState<StaticImageData | string>(
-    DefaultUserImage
+   userPersonalInfo.image
   );
-  const inputImageRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const changeUserImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     try {
       //Update image in DB
       setDisabledButton(false);
+      userPersonalInfo.image = e.target.files[0]
       setUserImage(URL.createObjectURL(e.target.files[0]));
       // image = URL.createObjectURL(e.target.files[0]);
     } catch {
@@ -30,18 +32,18 @@ const UserImage = ({ setDisabledButton, setError }: Props) => {
       Click on the image to change it
       <input
         type='file'
+        ref={imageRef}
         className='hidden'
         accept='.jpg, jpeg, .png, .gif'
-        ref={inputImageRef}
         onChange={changeUserImage}
       />
       <Image
-        src={userImage}
+        src={userImage || userPersonalInfo.image || DefaultUserImage}
         className='rounded-full hover:cursor-pointer'
         width={150}
         height={150}
         alt='user-image'
-        onClick={() => inputImageRef.current!.click()}
+        onClick={() => imageRef.current!.click()}
       />
     </div>
   );
