@@ -63,66 +63,6 @@ function Register({ signOut, user }: any) {
         <h1>Hello</h1>
         <button onClick={signOut}>Sign out</button>
       </>
-
-      {/* <h1>Share your Passions</h1>
-      <br />
-      {error && <div className='bg-red-600'>{error}</div>}
-      <form
-        className='flex flex-col'
-        onSubmit={submitHandler}
-      >
-        <label htmlFor='name'>Name</label>
-        <input
-          className='border-solid border-2 border-black-600'
-          ref={nameRef}
-          type='text'
-          id='name'
-          autoComplete='on'
-          required
-        />
-        <label htmlFor='email'>Email</label>
-        <input
-          className='border-solid border-2 border-black-600'
-          ref={emailRef}
-          type='email'
-          id='email'
-          autoComplete='on'
-          required
-        />
-        <label htmlFor='password'>Password</label>
-        <input
-          className='border-solid border-2 border-black-600'
-          ref={passwordRef}
-          type='password'
-          id='password'
-          autoComplete='on'
-          minLength={6}
-          required
-        />
-        <label htmlFor='confirm-password'>Confirm Password</label>
-        <input
-          className='border-solid border-2 border-black-600'
-          ref={confirmedPasswordRef}
-          type='password'
-          id='confirm-password'
-          autoComplete='on'
-          minLength={6}
-          required
-        />
-        <div className='flex justify-center'>
-          <button
-            className='border-solid border-2 border-black-600 w-48'
-            type='submit'
-            disabled={loading}
-          >
-            Sign Up
-          </button>
-        </div>
-      </form>
-      <div className=''>------------------------</div>
-      <div className=''>Sign Up with Google</div>
-      <div>Already have an account?</div>
-      <Link href='/Login'>Log in</Link> */}
     </main>
   );
 }

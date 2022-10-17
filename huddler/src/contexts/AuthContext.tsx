@@ -41,6 +41,13 @@ export const AuthProvider = ({ children }) => {
           setCurrentUser(null);
           setIsAuthenticated(false);
         }
+        if (payload.event === 'signIn') {
+          console.log('User Signed In')
+          console.log('userName', currentUser.userName)
+          if (currentUser.username) {
+            router.replace('/home')
+          } else router.replace('/newuser')
+        }
       });
     } catch (error) {
       console.error(
@@ -76,6 +83,8 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+
 
 
 

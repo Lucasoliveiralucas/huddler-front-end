@@ -17,6 +17,7 @@ const UpdateLocation = ({
     try {
       //await here we post the new location to the DB
       //If success the h1 down below should show the new location
+      console.log('secondLocation', location)
     } catch {
       setError("We weren't able to update your location. Please try again");
     }
@@ -34,7 +35,7 @@ const UpdateLocation = ({
       >
         Update Location
       </button>
-      <Map />
+      <Map setLocation={setLocation}/>
     </>
   );
 };

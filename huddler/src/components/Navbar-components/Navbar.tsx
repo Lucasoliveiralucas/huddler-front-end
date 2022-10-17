@@ -9,7 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
   const {currentUser} = useAuth()
-  // console.log('imageeeee', currentUser[0].image)
+ 
   // const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -34,7 +34,6 @@ function Navbar() {
   }, [controlNavbar]);
 
   const handleClickOnImg = () => {
-    console.log('click' ,showDropDown)
     setShowDropDown(!showDropDown);
   };
 

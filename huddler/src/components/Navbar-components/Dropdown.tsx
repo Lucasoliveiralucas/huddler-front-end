@@ -27,44 +27,16 @@ type Props = {
 const Dropdown = ({ setShowDropDown }: Props) => {
   //@ts-ignore
   const { currentUser, logOut } = useAuth();
-  const [dropDown, setDropDown] = useState<HTMLElement | null>(null);
-  console.log('logouuut', currentUser);
-  const router = useRouter();
-  let dropDownRef = useRef<HTMLElement>();
 
-  const ref = useOnclickOutside(() => {
+  const dropDownref = useOnclickOutside(() => {
    setShowDropDown(false)
   });
-  const handleLogoutClick = () => {
-    console.log('hit hereeee');
-    // if (currentUser) return logOut();
-    // router.replace('/');
-    return;
-  };
-
-  // useEffect(() => {
-  //   //@ts-ignore
-  //   dropDownRef.current = document.getElementById('dropdown')
-  //   console.log('droppy' , dropDown)
-  //   setDropDown(dropDown)
-  //   document.addEventListener('click', handleClickOutsideDropdown, true);
-  // }, []);
-
-  // function handleClickOutsideDropdown(this: HTMLElement) {
-  //   // console.log('thiiiiiis', this)
-  //   // console.log('Reeeeef', dropDownRef.current);
-  //   // console.log('DropDooooown',dropDown)
-  //   if (dropDownRef.current?.contains(this)) return;
-  //   if (!dropDownRef.current!.contains(this)) setShowDropDown(false);
-  // }
 
   return (
     <div>
       <div
-      ref={ref}
+      ref={dropDownref}
         className='mt-24 w-full rounded-[5px] shadow-md'
-        // id='dropdown'
-        // onMouseLeave={() => setShowDropDown(false)}
       >
         <ul className=' w-64 absolute bg-palette-dark -right-[50%] rounded-[10px] mr-[5px] mt-[5px] pt-0'>
           {serviceDropdown.map((menuItem, i) => {
