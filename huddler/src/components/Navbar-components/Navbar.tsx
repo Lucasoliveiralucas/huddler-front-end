@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect, } from 'react';
 import Image from 'next/future/image';
 import DefaultUserImage from '../../../public/defaultUserImage.png';
 import Dropdown from './Dropdown';
@@ -10,6 +10,29 @@ function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
   const {currentUser} = useAuth()
   // console.log('imageeeee', currentUser[0].image)
+  // const [show, setShow] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlNavbar = useCallback(() => {
+    const navbar = document.querySelector(".navbar");
+      if (window.scrollY > lastScrollY) {
+        navbar?.classList.add('navbar--hidden');
+        // setShow(false);
+      } else {
+        navbar?.classList.remove('navbar--hidden');
+        // setShow(true);  
+      }
+      setLastScrollY(window.scrollY);
+    }
+  , [lastScrollY]);
+  
+  useEffect(() => {
+      window.addEventListener('scroll', controlNavbar);
+      return () => {
+        window.removeEventListener('scroll', controlNavbar);
+      };
+  }, [controlNavbar]);
+
   const handleClickOnImg = () => {
     console.log('click' ,showDropDown)
     setShowDropDown(!showDropDown);
