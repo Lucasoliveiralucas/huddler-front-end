@@ -8,18 +8,13 @@ type Props = {
 };
 
 function UserInfo({ numOfCreatedHuddles, huddlesUserIsGoing }: Props) {
-  const user: User = {
-    name: "Florio",
-    image: avatar,
-    email: "",
-    createdOn: 0,
-  };
 
   return (
     <>
-      <h1 className="text-3xl ml-4 font-bold">My Huddles</h1>
+      <h1 className="hidden lg:block text-3xl ml-4 font-bold">My Huddles</h1>
       <br />
       <div className="flex gap-5 justify-center w-full">
+        <h1 className="lg:hidden text-3xl ml-4 font-bold">My Huddles</h1>
         <div className="flex flex-col justify-center w-[150px] text-2xl border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg ">
           <h1 className="self-center">Created</h1>
           <p className="font-bold self-center">{numOfCreatedHuddles}</p>

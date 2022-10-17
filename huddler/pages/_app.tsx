@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import '../styles/aws-cognito-ui.css';
 import type { AppProps } from 'next/app';
 import Layout from '../src/components/Layout';
 import { ReactElement, ReactNode } from 'react';
