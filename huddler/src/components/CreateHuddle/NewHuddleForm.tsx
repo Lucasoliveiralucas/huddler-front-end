@@ -17,13 +17,12 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 
 type Props = {
+  id: string;
   data: {
     name: string;
     lat: string;
     lng: string;
-    id: string;
   };
-  update: boolean;
   setCenter: React.Dispatch<
     React.SetStateAction<{
       lat: number;
@@ -51,7 +50,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const [error, setError] = useState("");
   const [locationData, setLocationData] = useState({
     name: "",
-    lat: "41.39",
+    lat: "1.39",
     lng: "2.154",
   });
   const [finalLocation, setFinalLocation] = useState(locationData);
@@ -63,7 +62,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(id)
+    console.log(id);
     try {
       const data = await getUploadUrl();
       const uploadUrl = data.uploadURL;
@@ -137,10 +136,11 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   };
 
   useEffect(() => {
-    setCenter({
-      lat: Number(locationData.lat),
-      lng: Number(locationData.lng),
-    });
+    if (locationData.lat !== "1.39")
+      setCenter({
+        lat: Number(locationData.lat),
+        lng: Number(locationData.lng),
+      });
     setFinalLocation(locationData);
   }, [locationData]);
 

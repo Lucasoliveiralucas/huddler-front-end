@@ -15,6 +15,7 @@ type Props = {
   huddlesUserIsGoing: Huddle[];
   setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
   update: boolean;
+  id: string;
 };
 
 function HuddleCarouselItem({
@@ -22,6 +23,7 @@ function HuddleCarouselItem({
   huddlesUserIsGoing,
   setUpdate,
   update,
+  id,
 }: Props) {
   let dateTime:any = '';
   const [going, setGoing] = useState(false);
@@ -50,20 +52,21 @@ function HuddleCarouselItem({
     getter();
   }, []);
   return (
-    <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
+    
       <div className="ml-3 mr-3 mt-3">
         <div className="flex mb-1">
           <h1 className="font-extrabold text-palette-orange text-2xl">
             {huddle.name}
           </h1>
-          <div className="ml-auto mr-3">
+        <div className="ml-auto mr-3 flex gap-4 py-2">
+          <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}><a className=" underline">Event Details</a></Link>
             {going ? (
               <button
                 className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
                 onClick={(e) => {
                   setGoing(!going);
                   setUpdate(!update);
-                  removeUserGoingToHuddle(currentUser, huddle.id);
+                  removeUserGoingToHuddle(id, huddle.id);
                 }}
               >
                 Leave
@@ -74,7 +77,7 @@ function HuddleCarouselItem({
                 onClick={(e) => {
                   setGoing(!going);
                   setUpdate(!update);
-                  postUserGoingToHuddle(currentUser, huddle.id);
+                  postUserGoingToHuddle(id, huddle.id);
                 }}
               >
                 Join
@@ -85,14 +88,16 @@ function HuddleCarouselItem({
 
         <div className="flex">
           <div className="w-[24rem] mr-3">
-            <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
+            <div className="rounded-lg h-32 lg:h-40 relative">
               <Image
-                src={huddle.image}
-                fill
-                placeholder="empty"
-                sizes="150px"
-                className="rounded-lg"
-                alt={huddle.name}
+              fill
+              src={huddle.image}
+              alt={huddle.name}
+              sizes="(max-width: 768px) 100px,
+                       (max-width: 1200px) 250px,
+                       300px"
+              placeholder="empty"
+              className="rounded-lg object-contain"
               />
             </div>
             <p>attending: {data.attending}</p>
@@ -136,7 +141,6 @@ function HuddleCarouselItem({
           </div>
         </div>
       </div>
-    </Link>
   );
 }
 

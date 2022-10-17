@@ -6,6 +6,8 @@ import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
 import { useAuth } from "../../contexts/AuthContext";
 import { getUserById } from "../../utils/APIServices/userServices";
+import { withSSRContext } from "aws-amplify";
+import { GetServerSideProps } from "next";
 const image = require("../../../public/location-pin-svgrepo-com.svg");
 const libraries: (
   | "places"
@@ -19,18 +21,18 @@ type Props = {
   huddles?: Huddle[];
   currentPage: string;
   setLocation: React.Dispatch<React.SetStateAction<any>>;
-  update: boolean;
-  id: string;
+  updateList: Function;
+  user: User;
 };
 export default function Map({
   huddles,
   currentPage,
+  updateList,
   setLocation,
-  update,
-  id,
+  user,
 }: Props) {
-  const { currentUser } = useAuth();
-  const [user, setUser] = useState<User>();
+  // const { currentUser } = useAuth();
+  // const [user, setUser] = useState<User>();
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
   const [locationName, setLocationName] = useState("");
   const [selected, setSelected] = useState(false);
@@ -82,12 +84,15 @@ export default function Map({
   }, [center]);
   useEffect(() => {
     const getter = async () => {
-      const userData = await getUserById(currentUser);
-      setUser(userData[0]);
+      // const userData = await getUserById(currentUser);
+      // console.log(userData);
+      // setUser(userData[0]);
+      console.log("over herer", user);
+
       user
         ? setCenter({
-            lat: Number(userData[0].default_latitude),
-            lng: Number(userData[0].default_longitude),
+            lat: Number(user.default_latitude),
+            lng: Number(user.default_longitude),
           })
         : setCenter({ lat: 41.39, lng: 2.15 });
     };
@@ -103,10 +108,10 @@ export default function Map({
       });
     }
   }, []);
-  return isLoaded ? (
+  return isLoaded && user ? (
     <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
-        <div className="flex">
+        {/* <div className="flex">
           {containerSize.width == "40vw" ? (
             <button
               className="p-2 bg-white  shadow-md rounded-sm"
@@ -137,7 +142,7 @@ export default function Map({
               Create
             </button>
           )}
-        </div>
+        </div> */}
         <div className="z-10 mt-3 w-60">
           <PlacesAutocomplete
             hook={setCenter}
@@ -157,8 +162,7 @@ export default function Map({
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
-            update={update}
-            id={id}
+            id={user.aws_id}
           />
         </div>
       </div>
@@ -204,14 +208,34 @@ export default function Map({
             <></>
           )}
           <MapInfoWindow
-            user={user}
+            id={user.aws_id}
             showHuddle={showHuddle}
             setShowHuddle={setShowHuddle}
+            updateList={updateList}
           />
         </GoogleMap>
       </div>
     </div>
   ) : (
-    <></>
+    <p>Loading...</p>
   );
 }
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const { Auth } = withSSRContext({ req });
+
+  try {
+    const { username } = await Auth.currentUserInfo();
+    const user: User[] = await getUserById(username);
+    return {
+      props: {
+        user: user.pop(),
+      },
+    };
+  } catch (err) {
+    res.writeHead(302, { Location: "/" });
+    res.end();
+    return {
+      props: {},
+    };
+  }
+};

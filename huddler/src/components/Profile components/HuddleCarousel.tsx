@@ -7,6 +7,7 @@ type Props = {
   huddlesUserIsGoing: Huddle[];
   setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
   update: boolean;
+  id: string;
 };
 
 function HuddleCarousel({
@@ -14,6 +15,7 @@ function HuddleCarousel({
   huddlesUserIsGoing,
   setUpdate,
   update,
+  id,
 }: Props) {
 
   return Array.isArray(huddles) ? (
@@ -31,6 +33,7 @@ function HuddleCarousel({
             update={update}
             huddle={huddle}
             huddlesUserIsGoing={huddlesUserIsGoing}
+            id={id}
           />
         </div>
       ))}

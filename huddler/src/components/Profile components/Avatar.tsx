@@ -21,7 +21,9 @@ function Avatar({ user }: Props) {
           src={image}
           placeholder='empty'
           alt='avatar'
-          sizes='auto'
+          sizes="(max-width: 768px) 0px,
+                       (max-width: 1200px) 300px,
+                       400px"
           priority={true}
           fill
         />
