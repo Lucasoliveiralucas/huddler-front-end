@@ -10,11 +10,30 @@ const SocketHandler = (req, res) => {
 
     io.on("connection", (socket) => {
       // socket.join(`room ${id}`);
-      socket.on("input-change", (msg, room) => {
-        console.log(room);
-        room
-          ? socket.to(room).emit("update-input", msg)
-          : socket.broadcast.emit("update-input", msg);
+      socket.on("input-change", (msg, room, username) => {
+        try {
+          fetch(
+            "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/messages",
+            {
+              method: "POST",
+              mode: "no-cors",
+              body: JSON.stringify({
+                huddle_id: Number(room),
+                message: msg,
+                username: username.username,
+              }),
+              headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+            }
+          );
+          room
+            ? socket.to(room).emit("update-input", msg)
+            : socket.broadcast.emit("update-input", msg);
+        } catch (error) {
+          console.log("error posting message", error);
+        }
       });
       socket.on("join-room", async (room) => {
         console.log("joined", room);

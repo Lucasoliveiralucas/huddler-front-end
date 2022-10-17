@@ -6,10 +6,12 @@ import { dateFormatter } from "../../src/utils/helperFunctions";
 import { getUsersGoingToHuddle } from "../../src/utils/APIServices/huddleServices";
 import { getUserById } from "../../src/utils/APIServices/userServices";
 import io from "socket.io-client";
+import { getMsgsFromHuddle } from "../../src/utils/APIServices/chatService";
 let socket;
 
 const Details = () => {
-  const [chatMessages, setChatMessages] = useState<string[]>([]);
+  const [chatMsg, setChatMsg] = useState<string[]>([]);
+  const [updateMsg, setUpdateMsg] = useState<string>();
   const [users, setUsers] = useState<any>();
   const [creator, setCreator] = useState<User>();
   const huddle: Huddle = useRouter().query;
@@ -20,6 +22,8 @@ const Details = () => {
     setUsers(usersGoingTo);
     const createdBy = await getUserById(huddle.fk_author_id);
     setCreator(createdBy[0]);
+    const allMsgs = await getMsgsFromHuddle(huddle.id);
+    setChatMsg(allMsgs);
   };
   const socketInitializer = async () => {
     await fetch(`/api/chat/chat`);
@@ -31,11 +35,8 @@ const Details = () => {
     //join user the huddle room
     socket.emit("join-room", huddle.id);
     //gets the messaage
-    let message;
     socket.on("update-input", (msg) => {
-      console.log(msg);
-      message = msg;
-      setChatMessages([...chatMessages, message]);
+      setUpdateMsg(msg);
     });
   };
 
@@ -43,11 +44,14 @@ const Details = () => {
     socketInitializer();
     getter();
   }, []);
+  useEffect(() => {
+    if (chatMsg && updateMsg) setChatMsg([...chatMsg, updateMsg]);
+  }, [updateMsg]);
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setChatMessages([...chatMessages, e.target[0].value]);
+    setChatMsg([...chatMsg, e.target[0].value]);
     //emits message e.target.value to room huddle.id
-    socket.emit("input-change", e.target[0].value, huddle.id);
+    socket.emit("input-change", e.target[0].value, huddle.id, creator);
   };
   return (
     <div className="flex">
@@ -73,7 +77,7 @@ const Details = () => {
         <p>{huddle.address}</p>
         <p className="mt-4">Created By: {creator?.username}</p>
         <p className="my-2">Who's going:</p>
-        {/* {users ? (
+        {users ? (
           users.map((user: any, i: number) => {
             return (
               <p key={i} className="cursor-pointer mb-1">
@@ -83,14 +87,14 @@ const Details = () => {
           })
         ) : (
           <></>
-        )} */}
+        )}
       </div>
       <div id="huddle-chat" className="grid grid-cols-1 w-full mb-24">
         <div className="border border-palette-orange mx-14 my-24 p-4 rounded-2xl bg-white bg-opacity-20 relative">
           <div>
-            {chatMessages ? (
-              chatMessages.map((msg, i) => {
-                return <li key={i}>{msg}</li>;
+            {chatMsg ? (
+              chatMsg.map((msg, i) => {
+                return <p key={i}>{msg.message}</p>;
               })
             ) : (
               <></>
