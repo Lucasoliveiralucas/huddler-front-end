@@ -22,7 +22,7 @@ function HuddleCarouselItem({
   setUpdate,
   update,
 }: Props) {
-  const dateTime = dateFormatter(huddle.day_time || '');
+  let dateTime:string = '';
   const [going, setGoing] = useState(false);
   //getting addicional huddle data
   const [data, setData] = useState({
@@ -30,6 +30,11 @@ function HuddleCarouselItem({
     categories: [{ name: "", id: 0 }],
   });
   useEffect(() => {
+    try {
+      dateTime = dateFormatter(huddle.day_time);
+    } catch (err) {
+
+    }
     if (huddlesUserIsGoing) {
       huddlesUserIsGoing.find((h) => h.id === huddle.id)
         ? setGoing(true)
@@ -113,7 +118,7 @@ function HuddleCarouselItem({
           <p className="text-sm self-end">
             At {huddle.address}
             <br></br>
-            {dateTime.monthDayYear} at {dateTime.time}
+            {/* {dateTime.monthDayYear} at {dateTime.time} */}
           </p>
         </div>
         </div>
