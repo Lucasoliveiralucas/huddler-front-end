@@ -18,9 +18,9 @@ const SettingsPage = () => {
   const router = useRouter();
 
   //@ts-ignore
-  const { currentUser, isAuthenticated, isLoading } = useAuth();
+  const { currentUser, isAuthenticated, isLoading, logOut } = useAuth();
   // if (!aws_id) router.replace('/');
-
+  // logOut()
   const [userData, setUserData] = useState<any>(currentUser);
   const [option, setOption] = useState('information');
 
