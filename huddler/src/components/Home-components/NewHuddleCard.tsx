@@ -9,19 +9,16 @@ import {
   removeUserGoingToHuddle,
 } from "../../utils/APIServices/huddleServices";
 import { useAuth } from "../../contexts/AuthContext";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
-  update: boolean;
 };
 
 function NewHuddleCard({
   huddle,
   huddlesUserIsGoing,
-  setUpdate,
-  update,
 }: Props) {
   const { currentUser } = useAuth();
   const dateTime = dateFormatter(huddle.day_time);
@@ -30,7 +27,7 @@ function NewHuddleCard({
   //getting addicional huddle data
   const [data, setData] = useState({
     attending: 0,
-    categories: [{ name: "" }],
+    categories: [{ name: "", id: 0 }],
   });
 
   useEffect(() => {
@@ -60,7 +57,6 @@ function NewHuddleCard({
               className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
-                setUpdate(!update);
                 removeUserGoingToHuddle(currentUser, huddle.id);
               }}
             >
@@ -71,7 +67,6 @@ function NewHuddleCard({
               className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
-                setUpdate(!update);
                 postUserGoingToHuddle(currentUser, huddle.id);
               }}
             >
@@ -85,10 +80,12 @@ function NewHuddleCard({
           <div className="h-3/4 md:w-[24rem] mr-3">
             <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
               <Image
-                src={huddle.image}
                 fill
-                className="rounded-lg"
+                src={huddle.image}              
                 alt={huddle.name}
+                sizes="100vw"
+                placeholder="empty"
+                className="rounded-lg object-contain"
               />
             </div>
 
@@ -111,15 +108,15 @@ function NewHuddleCard({
             {/* Mobile */}
             <div className="grid md:hidden grid-cols-2 gap-2 py-1">
               {data.categories.map((category, i) => {
-                return i > 1 ? (
-                  <></>
-                ) : (
-                  <p
-                    className="text-center py-1 bg-palette-dark rounded-md text-white"
-                    key={category.id}
-                  >
-                    {category.name}
-                  </p>
+                return (
+                  i <= 1 && (
+                    <p
+                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+                      key={category.id + (i - i)}
+                    >
+                      {category.name}
+                    </p>
+                  )
                 );
               })}
             </div>

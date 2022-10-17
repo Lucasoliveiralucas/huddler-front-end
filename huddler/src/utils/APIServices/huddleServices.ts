@@ -129,7 +129,7 @@ export const removeUserGoingToHuddle = async (aws_id: string, huddleId?: number)
         },
       }
     );
-
+    console.log(`User ${aws_id} was checked out from huddle ${huddleId}`);
     return;
   } catch (e) {
     console.log('Error checkin out user', e);

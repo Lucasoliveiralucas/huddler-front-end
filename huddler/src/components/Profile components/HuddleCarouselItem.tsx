@@ -89,6 +89,8 @@ function HuddleCarouselItem({
               <Image
                 src={huddle.image}
                 fill
+                placeholder="empty"
+                sizes="150px"
                 className="rounded-lg"
                 alt={huddle.name}
               />
