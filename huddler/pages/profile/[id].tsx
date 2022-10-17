@@ -76,7 +76,6 @@ function Profile({
     }
   };
 
-
   if (tagsError) return <div>failed to load</div>;
   if (!tags)
     return <div>loading...</div>;
@@ -140,6 +139,7 @@ function Profile({
           update={update}
           huddles={userCreatedHuddles}
           huddlesUserIsGoing={huddlesUserIsGoing}
+          id={aws_id}
         />
 
         <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
@@ -150,6 +150,7 @@ function Profile({
           update={update}
           huddles={huddlesUserIsGoing}
           huddlesUserIsGoing={huddlesUserIsGoing}
+          id={aws_id}
         />
 
         <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
@@ -160,6 +161,7 @@ function Profile({
           update={update}
           huddles={lastRow.huddles}
           huddlesUserIsGoing={huddlesUserIsGoing}
+          id={aws_id}
         />
       </div>
     </main>
