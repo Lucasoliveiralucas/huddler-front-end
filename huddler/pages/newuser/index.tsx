@@ -21,7 +21,6 @@ function Index() {
       <div className='border-solid border-[1px] border-palette-orange min-w-fit w-[50%] mt-10 px-3 rounded-[5px] shadow-md'>
         <MainForm currentUser={currentUser} />
       </div>
-      <button onClick={logOut}>logout </button>
     </div>
   ) : null;
 }

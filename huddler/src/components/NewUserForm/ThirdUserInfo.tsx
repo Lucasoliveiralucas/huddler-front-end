@@ -15,17 +15,16 @@ function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
   const [imageSelected, setImageSelected] = useState<StaticImageData | string>(
     DefaultUserImage
   );
-  
+
   const imageRef = useRef<HTMLInputElement | null>(null);
 
   const changeUserImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!e.target.files) return;
     const image = URL.createObjectURL(e.target.files[0]);
     setImageSelected(image);
     const img = e.target.files[0];
     setUserImg(img);
-    
   };
   return (
     <>
@@ -84,9 +83,6 @@ function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
               height={150}
               onClick={() => imageRef.current!.click()}
             />
-            <div>
-              userdata : {JSON.stringify(userData.image)}
-            </div>
           </div>
         </div>
       </div>

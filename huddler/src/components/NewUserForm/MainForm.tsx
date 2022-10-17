@@ -8,38 +8,20 @@ import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
 import { postUserInfo, postUserCategory, getUserById } from '../../utils/APIServices/userServices';
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
-import { Auth} from 'aws-amplify'
 
-type Props = {
-  currentUser: any;
-}
+import { useAuth } from '../../contexts/AuthContext';
 
-function MainForm({currentUser}: Props) {
+
+
+function MainForm() {
   const [page, setPage] = useState(1);
   const [userImg, setUserImg] = useState({});
 
+  const { currentUser } = useAuth()
   const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
   const [categoriesPicked, setCategoriesPicked] = useState<Category[]>([]);
-  const [userData, setUserData] = useState<User>({
-    username: '',
-    first_name: '',
-    last_name: '',
-    image: '',
-    default_longitude: 0,
-    default_latitude: 0,
-    description: '',
-  });
-
-  // useEffect(()=>{
-  //   handlePromise()
-  // },[])
-
-  const handlePromise = async () => {
-    // const user = await getUserById(currentUser)
-    setUserData(...currentUser)
-    // console.log('useeeer', userData)
-  }
-
+  const [userData, setUserData] = useState<any>(...currentUser);
+  console.log('this is userData', userData)
 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
