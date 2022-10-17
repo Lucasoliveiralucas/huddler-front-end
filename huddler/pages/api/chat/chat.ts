@@ -11,6 +11,12 @@ const SocketHandler = (req, res) => {
     io.on("connection", (socket) => {
       // socket.join(`room ${id}`);
       socket.on("input-change", (msg, room, username) => {
+        console.log({
+          huddle_id: Number(room),
+          message: msg,
+          username: username,
+        });
+
         try {
           fetch(
             "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/messages",
@@ -20,7 +26,7 @@ const SocketHandler = (req, res) => {
               body: JSON.stringify({
                 huddle_id: Number(room),
                 message: msg,
-                username: username.username,
+                username: username,
               }),
               headers: {
                 "Content-type": "application/json",
@@ -29,7 +35,11 @@ const SocketHandler = (req, res) => {
             }
           );
           room
-            ? socket.to(room).emit("update-input", msg)
+            ? socket.to(room).emit("update-input", {
+                huddle_id: Number(room),
+                message: msg,
+                username: username.username,
+              })
             : socket.broadcast.emit("update-input", msg);
         } catch (error) {
           console.log("error posting message", error);

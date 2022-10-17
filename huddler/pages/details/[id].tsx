@@ -7,10 +7,17 @@ import { getUsersGoingToHuddle } from "../../src/utils/APIServices/huddleService
 import { getUserById } from "../../src/utils/APIServices/userServices";
 import io from "socket.io-client";
 import { getMsgsFromHuddle } from "../../src/utils/APIServices/chatService";
+import { withSSRContext } from "aws-amplify";
+import { GetServerSideProps } from "next";
 let socket;
 
-const Details = () => {
-  const [chatMsg, setChatMsg] = useState<string[]>([]);
+type Props = {
+  aws_id: string;
+  user: User;
+};
+
+const Details = ({ aws_id, user }: Props) => {
+  const [chatMsg, setChatMsg] = useState<any[]>();
   const [updateMsg, setUpdateMsg] = useState<string>();
   const [users, setUsers] = useState<any>();
   const [creator, setCreator] = useState<User>();
@@ -45,13 +52,28 @@ const Details = () => {
     getter();
   }, []);
   useEffect(() => {
-    if (chatMsg && updateMsg) setChatMsg([...chatMsg, updateMsg]);
+    if (chatMsg && updateMsg)
+      setChatMsg([
+        ...chatMsg,
+        {
+          fk_huddle_id: updateMsg.huddle_id,
+          message: updateMsg.message,
+          username: updateMsg.username,
+        },
+      ]);
   }, [updateMsg]);
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setChatMsg([...chatMsg, e.target[0].value]);
+    setChatMsg([
+      ...chatMsg,
+      {
+        fk_huddle_id: huddle.id,
+        message: e.target[0].value,
+        username: user.username,
+      },
+    ]);
     //emits message e.target.value to room huddle.id
-    socket.emit("input-change", e.target[0].value, huddle.id, creator);
+    socket.emit("input-change", e.target[0].value, huddle.id, user.username);
   };
   return (
     <div className="flex">
@@ -94,7 +116,15 @@ const Details = () => {
           <div>
             {chatMsg ? (
               chatMsg.map((msg, i) => {
-                return <p key={i}>{msg.message}</p>;
+                return msg.username === user.username ? (
+                  <p key={i} className="justify-end text-blue-800">
+                    {msg.message}
+                  </p>
+                ) : (
+                  <p key={i} className="">
+                    {msg.message}
+                  </p>
+                );
               })
             ) : (
               <></>
@@ -113,3 +143,24 @@ const Details = () => {
 };
 
 export default Details;
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const { Auth } = withSSRContext({ req });
+
+  try {
+    const { username } = await Auth.currentUserInfo();
+    const user: User[] = await getUserById(username);
+    return {
+      props: {
+        aws_id: username,
+        user: user.pop(),
+      },
+    };
+  } catch (err) {
+    res.writeHead(302, { Location: "/" });
+    res.end();
+    return {
+      props: {},
+    };
+  }
+};
