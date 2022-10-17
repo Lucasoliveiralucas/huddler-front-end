@@ -14,13 +14,15 @@ import { AiOutlineConsoleSql } from "react-icons/ai";
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  id:string ;
+  updateList: any,
+  id: string;
 };
 
 function NewHuddleCard({
   huddle,
   huddlesUserIsGoing,
-  id
+  updateList,
+  id,
 }: Props) {
   const dateTime = dateFormatter(huddle.day_time);
   // dateFormatter(huddle.day_time);
@@ -32,11 +34,13 @@ function NewHuddleCard({
   });
 
   useEffect(() => {
+    console.log(huddlesUserIsGoing)
     if (huddlesUserIsGoing) {
       huddlesUserIsGoing.find((h) => h.id === huddle.id)
         ? setGoing(true)
         : setGoing(false);
     }
+
     const getter = async () => {
       const attending = await getUsersGoingToHuddle(huddle.id);
       const categories = await getHuddleCategories(huddle.id);
@@ -59,6 +63,7 @@ function NewHuddleCard({
               onClick={(e) => {
                 setGoing(!going);
                 removeUserGoingToHuddle(id, huddle.id);
+                updateList();
               }}
             >
               Leave
@@ -69,6 +74,7 @@ function NewHuddleCard({
               onClick={(e) => {
                 setGoing(!going);
                 postUserGoingToHuddle(id, huddle.id);
+                updateList();
               }}
             >
               Join
@@ -82,9 +88,11 @@ function NewHuddleCard({
             <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
               <Image
                 fill
-                src={huddle.image}              
+                src={huddle.image}
                 alt={huddle.name}
-                sizes="100vw"
+                sizes="(max-width: 768px) 100px,
+                       (max-width: 1200px) 230px,
+                       300px"
                 placeholder="empty"
                 className="rounded-lg object-contain"
               />
