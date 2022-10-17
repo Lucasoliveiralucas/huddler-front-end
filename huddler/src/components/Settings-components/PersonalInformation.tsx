@@ -3,54 +3,52 @@ import { useState, useRef } from 'react';
 import UserImage from './UpdateUserImage';
 import { postUserInfo } from '../../utils/APIServices/userServices';
 import DefaultUserImage from '../../../public/defaultUserImage.png'
+import { Router, useRouter } from 'next/router';
 type Props = {
-  currentUser: User;
+  userData: User;
 };
 
-const PersonalInfo = ({ currentUser }: Props) => {
+const PersonalInfo = ({ userData }: Props) => {
   const [error, setError] = useState('');
   const [disabledButton, setDisabledButton] = useState(true);
-
+  const router = useRouter()
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
-  const dateOfBirthRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  let userPersonalInfo = userData;
+  console.log('userPersonalInforrrrrrrr', userPersonalInfo)
+  const handleSubmit = (e:any) => {
     e.preventDefault();
+    console.log('hit hereee')
     try {
       setError('');
-      if (nameRef.current && nameRef.current!.value !== currentUser.username) {
-        currentUser.username = nameRef.current.value;
+      if (nameRef.current && nameRef.current!.value !== userData.username) {
+        userPersonalInfo.username = nameRef.current.value;
       }
 
-      if (emailRef.current && emailRef.current!.value !== currentUser.email) {
-        currentUser.email = emailRef.current.value;
+      if (emailRef.current && emailRef.current!.value !== userPersonalInfo.email) {
+        userPersonalInfo.email = emailRef.current.value;
       }
 
       if (
         firstNameRef.current &&
-        firstNameRef.current!.value !== currentUser.first_name
+        firstNameRef.current!.value !== userPersonalInfo.first_name
       ) {
-        currentUser.first_name = firstNameRef.current.value;
+        userPersonalInfo.first_name = firstNameRef.current.value;
       }
 
       if (
         lastNameRef.current &&
-        lastNameRef.current!.value !== currentUser.last_name
+        lastNameRef.current!.value !== userPersonalInfo.last_name
       ) {
-        currentUser.last_name = lastNameRef.current.value;
+        userPersonalInfo.last_name = lastNameRef.current.value;
       }
 
-      if (
-        dateOfBirthRef.current &&
-        dateOfBirthRef.current!.value !== currentUser.date_of_birth
-      ) {
-        currentUser.date_of_birth = dateOfBirthRef.current.value;
-      }
-      // postUserInfo(currentUser, currentUser.id as number)
+      postUserInfo(userPersonalInfo, userData.aws_id as string)
+      router.push('/profile')
     } catch {
       setError("We weren't able to update your profile. Please try again");
     }
@@ -63,14 +61,15 @@ const PersonalInfo = ({ currentUser }: Props) => {
           <UserImage
             setDisabledButton={setDisabledButton}
             setError={setError}
+            userPersonalInfo={userPersonalInfo}
           />
           <label htmlFor='description'>Description</label>
           <textarea
             ref={descriptionRef}
             id='description'
             className='block'
-            placeholder={currentUser.description}
-            onChange={() => setDisabledButton(true)}
+            placeholder={userPersonalInfo.description}
+            onChange={() => setDisabledButton(false)}
           />
         </div>
         <form onSubmit={handleSubmit}>
@@ -79,7 +78,7 @@ const PersonalInfo = ({ currentUser }: Props) => {
             ref={nameRef}
             className='block'
             type='text'
-            placeholder={currentUser.username}
+            placeholder={userPersonalInfo.username}
             onChange={() => setDisabledButton(false)}
           />
           <label htmlFor='email'>Email</label>
@@ -88,7 +87,7 @@ const PersonalInfo = ({ currentUser }: Props) => {
             id='email'
             className='block'
             type='email'
-            placeholder={currentUser.email || ''}
+            placeholder={userPersonalInfo.email || ''}
             onChange={() => setDisabledButton(false)}
           />
           <label htmlFor='first-name'>First name</label>
@@ -97,7 +96,7 @@ const PersonalInfo = ({ currentUser }: Props) => {
             id='first-name'
             className='block'
             type='text'
-            placeholder={currentUser.first_name || ''}
+            placeholder={userPersonalInfo.first_name || ''}
             onChange={() => setDisabledButton(false)}
           />
           <label htmlFor='last-name'>Last name</label>
@@ -106,18 +105,8 @@ const PersonalInfo = ({ currentUser }: Props) => {
             id='last-name'
             className='block'
             type='text'
-            placeholder={currentUser.last_name || ''}
+            placeholder={userPersonalInfo.last_name || ''}
             onChange={() => setDisabledButton(false)}
-          />
-          <label htmlFor='date-of-birth'>Date of birth</label>
-          <input
-            ref={dateOfBirthRef}
-            id='date-of-birth'
-            className='block'
-            type='text'
-            placeholder={currentUser.date_of_birth || 'MM/DD/YYYY'}
-            onFocus={(e) => (e.target.type = 'date')}
-            onChange={() => setDisabledButton(true)}
           />
           <br />
           <div className='flex justify-center'>
@@ -136,5 +125,6 @@ const PersonalInfo = ({ currentUser }: Props) => {
 };
 
 export default PersonalInfo;
+
 
 

@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 function Index() {
   //@ts-ignore
-  const { currentUser, logOut, isAuthenticated, isLoading } = useAuth();
+  const { currentUser, isAuthenticated, isLoading } = useAuth();
   console.log('this is current user', currentUser);
   const router = useRouter();
   useEffect(() => {
