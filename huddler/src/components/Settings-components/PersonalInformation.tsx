@@ -1,7 +1,7 @@
 import { User } from '../../types';
 import { useState, useRef } from 'react';
 import UserImage from './UpdateUserImage';
-import { postUserInfo } from '../../utils/APIServices/userServices';
+import { postUpdatedUserInfo } from '../../utils/APIServices/userServices';
 import { useRouter } from 'next/router';
 
 type Props = {
@@ -50,7 +50,7 @@ const PersonalInfo = ({ userData }: Props) => {
         userPersonalInfo.last_name = lastNameRef.current.value;
       }
 
-      postUserInfo(userPersonalInfo, userData.aws_id as string);
+      postUpdatedUserInfo(userPersonalInfo, userData.aws_id as string);
       router.push('/profile');
     } catch {
       setError("We weren't able to update your profile. Please try again");

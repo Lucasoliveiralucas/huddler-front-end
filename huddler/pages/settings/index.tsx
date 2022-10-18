@@ -28,7 +28,7 @@ const SettingsPage = () => {
   useEffect(() => {
     if (currentUser) {
       setUserData(currentUser);
-      console.log('this is current user', currentUser);
+      // console.log('this is current user', currentUser);
     }
   }, [currentUser]);
 
@@ -42,9 +42,10 @@ const SettingsPage = () => {
       {option === 'password' && <ChangePassword />}
       {option === 'location' && (
         <UpdateLocation
-          currentUserLongitude={userData.default_longitude!}
-          currentUserLatitude={userData.default_latitude!}
+          // currentUserLongitude={userData.default_longitude!}
+          // currentUserLatitude={userData.default_latitude!}
           userData={userData}
+          setUserData={setUserData}
         />
       )}
       {option === 'interests' && <UpdateInterests userData={userData} />}
