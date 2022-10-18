@@ -39,19 +39,21 @@ const Details = ({ aws_id, user }: Props) => {
   const getter = async (stop: boolean) => {
     const usersGoingTo = await getUsersGoingToHuddle(huddle.id);
     setUsers(usersGoingTo);
-    if (stop) return;
+    if (stop) {
+      usersGoingTo.find((users: User) => {
+        console.log(users);
+        return (users.aws_id = aws_id);
+      })
+        ? setGoing("Join")
+        : setGoing("Leave");
+      return;
+    }
     const createdBy = await getUserById(huddle.fk_author_id);
     setCreator(createdBy[0]);
     const allMsgs = await getMsgsFromHuddle(huddle.id);
     setChatMsg(allMsgs);
     const categories = await getHuddleCategories(huddle.id);
     setCategories(categories);
-    usersGoingTo.find((users: User) => {
-      console.log(users);
-      return (users.aws_id = aws_id);
-    })
-      ? setGoing("Join")
-      : setGoing("Leave");
   };
   const socketInitializer = async () => {
     await fetch(`/api/chat/chat`);
