@@ -63,7 +63,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(id)
+    console.log(e);
     try {
       const data = await getUploadUrl();
       const uploadUrl = data.uploadURL;
@@ -82,19 +82,16 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         latitude: +finalLocation.lat,
         address: finalLocation.name,
         description: descriptionRef.current!.value,
-        // for images we'll probably have to split what comes from the input field
-        // CHANGE THIS DEFAULT VALUE TO ACTUAL INPUT
         image:
           "https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/" +
           filename,
         date_of_creation: date,
         link: "",
-        fk_author_id: id, //here we'll require the uid from the authentication
+        fk_author_id: currentUser[0].aws_id, //here we'll require the uid from the authentication
       };
-      // postHuddle2(newHuddle);
       // Post huddle in DB
       console.log("new huddle", newHuddle);
-      console.log("user", currentUser);
+      console.log("user", currentUser[0].aws_id);
       const huddleDateOfCreation = await postHuddle(newHuddle);
 
       // getting id of huddle
@@ -113,10 +110,22 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       }, 500);
       // redirect to user home page
       router.replace("/home");
+
+      // Clean form
+      // titleRef.current!.value = '';
+      // whenRef.current!.value = '';
+      // //@ts-ignore
+      // e.target[1].value = '';
+      // //@ts-ignore
+      // e.target[2].__reactProps$vl00rzm2uui.defaultValue = '';
+      // //@ts-ignore
+      // e.target[2].value = '';
+      // descriptionRef.current!.value = '';
     } catch {
       setError("We could not create the huddle");
     }
   };
+
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     setImageSelected(true);
@@ -154,7 +163,23 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   }, [center]);
 
   return (
-    <main className="w-[100%]">
+    // <main className="w-[100%]"
+    <main
+      id="huddle-form"
+      className="
+      top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+      absolute
+      flex-col
+      items-center
+      p-8
+      bg-[rgb(248,241,229)]
+      w-[50vw]
+      shadow-md
+      rounded-md
+      border-solid
+      border-[0.5px]
+      border-palette-dark"
+      >
       <h1 className="text-center text-lg font-medium text-palette-orange mt-0">
         {"Let's make a new huddle"}
       </h1>

@@ -25,38 +25,38 @@ function Navbar() {
         form?.classList.remove("animate-fade-in");
         form?.classList.add("animate-fade-out");
         setTimeout(() => {
-            form?.classList.remove("flex");
+            form?.classList.remove("absolute");
             form?.classList.add("hidden");
         }, 500);
         setCreateBox(false);
         return;
     }
     form?.classList.remove("hidden");
-    form?.classList.add("flex");
+    form?.classList.add("absolute");
     form?.classList.remove("animate-fade-out");
     form?.classList.add("animate-fade-in");
     setCreateBox(true);
 };
 
-  const controlNavbar = useCallback(() => {
-    const navbar = document.querySelector(".navbar");
-      if (window.scrollY > lastScrollY) {
-        navbar?.classList.add('navbar--hidden');
-        // setShow(false);
-      } else {
-        navbar?.classList.remove('navbar--hidden');
-        // setShow(true);  
-      }
-      setLastScrollY(window.scrollY);
-    }
-  , [lastScrollY]);
+  // const controlNavbar = useCallback(() => {
+  //   const navbar = document.querySelector(".navbar");
+  //     if (window.scrollY > lastScrollY) {
+  //       navbar?.classList.add('navbar--hidden');
+  //       // setShow(false);
+  //     } else {
+  //       navbar?.classList.remove('navbar--hidden');
+  //       // setShow(true);  
+  //     }
+  //     setLastScrollY(window.scrollY);
+  //   }
+  // , [lastScrollY]);
   
-  useEffect(() => {
-      window.addEventListener('scroll', controlNavbar);
-      return () => {
-        window.removeEventListener('scroll', controlNavbar);
-      };
-  }, [controlNavbar]);
+  // useEffect(() => {
+  //     window.addEventListener('scroll', controlNavbar);
+  //     return () => {
+  //       window.removeEventListener('scroll', controlNavbar);
+  //     };
+  // }, [controlNavbar]);
 
   const handleClickOnImg = () => {
     console.log('click' ,showDropDown)
@@ -64,9 +64,12 @@ function Navbar() {
   };
 
   return (
-    <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-10">
-      <Link href={'/home'}>
-        <Image className="w-48" src={huddler_logo} alt='logo' />
+    <>
+    <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-40">
+      <Link href={'/home'} rel="prefetch" as="image" >
+        <a className="w-48">
+          <Image src={huddler_logo} alt='logo' priority={true}  />
+        </a>
       </Link>
       <div className='flex items-center justify-end'>
         <button className="
@@ -89,22 +92,44 @@ function Navbar() {
         {showDropDown && <Dropdown setShowDropDown={setShowDropDown} />}
         </div>
       </div>
-
-      <div
-        id="huddle-form"
-        className="hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark"
-      >
-        <NewHuddleForm
-            center={center}
-            setCenter={setCenter}
-            data={{
-                name: locationName,
-                lat: "" + center.lat,
-                lng: "" + center.lng,
-            }}
-        />
-      </div>
     </div>
+    <div
+    id="huddle-form"
+    // className="
+    // z-10
+    // hidden
+    // flex-col
+    // items-center
+    // justifiy-center
+    // p-8
+    // mt-4
+    // bg-[rgb(248,241,229)]
+    // w-[50vw]
+    // shadow-md
+    // rounded-md
+    // border-solid
+    // border-[0.5px]
+    // border-palette-dark"
+    className="w-screen
+    mt-20
+    h-[100vh]
+    hidden
+    z-10
+    justify-center 
+    backdrop-blur-sm
+    white/30"
+  >
+    <NewHuddleForm
+        center={center}
+        setCenter={setCenter}
+        data={{
+            name: locationName,
+            lat: "" + center.lat,
+            lng: "" + center.lng,
+        }}
+    />
+  </div>
+  </>
   );
 }
 

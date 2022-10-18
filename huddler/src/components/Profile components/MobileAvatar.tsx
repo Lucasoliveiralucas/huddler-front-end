@@ -14,13 +14,13 @@ function MobileAvatar({ user }: Props) {
     return (
 
         <div className=' w-full flex flex-col py-6 justify-center items-center'>
-            <div className='rounded-full h-72 w-72 md:w-96 md:h-96 relative hidden md:flex'>
+            <div className='relative rounded-full h-72 w-72 md:w-96 md:h-96 md:flex'>
                 <Image
-                    className='rounded-full'
+                    className='rounded-full object-cover'
                     src={image}
                     placeholder='empty'
+                    sizes=''
                     alt='avatar'
-                    sizes='auto'
                     priority={true}
                     fill
                 />

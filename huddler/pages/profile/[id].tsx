@@ -82,7 +82,7 @@ function Profile({
     return <div>loading...</div>;
 
   return (
-    <main className="flex flex-col lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
+    <main className="flex flex-col mt-20 lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
       <div className="hidden lg:block w-full">
         <div className="fixed min-w-[20%] h-full">
           <div
