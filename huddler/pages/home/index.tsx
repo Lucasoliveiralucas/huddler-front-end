@@ -12,6 +12,7 @@ import {
   getUserById,
   getUserGoingHuddles,
 } from "../../src/utils/APIServices/userServices";
+import DropdownMenu from '../../src/components/Home-components/DropdownMenu';
 import { GetServerSideProps } from "next";
 
 type Props = {
@@ -58,6 +59,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
             Recommended
           </button>
           <button onClick={() => setToAllHuddles()}>All Huddles</button>
+          <DropdownMenu setFilterChoice={setFilterChoice}/>
           <button
             onClick={() => setMobileShowMap(!mobileShowMap)}
             className="lg:hidden"
