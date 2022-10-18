@@ -107,7 +107,7 @@ export default function Map({
     <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
         <div className="flex">
-          {containerSize.width == "40vw" ? (
+          {/* {containerSize.width == "40vw" ? (
             <button
               className="p-2 bg-white  shadow-md rounded-sm"
               onClick={() => setContainerSize(mapSize)}
@@ -116,7 +116,7 @@ export default function Map({
             </button>
           ) : (
             <button
-              className="p-2  bg-white shadow-md "
+              className="p-2"
               onClick={() =>
                 setContainerSize({
                   width: "40vw",
@@ -126,8 +126,8 @@ export default function Map({
             >
               &#x2771;
             </button>
-          )}
-          {currentPage === "newuser" ? (
+          )} */}
+          {/* {currentPage === "newuser" ? (
             <></>
           ) : (
             <button
@@ -136,7 +136,7 @@ export default function Map({
             >
               Create
             </button>
-          )}
+          )} */}
         </div>
         <div className="z-10 mt-3 w-60">
           <PlacesAutocomplete

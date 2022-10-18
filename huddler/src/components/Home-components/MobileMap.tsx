@@ -41,6 +41,7 @@ export default function MobileMap({ huddles, currentPage, setLocation }: Props) 
         version: "weekly",
         libraries,
     });
+
     const toggleCreate = () => {
         const form = document.getElementById("huddle-form");
         if (createBox) {
@@ -59,6 +60,7 @@ export default function MobileMap({ huddles, currentPage, setLocation }: Props) 
         form?.classList.add("animate-fade-in");
         setCreateBox(true);
     };
+
     useEffect(() => {
         if (center.lat !== 41.39) setSelected(true);
         if (currentPage)
@@ -68,6 +70,7 @@ export default function MobileMap({ huddles, currentPage, setLocation }: Props) 
                 lng: center.lng,
             });
     }, [center]);
+
     useEffect(() => {
         if (currentPage === "newuser") {
             setMapSize({
@@ -80,11 +83,12 @@ export default function MobileMap({ huddles, currentPage, setLocation }: Props) 
             });
         }
     }, []);
+    
     return isLoaded ? (
         <div className="mt-0">
             <div className="absolute pl-3 z-10 mt-24">
                 <div className="flex">
-                    {containerSize.width == "40vw" ? (
+                    {/* {containerSize.width == "40vw" ? (
                         <button
                             className="p-2 bg-white  shadow-md rounded-sm"
                             onClick={() => setContainerSize(mapSize)}
@@ -103,8 +107,8 @@ export default function MobileMap({ huddles, currentPage, setLocation }: Props) 
                         >
                             &#x2771;
                         </button>
-                    )}
-                    {currentPage === "newuser" ? (
+                    )} */}
+                    {/* {currentPage === "newuser" ? (
                         <></>
                     ) : (
                         <button
@@ -113,7 +117,7 @@ export default function MobileMap({ huddles, currentPage, setLocation }: Props) 
                         >
                             Create
                         </button>
-                    )}
+                    )} */}
                 </div>
                 <div className="z-10 mt-3 w-60">
                     <PlacesAutocomplete

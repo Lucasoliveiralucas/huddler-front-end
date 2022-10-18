@@ -50,8 +50,8 @@ function Home({ recommended, huddles, user }: Props) {
 
   return (
     <div className="sm:block md:flex xl:gap-10 mt-20 relative h-full lg:px-0 2xl:px-10">
-      <div className="flex flex-col w-screen h-full" id="0">
-        <div className="flex py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start" id="1">
+      <div className="flex flex-col w-screen" id="0">
+        <div className="flex w-screen py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start" id="1">
           <button className="mr-4"
             onClick={() => setFilterChoice(recommended)}>
             Recommended

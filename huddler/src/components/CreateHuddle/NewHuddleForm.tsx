@@ -21,9 +21,9 @@ type Props = {
     name: string;
     lat: string;
     lng: string;
-    id: string;
+    id?: string;
   };
-  update: boolean;
+  update?: boolean;
   setCenter: React.Dispatch<
     React.SetStateAction<{
       lat: number;
