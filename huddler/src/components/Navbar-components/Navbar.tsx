@@ -48,7 +48,7 @@ function Navbar() {
       <div className="w-20 h-20 relative">
       {currentUser &&
         <Image
-          src={DefaultUserImage}
+          src={currentUser.image || DefaultUserImage}
           alt='user-image'
           fill
           className=' rounded-full p-1 cursor-pointer'
