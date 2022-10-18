@@ -27,6 +27,7 @@ const OptionsMenu = ({ setOption }: Props) => {
     password: false,
     location: false,
     interests: false,
+    image: false,
     delete: false,
   });
 
@@ -89,6 +90,18 @@ const OptionsMenu = ({ setOption }: Props) => {
       </li>
       <li
         className={
+          selected.image
+            ? defaultClass + ' bg-palette-orange'
+            : defaultClass
+        }
+        onClick={handleOption}
+        id='image'
+      >
+        Update image
+        {arrowImage}
+      </li>
+      <li
+        className={
           selected.delete
             ? defaultClassBottom + ' bg-palette-orange'
             : defaultClassBottom
@@ -104,4 +117,3 @@ const OptionsMenu = ({ setOption }: Props) => {
 };
 
 export default OptionsMenu;
-

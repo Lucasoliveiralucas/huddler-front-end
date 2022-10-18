@@ -1,21 +1,24 @@
 import Image, { StaticImageData } from 'next/future/image';
 import DefaultUserImage from '../../../public/defaultUserImage.png';
 import { useState, useRef } from 'react';
+import { User } from '../../types'
 
 type Props = {
   setDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
   image?: string;
   userPersonalInfo: any;
+  userData: User;
 };
 
 const UserImage = ({
   setDisabledButton,
   setError,
   userPersonalInfo,
+  userData,
 }: Props) => {
   const [userImage, setUserImage] = useState<StaticImageData | string>(
-    userPersonalInfo.image
+    userData.image
   );
   const imageRef = useRef<HTMLInputElement>(null);
 
@@ -24,7 +27,7 @@ const UserImage = ({
     try {
       //Update image in DB
       setDisabledButton(false);
-      userPersonalInfo.image = e.target.files[0];
+      userData.image = e.target.files[0];
       setUserImage(URL.createObjectURL(e.target.files[0]));
       // image = URL.createObjectURL(e.target.files[0]);
     } catch {
@@ -42,7 +45,7 @@ const UserImage = ({
         onChange={changeUserImage}
       />
       <Image
-        src={userImage || userPersonalInfo.image || DefaultUserImage}
+        src={userImage || userData.image || DefaultUserImage}
         className='rounded-full hover:cursor-pointer'
         width={150}
         height={150}

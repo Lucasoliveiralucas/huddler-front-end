@@ -4,6 +4,7 @@ import PersonalInformation from '../../src/components/Settings-components/Person
 import ChangePassword from '../../src/components/Settings-components/ChangePassword';
 import UpdateLocation from '../../src/components/Settings-components/UpdateLocation';
 import UpdateInterests from '../../src/components/Settings-components/UpdateInterests';
+import UpdateUserImage from '../../src/components/Settings-components/UpdateUserImage';
 import DeleteUser from '../../src/components/Settings-components/DeleteUser';
 import { User } from '../../src/types';
 import OptionsMenu from '../../src/components/Settings-components/OptionsMenu';
@@ -32,10 +33,12 @@ const SettingsPage = () => {
     }
   }, [currentUser]);
 
+  console.log(currentUser);
+
   return (
     <main className='flex h-screen justify-center items-center'>
       <OptionsMenu setOption={setOption} />
-
+  
       {option === 'information' && userData && (
         <PersonalInformation userData={userData} />
       )}
@@ -48,6 +51,7 @@ const SettingsPage = () => {
         />
       )}
       {option === 'interests' && <UpdateInterests userData={userData} />}
+      {option === 'image' && <UpdateUserImage userData={userData} />}
       {option === 'delete' && <DeleteUser userData={userData} />}
     </main>
   );
