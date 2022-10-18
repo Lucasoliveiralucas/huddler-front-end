@@ -11,6 +11,7 @@ import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServic
 import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
 import { withSSRContext } from 'aws-amplify';
 import { GetServerSideProps } from "next/types";
+import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
   aws_id: string;
@@ -88,7 +89,7 @@ function Profile({
             className="flex flex-col h-full items-center
           border-x-[0.2px] shadow-md w-full"
           >
-            {/* <Avatar user={user} /> */}
+            <Avatar user={user} />
             <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
               huddlesUserIsGoing={huddlesUserIsGoing.length} />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
@@ -101,6 +102,7 @@ function Profile({
                   update={update}
                   huddle={huddlesUserIsGoing[0]}
                   huddlesUserIsGoing={huddlesUserIsGoing}
+                  id={aws_id}
                 />}
               </div>
             </div>
@@ -116,9 +118,9 @@ function Profile({
       </div>
 
       <div className="h-full w-full col-span-2 3xl:col-span-3 overflow-auto ml-0 lg:ml-48 2xl:ml-0">
-        <h1 className="pt-8 px-4 text-3xl font-bold pl-10 lg:pl-0">Interests:</h1>
+        <h1 className="pt-8 px-4 text-3xl font-bold md:pl-10 lg:pl-0">Interests:</h1>
         {Array.isArray(tags) &&
-          <div className="flex flex-wrap gap-4 p-4 pl-10 lg:pl-0">
+          <div className="flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0">
             {tags.map((tag: Category, i: number) => (
               <h1
                 id={tag.name}
@@ -143,7 +145,7 @@ function Profile({
         />
 
         <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
-          Huddles I'm going to:
+          Huddles I&lsquo;m going to:
         </h1>
         <HuddleCarousel
           setUpdate={setUpdate}
@@ -170,7 +172,12 @@ function Profile({
 
 export default Profile;
 
-export const getServerSideProps:GetServerSideProps = async ({ req , res }) => {
+type Context = {
+  req: NextRequest,
+  res: NextResponse,
+}
+
+export const getServerSideProps:GetServerSideProps = async ({ req , res }:Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {

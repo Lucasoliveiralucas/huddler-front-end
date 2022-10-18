@@ -7,7 +7,8 @@ import { MapInfoWindow } from "./MapInfoWindow";
 import { useAuth } from "../../contexts/AuthContext";
 import { getUserById } from "../../utils/APIServices/userServices";
 import { withSSRContext } from "aws-amplify";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps } from "next/types";
+import { NextApiResponse, NextApiRequest } from "next/types";
 const image = require("../../../public/location-pin-svgrepo-com.svg");
 const libraries: (
   | "places"
@@ -20,7 +21,7 @@ const libraries: (
 type Props = {
   huddles?: Huddle[];
   currentPage: string;
-  setLocation: React.Dispatch<React.SetStateAction<any>>;
+  // setLocation: React.Dispatch<React.SetStateAction<any>>;
   updateList: Function;
   user: User;
 };
@@ -28,7 +29,6 @@ export default function Map({
   huddles,
   currentPage,
   updateList,
-  setLocation,
   user,
 }: Props) {
   // const { currentUser } = useAuth();
@@ -87,9 +87,9 @@ export default function Map({
       // const userData = await getUserById(currentUser);
       // console.log(userData);
       // setUser(userData[0]);
-      console.log("over herer", user);
+      console.log("over herer", user.default_latitude);
 
-      user
+      user.default_latitude !== 1
         ? setCenter({
             lat: Number(user.default_latitude),
             lng: Number(user.default_longitude),
@@ -108,7 +108,7 @@ export default function Map({
       });
     }
   }, []);
-  return isLoaded && user ? (
+  return isLoaded ? (
     <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
         {/* <div className="flex">
@@ -220,7 +220,11 @@ export default function Map({
     <p>Loading...</p>
   );
 }
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+type Context = {
+  req: NextApiRequest;
+  res: NextApiResponse;
+}
+export const getServerSideProps = async ({ req, res }:Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {

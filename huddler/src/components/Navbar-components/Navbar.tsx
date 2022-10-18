@@ -8,8 +8,9 @@ import { useAuth } from '../../contexts/AuthContext';
 
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
-  const {currentUser} = useAuth()
-  // console.log('imageeeee', currentUser[0].image)
+  const { currentUser } = useAuth()
+  
+ 
   // const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -39,8 +40,10 @@ function Navbar() {
 
   return (
     <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-10">
-      <Link href={'/home'}>
-        <Image className="w-48" src={huddler_logo} alt='logo' />
+      <Link href={'/home'} rel="prefetch" as="image" >
+        <a className="w-48">
+          <Image src={huddler_logo} alt='logo' priority={true}  />
+        </a>
       </Link>
       <div className="w-20 h-20 relative">
       {currentUser &&
@@ -48,8 +51,13 @@ function Navbar() {
           src={DefaultUserImage}
           alt='user-image'
           fill
-          className=' rounded-full p-1 cursor-pointer p-3'
+          className=' rounded-full p-1 cursor-pointer'
           onClick={() => handleClickOnImg()}
+          placeholder='empty'
+          sizes="(max-width: 768px) 100px,
+                       (max-width: 1200px) 100px,
+                       100px"
+          priority={true}
         />
       }
         {showDropDown && <Dropdown setShowDropDown={setShowDropDown} />}

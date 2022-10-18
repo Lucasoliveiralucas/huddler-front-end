@@ -7,11 +7,12 @@ import HuddlesNew from "../../src/components/Home-components/HuddlesNew";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import MobileMap from "../../src/components/Home-components/MobileMap";
 import { withSSRContext } from "aws-amplify";
+import { NextApiResponse, NextApiRequest } from 'next';
 import {
   getUserById,
   getUserGoingHuddles,
 } from "../../src/utils/APIServices/userServices";
-import { GetServerSideProps } from "next/types";
+import { GetServerSideProps } from "next";
 
 type Props = {
   recommended: Huddle[];
@@ -72,7 +73,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
         {/* <Huddles huddles={filterChoice} /> */}
         {mobileShowMap && (
           <div className="absolute lg:hidden block h-full w-full z-30">
-            <MobileMap huddles={filterChoice} />
+            <MobileMap huddles={filterChoice} user={user} updateList={updateList} />
           </div>
         )}
 
@@ -93,7 +94,12 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+type Context = {
+  req: NextApiRequest;
+  res: NextApiResponse;
+}
+
+export const getServerSideProps = async ({ req, res }:Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {
