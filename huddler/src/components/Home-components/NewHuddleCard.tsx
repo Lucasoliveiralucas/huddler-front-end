@@ -10,20 +10,16 @@ import {
 } from "../../utils/APIServices/huddleServices";
 import { useAuth } from "../../contexts/AuthContext";
 import { AiOutlineConsoleSql } from "react-icons/ai";
+import Link from "next/link";
 
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  updateList: any,
+  updateList: any;
   id: string;
 };
 
-function NewHuddleCard({
-  huddle,
-  huddlesUserIsGoing,
-  updateList,
-  id,
-}: Props) {
+function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
   const dateTime = dateFormatter(huddle.day_time);
   // dateFormatter(huddle.day_time);
   const [going, setGoing] = useState(false);
@@ -56,6 +52,14 @@ function NewHuddleCard({
           {huddle.name}
         </h1>
         <div className="ml-auto mr-3">
+          <Link
+            href={{
+              pathname: `/details/${huddle.id}`,
+              query: huddle,
+            }}
+          >
+            <a className=" underline">Event Details</a>
+          </Link>
           {going ? (
             <button
               className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
@@ -98,7 +102,6 @@ function NewHuddleCard({
             </div>
             <p className="hidden md:block">attending: {data.attending}</p>
 
-
             <div className="hidden md:grid grid-cols-2 gap-2 w-2/3">
               {data.categories.map((category, i) => {
                 return (
@@ -113,33 +116,33 @@ function NewHuddleCard({
                 );
               })}
             </div>
-            </div>
-            {/* Mobile */}
-            <div className="grid md:hidden grid-cols-2 gap-1 py-1">
-              {data.categories.map((category, i) => {
-                return (
-                  i <= 1 && (
-                    <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                      key={category.id + (i - i)}
-                    >
-                      {category.name}
-                    </p>
-                  )
-                );
-              })}
-            </div>
           </div>
-          {/* Description */}
-          <div className="grid max-w-[300px] md:h-56 py-2 w-full pl-4 ">
-            <p>{huddle.description}</p>
-            <p className="text-sm self-end">
-              At {huddle.address}
-              <br></br>
-              {dateTime.monthDayYear} at {dateTime.time}
-            </p>
+          {/* Mobile */}
+          <div className="grid md:hidden grid-cols-2 gap-1 py-1">
+            {data.categories.map((category, i) => {
+              return (
+                i <= 1 && (
+                  <p
+                    className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+                    key={category.id + (i - i)}
+                  >
+                    {category.name}
+                  </p>
+                )
+              );
+            })}
           </div>
         </div>
+        {/* Description */}
+        <div className="grid max-w-[300px] md:h-56 py-2 w-full pl-4 ">
+          <p>{huddle.description}</p>
+          <p className="text-sm self-end">
+            At {huddle.address}
+            <br></br>
+            {dateTime.monthDayYear} at {dateTime.time}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
