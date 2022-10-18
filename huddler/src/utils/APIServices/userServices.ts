@@ -36,12 +36,12 @@ export const getUserGoingHuddles = async (aws_id: string) =>
 
 // POST Functions
 
-export const postUserInfo = async (user: User, aws_id: string) => {
+export const postUserInfo = async (user: User, aws_id: string, ) => {
   try {
-    console.log('trying to post huddle category', user, aws_id);
+    console.log('trying to post userinfo', user, aws_id);
 
     const newUserToPost = await fetch(
-      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser/update?user-id=${aws_id}`,
+      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser/update`,
       {
         method: 'POST',
         mode: 'no-cors',
