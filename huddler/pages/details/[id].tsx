@@ -115,9 +115,12 @@ const Details = ({ aws_id, user }: Props) => {
         <p className="text-2xl">{huddle.address}</p>
         <div className="grid grid-cols-3 gap-x-4 gap-y-2 mr-3 mt-2 mb-2 w-full">
           {categories ? (
-            categories.map((category) => {
+            categories.map((category, i) => {
               return (
-                <p className="text-center py-1 bg-palette-dark rounded-md text-white">
+                <p
+                  key={i}
+                  className="text-center py-1 bg-palette-dark rounded-md text-white"
+                >
                   {category.name}
                 </p>
               );
@@ -138,14 +141,14 @@ const Details = ({ aws_id, user }: Props) => {
           </div>
           <p className="self-center ml-2 text-2xl">{creator?.username}</p>
         </div>
-        <p className="my-2 text-4xl">Who's going:</p>
+        <p className="my-2 text-4xl">Who&apos;s going:</p>
         {users ? (
           users.map((user: any, i: number) => {
             return (
-              <div className="flex mb-4">
+              <div key={i} className="flex mb-4">
                 <div className="relative h-12 w-12">
                   <Image
-                    className="flex rounded-full "
+                    className="flex rounded-full"
                     fill
                     alt="user image"
                     src={user.image}
@@ -172,7 +175,10 @@ const Details = ({ aws_id, user }: Props) => {
                     ? (time = msg.time_of_creation.slice(11, 16))
                     : (time = dateFormatter(Date.now()).time.substring(0, 5));
                   return isMessageFromUser(msg.username) ? (
-                    <div className="text-end bg-palette-orange bg-opacity-50 ml-auto mr-0 mb-4 max-w-[60%] px-2 rounded-xl shadow-md">
+                    <div
+                      key={i}
+                      className="text-end bg-palette-orange bg-opacity-50 ml-auto mr-0 mb-4 max-w-[60%] px-2 rounded-xl shadow-md"
+                    >
                       {/* <p className="py-1 font-medium">{msg.username}</p> */}
                       <div className="flex pb-4 pt-6 justify-between">
                         {time ? <p className="opacity-60">{time}</p> : <></>}
@@ -182,7 +188,10 @@ const Details = ({ aws_id, user }: Props) => {
                       </div>
                     </div>
                   ) : (
-                    <div className=" bg-palette-dark bg-opacity-30 max-w-[60%] mb-4 p-2 pt-1 rounded-xl shadow-md">
+                    <div
+                      key={i}
+                      className=" bg-palette-dark bg-opacity-30 max-w-[60%] mb-4 p-2 pt-1 rounded-xl shadow-md"
+                    >
                       <p className="py-1 font-medium">{msg.username}</p>
                       <div className="flex justify-between">
                         <p id={i + ""} key={i}>
