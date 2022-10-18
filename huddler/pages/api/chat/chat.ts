@@ -2,11 +2,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Server } from "socket.io";
 
 const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  if (res.socket.server.io) {
+  // @ts-ignore
+  if (res.socket?.server.io) {
     console.log("Socket is already running");
   } else {
     console.log("Socket is initializing");
+    // @ts-ignore
     const io = new Server(res.socket.server);
+    // @ts-ignore
     res.socket.server.io = io;
 
     io.on("connection", (socket) => {
