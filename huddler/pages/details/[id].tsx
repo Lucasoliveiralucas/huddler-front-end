@@ -8,11 +8,11 @@ import {
   getUsersGoingToHuddle,
 } from "../../src/utils/APIServices/huddleServices";
 import { getUserById } from "../../src/utils/APIServices/userServices";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import { getMsgsFromHuddle } from "../../src/utils/APIServices/chatService";
 import { withSSRContext } from "aws-amplify";
 import { GetServerSideProps } from "next";
-let socket;
+let socket: Socket;
 
 type Props = {
   aws_id: string;
@@ -21,10 +21,15 @@ type Props = {
 
 const Details = ({ aws_id, user }: Props) => {
   const [chatMsg, setChatMsg] = useState<any[]>();
-  const [updateMsg, setUpdateMsg] = useState<string>();
+  const [updateMsg, setUpdateMsg] = useState<{
+    huddle_id: number;
+    message: string;
+    username: string;
+  }>();
   const [users, setUsers] = useState<any>();
   const [creator, setCreator] = useState<User>();
   const [categories, setCategories] = useState<Category[]>();
+  // @ts-ignore
   const huddle: Huddle = useRouter().query;
 
   const dateTime = dateFormatter(huddle.day_time);
@@ -86,7 +91,9 @@ const Details = ({ aws_id, user }: Props) => {
     e.preventDefault();
 
     //emits message e.target.value to room huddle.id
+    // @ts-ignore
     socket.emit("input-change", e.target[0].value, huddle.id, user.username);
+    // @ts-ignore
     e.target[0].value = "";
   };
   return (
@@ -136,6 +143,7 @@ const Details = ({ aws_id, user }: Props) => {
               className="flex rounded-full "
               fill
               alt="user image"
+              // @ts-ignore
               src={creator?.image}
             />
           </div>
@@ -173,7 +181,10 @@ const Details = ({ aws_id, user }: Props) => {
                   let time;
                   msg.time_of_creation
                     ? (time = msg.time_of_creation.slice(11, 16))
-                    : (time = dateFormatter(Date.now()).time.substring(0, 5));
+                    : (time = dateFormatter(Date.now() + "").time.substring(
+                        0,
+                        5
+                      ));
                   return isMessageFromUser(msg.username) ? (
                     <div
                       key={i}

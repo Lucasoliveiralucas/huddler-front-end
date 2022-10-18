@@ -1,4 +1,4 @@
-export const getMsgsFromHuddle = async (huddleId: number) => {
+export const getMsgsFromHuddle = async (huddleId: number | undefined) => {
   try {
     const data = await fetch(
       `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/messages?huddle-id=${huddleId}`
