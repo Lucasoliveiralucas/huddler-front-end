@@ -49,10 +49,9 @@ function Home({ recommended, huddles, user }: Props) {
   // if (!userCreatedHuddles || !recommended) return <div>loading...</div>;
 
   return (
-    <div className="sm:block md:flex xl:gap-10 mt-6 relative h-full md:px-24 lg:px-1 2xl:px-5">
-      <div className="max-h-[87vh] overflow-y-auto w-full" id="carousel">
-        <div className="flex p-5 mb-2 shadow-md justify-around md:justify-start">
-
+    <div className="sm:block md:flex xl:gap-10 mt-20 relative h-full lg:px-0 2xl:px-10">
+      <div className="flex flex-col w-screen h-full" id="0">
+        <div className="flex py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start" id="1">
           <button className="mr-4"
             onClick={() => setFilterChoice(recommended)}>
             Recommended
@@ -70,6 +69,7 @@ function Home({ recommended, huddles, user }: Props) {
           </button>
         </div>
 
+      <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2">
         {/* <Huddles huddles={filterChoice} /> */}
         {mobileShowMap && (
           <div className="absolute lg:hidden block h-full w-full z-30">
@@ -83,12 +83,16 @@ function Home({ recommended, huddles, user }: Props) {
           huddlesUserIsGoing={huddlesUserIsGoing}
           id={user.aws_id}
         />
-      </div>
+      
 
-      <div className="mt-16 hidden lg:flex ">
+      <div className="hidden sticky lg:flex ">
         <Map huddles={filterChoice} update={update} id={user.aws_id} />
       </div>
+      </div>
+      
+      </div>
     </div>
+
   );
 }
 

@@ -34,7 +34,7 @@ function Huddles({ huddles, update, setUpdate, id }: Props) {
     };
 
     return (
-        <div className="flex flex-col justify-start px-2 h-full" id="carousel" >
+        <div className="flex flex-col justify-start pr-10 h-full overflow-y-auto" id="carousel" >
             <div className="gap-4 grid 2xl:grid-cols-2">
             {huddles.map((huddle) => (
                 <div

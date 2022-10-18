@@ -14,7 +14,7 @@ function Layout({ children }: Props) {
     <>
       <div className='w-full h-screen flex flex-col justify-center' id="carousel">
         { currentUser && <Navbar /> }
-        <div className='self-center h-full w-full mt-24 grid' id="carousel">
+        <div className='self-center h-full w-full grid' id="carousel">
           <main>{children}</main>
         </div>
       </div>
