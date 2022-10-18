@@ -25,7 +25,7 @@ function HuddleCarouselItem({
   update,
   id,
 }: Props) {
-  let dateTime:any = '';
+  let dateTime: any = "";
   const [going, setGoing] = useState(false);
   //getting addicional huddle data
   const [data, setData] = useState({
@@ -35,9 +35,7 @@ function HuddleCarouselItem({
   useEffect(() => {
     try {
       dateTime = dateFormatter(huddle.day_time);
-    } catch (err) {
-
-    }
+    } catch (err) {}
     if (huddlesUserIsGoing) {
       huddlesUserIsGoing.find((h) => h.id === huddle.id)
         ? setGoing(true)
@@ -52,44 +50,50 @@ function HuddleCarouselItem({
     getter();
   }, []);
   return (
-    
-      <div className="ml-3 mr-3 mt-3">
-        <div className="flex mb-1">
-          <h1 className="font-extrabold text-palette-orange text-2xl">
-            {huddle.name}
-          </h1>
+    <div className="ml-3 mr-3 mt-3">
+      <div className="flex mb-1">
+        <h1 className="font-extrabold text-palette-orange text-2xl">
+          {huddle.name}
+        </h1>
         <div className="ml-auto mr-3 flex gap-4 py-2">
-          <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}><a className=" underline">Event Details</a></Link>
-            {going ? (
-              <button
-                className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
-                onClick={(e) => {
-                  setGoing(!going);
-                  setUpdate(!update);
-                  removeUserGoingToHuddle(id, huddle.id);
-                }}
-              >
-                Leave
-              </button>
-            ) : (
-              <button
-                className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
-                onClick={(e) => {
-                  setGoing(!going);
-                  setUpdate(!update);
-                  postUserGoingToHuddle(id, huddle.id);
-                }}
-              >
-                Join
-              </button>
-            )}
-          </div>
+          <Link
+            href={{
+              pathname: `/details/${huddle.id}`,
+              query: huddle,
+            }}
+          >
+            <a className=" underline">Event Details</a>
+          </Link>
+          {going ? (
+            <button
+              className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
+              onClick={(e) => {
+                setGoing(!going);
+                setUpdate(!update);
+                removeUserGoingToHuddle(id, huddle.id);
+              }}
+            >
+              Leave
+            </button>
+          ) : (
+            <button
+              className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
+              onClick={(e) => {
+                setGoing(!going);
+                setUpdate(!update);
+                postUserGoingToHuddle(id, huddle.id);
+              }}
+            >
+              Join
+            </button>
+          )}
         </div>
+      </div>
 
-        <div className="flex">
-          <div className="w-[24rem] mr-3">
-            <div className="rounded-lg h-32 lg:h-40 relative">
-              <Image
+      <div className="flex">
+        <div className="w-[24rem] mr-3">
+          <div className="rounded-lg h-32 lg:h-40 relative">
+            <Image
               fill
               src={huddle.image}
               alt={huddle.name}
@@ -98,49 +102,49 @@ function HuddleCarouselItem({
                        300px"
               placeholder="empty"
               className="rounded-lg object-contain"
-              />
-            </div>
-            <p>attending: {data.attending}</p>
-            <div className="hidden md:grid grid-cols-2 gap-2">
-              {data.categories.map((category, i) => {
-                return (
-                  i <= 3 && (
-                    <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                      key={category.id + (i - i)}
-                    >
-                      {category.name}
-                    </p>
-                  )
-                );
-              })}
-            </div>
-            {/* mobile */}
-            <div className="md:hidden grid grid-cols-2 gap-2">
-              {data.categories.map((category, i) => {
-                return (
-                  i <= 1 && (
-                    <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                      key={category.id + (i - i)}
-                    >
-                      {category.name}
-                    </p>
-                  )
-                );
-              })}
-            </div>
+            />
           </div>
-          <div className="grid max-w-[300px] md:h-56 w-full space-x-0 ">
-            <p>{huddle.description}</p>
-            <p className="text-sm self-end">
-              At {huddle.address}
-              <br></br>
-              {/* {dateTime.monthDayYear} at {dateTime.time} */}
-            </p>
+          <p>attending: {data.attending}</p>
+          <div className="hidden md:grid grid-cols-2 gap-2">
+            {data.categories.map((category, i) => {
+              return (
+                i <= 3 && (
+                  <p
+                    className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+                    key={category.id + (i - i)}
+                  >
+                    {category.name}
+                  </p>
+                )
+              );
+            })}
+          </div>
+          {/* mobile */}
+          <div className="md:hidden grid grid-cols-2 gap-2">
+            {data.categories.map((category, i) => {
+              return (
+                i <= 1 && (
+                  <p
+                    className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+                    key={category.id + (i - i)}
+                  >
+                    {category.name}
+                  </p>
+                )
+              );
+            })}
           </div>
         </div>
+        <div className="grid max-w-[300px] md:h-56 w-full space-x-0 ">
+          <p>{huddle.description}</p>
+          <p className="text-sm self-end">
+            At {huddle.address}
+            <br></br>
+            {/* {dateTime.monthDayYear} at {dateTime.time} */}
+          </p>
+        </div>
       </div>
+    </div>
   );
 }
 
