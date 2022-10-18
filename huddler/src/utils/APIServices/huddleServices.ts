@@ -1,11 +1,11 @@
-import { Huddle } from "../../types";
-import { fetcher } from "../helperFunctions";
+import { Huddle } from '../../types';
+import { fetcher } from '../helperFunctions';
 
 //GET Functions
 
 export const getAllHuddles = async () =>
   await fetcher(
-    "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted"
+    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted'
   );
 //Returns: Array of Huddle Objects
 
@@ -40,22 +40,22 @@ export const getIdOfHuddleByDateOfCreation = async (created_on: number) =>
 export const postHuddle = async (huddle: Huddle) => {
   try {
     const huddleToPost = await fetch(
-      "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newhuddle",
+      'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newhuddle',
       {
-        method: "POST",
-        mode: "no-cors",
+        method: 'POST',
+        mode: 'no-cors',
         body: JSON.stringify(huddle),
         headers: {
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Methods": "*",
-          Connection: "keep-alive",
-          "Content-Length": "7",
-          "x-amzn-RequestId": "bca54815-8c5e-4cc9-bf8d-caa420fee8cf",
-          "x-amz-apigw-id": "Z5pwWH2dCGYF2Rw=",
-          "XAmzn-Trace-Id":
-            "Root=1-6346f002-54116ed0323416e4273584fa;Sampled=0",
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Methods': '*',
+          Connection: 'keep-alive',
+          'Content-Length': '7',
+          'x-amzn-RequestId': 'bca54815-8c5e-4cc9-bf8d-caa420fee8cf',
+          'x-amz-apigw-id': 'Z5pwWH2dCGYF2Rw=',
+          'XAmzn-Trace-Id':
+            'Root=1-6346f002-54116ed0323416e4273584fa;Sampled=0',
         },
       }
     );
@@ -66,23 +66,23 @@ export const postHuddle = async (huddle: Huddle) => {
 
     return huddleToPost;
   } catch (e) {
-    console.log("Error posting a Huddle in DB  ", e);
+    console.log('Error posting a Huddle in DB  ', e);
   }
 };
 
 export const postHuddleCategory = async (huddleId: number, catId: number) => {
   try {
-    console.log("trying to post huddle category", huddleId, catId);
+    console.log('trying to post huddle category', huddleId, catId);
 
     const huddleToPost = await fetch(
-      "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddle_category",
+      'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddle_category',
       {
-        method: "POST",
-        mode: "no-cors",
+        method: 'POST',
+        mode: 'no-cors',
         body: JSON.stringify({ FK_huddle_id: huddleId, FK_category_id: catId }),
         headers: {
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
       }
     );
@@ -90,11 +90,14 @@ export const postHuddleCategory = async (huddleId: number, catId: number) => {
 
     return huddleToPost;
   } catch (e) {
-    console.log("Error posting a Huddle category in DB  ", e);
+    console.log('Error posting a Huddle category in DB  ', e);
   }
 };
 
-export const postUserGoingToHuddle = async (aws_id: string, huddleId?: number) => {
+export const postUserGoingToHuddle = async (
+  aws_id: string,
+  huddleId?: number
+) => {
   try {
     const userToHuddle = await fetch(
       'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/usersgoing',
@@ -115,7 +118,10 @@ export const postUserGoingToHuddle = async (aws_id: string, huddleId?: number) =
   }
 };
 
-export const removeUserGoingToHuddle = async (aws_id: string, huddleId?: number) => {
+export const removeUserGoingToHuddle = async (
+  aws_id: string,
+  huddleId?: number
+) => {
   try {
     const userToHuddle = await fetch(
       'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user_huddle',
@@ -135,8 +141,4 @@ export const removeUserGoingToHuddle = async (aws_id: string, huddleId?: number)
     console.log('Error checkin out user', e);
   }
 };
-
-
-
-
 

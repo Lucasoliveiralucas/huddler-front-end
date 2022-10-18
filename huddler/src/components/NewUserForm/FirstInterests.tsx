@@ -3,12 +3,12 @@ import { Category, User } from '../../types';
 import CategoriesContainer from '../CategoriesContainer';
 
 type Props = {
-  categoriesPicked: Category[];
+  chosenCategories: Category[];
   setCategoriesPicked: React.Dispatch<React.SetStateAction<Category[]>>;
 };
 
-function Interests({ categoriesPicked, setCategoriesPicked }: Props) {
-  console.log(categoriesPicked);
+function Interests({ chosenCategories, setChosenCategories }: Props) {
+  console.log(chosenCategories);
   return (
     <>
       <div className='flex flex-col'>
@@ -19,8 +19,8 @@ function Interests({ categoriesPicked, setCategoriesPicked }: Props) {
         <div className='flex flex-col py-8'>
           <h1 className='self-center text-2xl'>Choose your interests:</h1>
           <CategoriesContainer
-            categoriesPicked={categoriesPicked}
-            setCategoriesPicked={setCategoriesPicked}
+            chosenCategories={chosenCategories}
+           setChosenCategories={setChosenCategories}
           />
         </div>
       </div>

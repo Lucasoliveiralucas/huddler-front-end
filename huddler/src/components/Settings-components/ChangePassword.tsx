@@ -1,29 +1,31 @@
 import { useRef, useState } from 'react';
-import { useRouter } from 'next/router';
 import { useAuth } from '../../contexts/AuthContext';
 
 const ChangePassword = () => {
-  const router = useRouter();
   const passwordRef = useRef<HTMLInputElement>(null);
   const oldPasswordRef = useRef<HTMLInputElement>(null);
   const confirmedPasswordRef = useRef<HTMLInputElement>(null);
   const [disabledButton, setDisabledButton] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const { cognitoUser,changePassword }= useAuth();
+
+  //@ts-ignore Do not know what type a custom hook has
+  const { cognitoUser, changePassword } = useAuth();
   const checkEmails = () => {
     if (passwordRef.current!.value === confirmedPasswordRef.current!.value) {
       setDisabledButton(false);
     }
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      
-      await changePassword(cognitoUser,oldPasswordRef.current!.value, passwordRef.current!.value)
-
+      await changePassword(
+        cognitoUser,
+        oldPasswordRef.current!.value,
+        passwordRef.current!.value
+      );
       setSuccess('Success! Your password was changed');
-      console.log('this is success', success);
       passwordRef.current!.value = '';
       confirmedPasswordRef.current!.value = '';
     } catch {
@@ -79,7 +81,4 @@ const ChangePassword = () => {
 };
 
 export default ChangePassword;
-
-
-
 

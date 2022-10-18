@@ -6,12 +6,16 @@ type Props = {
   setDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
   image?: string;
-  userPersonalInfo: any
+  userPersonalInfo: any;
 };
 
-const UserImage = ({ setDisabledButton, setError, userPersonalInfo }: Props) => {
+const UserImage = ({
+  setDisabledButton,
+  setError,
+  userPersonalInfo,
+}: Props) => {
   const [userImage, setUserImage] = useState<StaticImageData | string>(
-   userPersonalInfo.image
+    userPersonalInfo.image
   );
   const imageRef = useRef<HTMLInputElement>(null);
 
@@ -20,7 +24,7 @@ const UserImage = ({ setDisabledButton, setError, userPersonalInfo }: Props) => 
     try {
       //Update image in DB
       setDisabledButton(false);
-      userPersonalInfo.image = e.target.files[0]
+      userPersonalInfo.image = e.target.files[0];
       setUserImage(URL.createObjectURL(e.target.files[0]));
       // image = URL.createObjectURL(e.target.files[0]);
     } catch {

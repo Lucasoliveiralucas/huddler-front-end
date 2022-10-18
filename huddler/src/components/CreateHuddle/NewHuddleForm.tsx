@@ -37,6 +37,7 @@ type Props = {
 
 const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const router = useRouter();
+  //@ts-ignore
   const { currentUser } = useAuth();
 
   const [imgUrl, setImageUrl] = useState({});
