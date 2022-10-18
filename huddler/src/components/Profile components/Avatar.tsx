@@ -15,7 +15,7 @@ function Avatar({ user }: Props) {
         Welcome back, {user.username}
       </h1>
     <br/>
-      <div className='rounded-full self-center shadow-md w-72 h-72 2xl:w-96 2xl:h-96 relative'>
+      <div className='rounded-full self-center shadow-md w-72 h-72 3xl:w-96 3xl:h-96 relative'>
         <Image
           className='rounded-full'
           src={image}
