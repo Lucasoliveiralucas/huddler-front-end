@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
-import Avatar from "../../src/components/Profile components/Avatar";
-import UserInfo from "../../src/components/Profile components/UserInfo";
-import useSWR from "swr";
-import HuddleCarousel from "../../src/components/Profile components/HuddleCarousel";
-import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
-import { Category, Huddle, User } from "../../src/types";
-import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
-import { getUserById, getUserGoingHuddles } from "../../src/utils/APIServices/userServices";
-import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
-import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
+import { useEffect, useState } from 'react';
+import Avatar from '../../src/components/Profile components/Avatar';
+import UserInfo from '../../src/components/Profile components/UserInfo';
+import useSWR from 'swr';
+import HuddleCarousel from '../../src/components/Profile components/HuddleCarousel';
+import { fetcher, recommendedForUser } from '../../src/utils/helperFunctions';
+import { Category, Huddle, User } from '../../src/types';
+import MobileAvatar from '../../src/components/Profile components/MobileAvatar';
+import {
+  getUserById,
+  getUserGoingHuddles,
+} from '../../src/utils/APIServices/userServices';
+import { getHuddlesInCategory } from '../../src/utils/APIServices/categoryServices';
+import HuddleCarouselItem from '../../src/components/Profile components/HuddleCarouselItem';
 import { withSSRContext } from 'aws-amplify';
 import { NextApiResponse, NextApiRequest } from "next/types";
 
@@ -176,9 +179,10 @@ type Context = {
   res: NextApiResponse,
 }
 
-export const getServerSideProps = async ({ req , res }:Context) => {
-  const { Auth } = withSSRContext({ req });
+export const getServerSideProps = async ({ req, res, resolvedUrl }:Context) => {
 
+  const { Auth } = withSSRContext({ req });
+  
   try {
     const huddles: Huddle[] = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted");
     const { username } = await Auth.currentUserInfo();
@@ -186,7 +190,7 @@ export const getServerSideProps = async ({ req , res }:Context) => {
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
     const user: User[] = await getUserById(username);
     if (!user.length) {
-      res.writeHead(302, { Location: "/" });
+      res.writeHead(302, { Location: '/' });
       res.end();
       return {
         props: {},
@@ -199,18 +203,14 @@ export const getServerSideProps = async ({ req , res }:Context) => {
         goingTo,
         recommended,
         huddles,
-      }
-    }
+      },
+    };
   } catch (err) {
-    res.writeHead(302, { Location: '/' })
-    res.end()
+    res.writeHead(302, { Location: '/' });
+    res.end();
     return {
-      props: {}
-    }
+      props: {},
+    };
   }
-}
-
-
-
-
+};
 

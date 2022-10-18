@@ -4,7 +4,7 @@ import CategoriesContainer from '../CategoriesContainer';
 
 type Props = {
   chosenCategories: Category[];
-  setCategoriesPicked: React.Dispatch<React.SetStateAction<Category[]>>;
+  setChosenCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 };
 
 function Interests({ chosenCategories, setChosenCategories }: Props) {
@@ -21,7 +21,7 @@ function Interests({ chosenCategories, setChosenCategories }: Props) {
           {/* @ts-ignore */}
           <CategoriesContainer
             chosenCategories={chosenCategories}
-           setChosenCategories={setChosenCategories}
+            setChosenCategories={setChosenCategories}
           />
         </div>
       </div>

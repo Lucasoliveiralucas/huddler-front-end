@@ -82,6 +82,15 @@ export const AuthProvider = ({ children }: Props) => {
     return await Auth.changePassword(user, oldPsw, newPsw);
   };
 
+  const deleteCognitoUser = async () => {
+    try {
+      const result = await Auth.deleteUser();
+      console.log(result)
+    } catch (error) {
+      console.log('Error deleting user', error)
+    }
+  }
+
   const value = {
     currentUser,
     isAuthenticated,
@@ -90,6 +99,7 @@ export const AuthProvider = ({ children }: Props) => {
     setCurrentUser,
     changePassword,
     logOut,
+    deleteCognitoUser
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

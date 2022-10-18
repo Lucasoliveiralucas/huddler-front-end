@@ -35,12 +35,12 @@ export const getUserGoingHuddles = async (aws_id: string) =>
 
 // POST Functions
 
-export const postUserInfo = async (user: User, aws_id: string) => {
+export const postNewUserInfo = async (user: User, aws_id: string) => {
   try {
     console.log('trying to post userinfo', user, aws_id);
 
     const newUserToPost = await fetch(
-      `${process.env.NEXT_PUBLIC_AWS_URL}newuser/update`,
+      `${process.env.NEXT_PUBLIC_AWS_URL}newuser`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -54,7 +54,30 @@ export const postUserInfo = async (user: User, aws_id: string) => {
     console.log(newUserToPost);
     return newUserToPost;
   } catch (e) {
-    console.log('Error posting a a new user category in DB  ', e);
+    console.log('Error posting a new user in DB  ', e);
+  }
+};
+
+export const postUpdatedUserInfo = async (user: User, aws_id: string) => {
+  try {
+    console.log('trying to update user info', user, aws_id);
+
+    const newUserToPost = await fetch(
+      `${process.env.NEXT_PUBLIC_AWS_URL}newuser/update?user-id=${aws_id}`,
+      {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(user),
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    );
+    console.log(newUserToPost);
+    return newUserToPost;
+  } catch (e) {
+    console.log('Error updating user information in DB  ', e);
   }
 };
 
@@ -163,6 +186,7 @@ export const deleteAllUserCategories = async (aws_id: string) => {
     console.log('Error deleting all categories in DB  ', e);
   }
 };
+
 
 
 

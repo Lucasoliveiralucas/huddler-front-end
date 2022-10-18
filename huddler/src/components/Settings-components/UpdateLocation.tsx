@@ -1,31 +1,40 @@
 import Map from "../Home-components/Map";
-import { useState, useRef } from "react";
-import PlacesAutoCompleter from "../Home-components/PlacesAutocomplete";
+import { useState } from "react";
 import { User } from "../../types";
-
+import {postUpdatedUserInfo} from '../../utils/APIServices/userServices'
 type Props = {
-  currentUserLongitude: number;
-  currentUserLatitude: number;
+  // currentUserLongitude: number;
+  // currentUserLatitude: number;
   userData: User;
+  setUserData: React.Dispatch<React.SetStateAction<User>>;
 };
 const UpdateLocation = ({
-  currentUserLongitude,
-  currentUserLatitude,
+  // currentUserLongitude,
+  // currentUserLatitude,
   userData,
+  setUserData
 }: Props) => {
   const [error, setError] = useState("");
   const [location, setLocation] = useState({
     name: "",
-    lat: currentUserLatitude,
-    lng: currentUserLongitude,
+    lat: userData.default_latitude,
+    lng: userData.default_longitude,
   });
-  console.log("locationnn", location);
+  console.log("location", location);
 
   const changeLocation = async () => {
     try {
       //await here we post the new location to the DB
       //If success the h1 down below should show the new location
-      console.log("secondLocation", location);
+      console.log(userData);
+      const updatedUser = { ...userData,
+        default_latitude: location.lat,
+        default_longitude: location.lng,
+      };
+      setUserData(updatedUser)
+      updatedUser && await postUpdatedUserInfo(updatedUser, userData.aws_id as string);
+      router.push('/profile');
+    
     } catch {
       setError("We weren't able to update your location. Please try again");
     }
@@ -49,3 +58,9 @@ const UpdateLocation = ({
 };
 
 export default UpdateLocation;
+
+
+
+
+
+

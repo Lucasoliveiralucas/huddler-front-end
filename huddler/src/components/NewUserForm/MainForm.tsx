@@ -7,7 +7,7 @@ import Location from './SecondLocation';
 import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
 import {
-  postUserInfo,
+  postNewUserInfo,
   postUserCategory,
   getUserById,
 } from '../../utils/APIServices/userServices';
@@ -22,7 +22,7 @@ function MainForm() {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [userImg, setUserImg] = useState({});
-
+  //@ts-ignore
   const { setCurrentUser, currentUser } = useAuth();
   const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
   const [chosenCategories, setChosenCategories] = useState<Category[]>([]);
@@ -59,7 +59,7 @@ function MainForm() {
     console.log('This is userData', userData);
 
     // // posting new user info to db
-    await postUserInfo(formData, userData.aws_id);
+    await postNewUserInfo(formData, userData.aws_id);
     setCurrentUser(formData);
     // // posting the categories to new huddle
     chosenCategories.forEach((category) => {
