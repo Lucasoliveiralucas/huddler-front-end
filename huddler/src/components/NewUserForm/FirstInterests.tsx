@@ -18,6 +18,7 @@ function Interests({ chosenCategories, setChosenCategories }: Props) {
 
         <div className='flex flex-col py-8'>
           <h1 className='self-center text-2xl'>Choose your interests:</h1>
+          {/* @ts-ignore */}
           <CategoriesContainer
             chosenCategories={chosenCategories}
            setChosenCategories={setChosenCategories}

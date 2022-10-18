@@ -29,13 +29,13 @@ const Dropdown = ({ setShowDropDown }: Props) => {
   const { currentUser, logOut } = useAuth();
 
   const dropDownref = useOnclickOutside(() => {
-   setShowDropDown(false)
+    setShowDropDown(false);
   });
 
   return (
     <div>
       <div
-      ref={dropDownref}
+        ref={dropDownref}
         className='hidden md:block mt-24 w-full rounded-[5px] shadow-md'
       >
         <ul className=' w-64 absolute bg-palette-dark -right-[50%] rounded-[10px] mr-[5px] mt-[5px] pt-0'>
@@ -48,7 +48,6 @@ const Dropdown = ({ setShowDropDown }: Props) => {
                       i === 0 ? topClass : i === 3 ? bottomClass : defaultClass
                     }
                     onClick={() => {
-                      console.log('hereee');
                       logOut();
                     }}
                   >
@@ -79,7 +78,7 @@ const Dropdown = ({ setShowDropDown }: Props) => {
           })}
         </ul>
       </div>
-        {/* Mobile */}
+      {/* Mobile */}
       <div
         ref={dropDownref}
         className='mt-20 w-full rounded-[5px] shadow-md md:hidden'
@@ -109,10 +108,10 @@ const Dropdown = ({ setShowDropDown }: Props) => {
                           i === 0
                             ? topClass
                             : i === 3
-                              ? bottomClass
-                              : defaultClass
+                            ? bottomClass
+                            : defaultClass
                         }
-                      // onClick={i === serviceDropdown.length - 1 && handleLogoutClick}
+                        // onClick={i === serviceDropdown.length - 1 && handleLogoutClick}
                       >
                         <p className='text-6xl'>{menuItem.icon}</p>
                         <p>{menuItem.name}</p>
@@ -130,6 +129,4 @@ const Dropdown = ({ setShowDropDown }: Props) => {
 };
 
 export default Dropdown;
-
-
 
