@@ -1,7 +1,7 @@
 export const getMsgsFromHuddle = async (huddleId: number | undefined) => {
   try {
     const data = await fetch(
-      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/messages?huddle-id=${huddleId}`
+      `${process.env.NEXT_PUBLIC_AWS_URL}messages?huddle-id=${huddleId}`
     );
     const res = await data.json();
     return res;
@@ -9,4 +9,5 @@ export const getMsgsFromHuddle = async (huddleId: number | undefined) => {
     console.log('error getting chat messages', error);
   }
 };
+
 

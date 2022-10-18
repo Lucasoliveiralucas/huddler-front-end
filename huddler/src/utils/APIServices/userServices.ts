@@ -10,27 +10,26 @@ export const getAllUsers = async () =>
 //Returns: Array of User Objects
 
 export const getUserById = async (aws_id: string) => {
-  const url = process.env.NEXT_PUBLIC_AWS_DB_URL
-  console.log('url', url)
-return await fetcher(process.env.NEXT_PUBLIC_AWS_DB_URL + `getuser_byid?user-id=${aws_id}`
-  );}
+return await fetcher(
+  `${process.env.NEXT_PUBLIC_AWS_URL}getuser_byid?user-id=${aws_id}`
+);}
 // Returns: Array of One User Object
 
 export const getUserCategories = async (aws_id: string) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${aws_id}`
+    `${process.env.NEXT_PUBLIC_AWS_URL}users_categories?user-id=${aws_id}`
   );
 //Returns: Array of CategoryID (id) & CategoryName (name) Objects
 
 export const getUserCreatedHuddles = async (aws_id: string) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${aws_id}`
+    `${process.env.NEXT_PUBLIC_AWS_URL}huddles_user_created?user-id=${aws_id}`
   );
 // Return: Array of Huddle Objects
 
 export const getUserGoingHuddles = async (aws_id: string) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_isgoing?user-id=${aws_id}`
+    `${process.env.NEXT_PUBLIC_AWS_URL}huddles_user_isgoing?user-id=${aws_id}`
   );
 //Return: Array of Huddle Objects
 
@@ -41,7 +40,7 @@ export const postUserInfo = async (user: User, aws_id: string) => {
     console.log('trying to post userinfo', user, aws_id);
 
     const newUserToPost = await fetch(
-      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newuser/update`,
+      `${process.env.NEXT_PUBLIC_AWS_URL}newuser/update`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -67,7 +66,7 @@ export const postUserCategory = async (
     console.log('trying to post huddle category', aws_id, userCategory);
 
     const userCategoriesPost = await fetch(
-      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories`,
+      `${process.env.NEXT_PUBLIC_AWS_URL}users_categories`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -93,7 +92,7 @@ export const deleteUser = async (aws_id: string) => {
     console.log('trying to delete user with user id: ', aws_id);
 
     const userToDelete = await fetch(
-      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user`,
+      `${process.env.NEXT_PUBLIC_AWS_URL}delete_user`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -121,7 +120,7 @@ export const deleteOneUserCategory = async (
     );
 
     const userToDelete = await fetch(
-      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user_category`,
+      `${process.env.NEXT_PUBLIC_AWS_URL}delete_user_category`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -147,7 +146,7 @@ export const deleteAllUserCategories = async (aws_id: string) => {
     console.log('trying to delete all user categories: ', aws_id);
 
     const categoriesToDelete = await fetch(
-      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_all_user_categories`,
+      `${process.env.NEXT_PUBLIC_AWS_URL}delete_all_user_categories`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -164,6 +163,15 @@ export const deleteAllUserCategories = async (aws_id: string) => {
     console.log('Error deleting all categories in DB  ', e);
   }
 };
+
+
+
+
+
+
+
+
+
 
 
 

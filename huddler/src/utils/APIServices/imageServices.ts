@@ -1,11 +1,8 @@
 export const getUploadUrl = async () => {
-  return await fetch(
-    'https://w878gqgb63.execute-api.eu-west-1.amazonaws.com/test/getPresignedUrl-test',
-    {
-      method: 'GET',
-      mode: 'cors',
-    }
-  )
+  return await fetch(`${process.env.NEXT_PUBLIC_AWS_UPLOAD_IMAGE}`, {
+    method: 'GET',
+    mode: 'cors',
+  })
     .then((res) => res.json())
     .then((uploadURL) => {
       return uploadURL;
@@ -23,4 +20,5 @@ export const uploadImgToS3 = async (uploadUrlForS3: string, file: File | {}) => 
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
+
 

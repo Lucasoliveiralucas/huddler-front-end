@@ -4,34 +4,32 @@ import { fetcher } from '../helperFunctions';
 //GET Functions
 
 export const getAllHuddles = async () =>
-  await fetcher(
-    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted'
-  );
+  await fetcher(`${process.env.NEXT_PUBLIC_AWS_URL}HuddlesFormatted`);
 //Returns: Array of Huddle Objects
 
 export const getUsersGoingToHuddle = async (huddle_id?: number) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/usersgoing?huddle-id=${huddle_id}`
+    `${process.env.NEXT_PUBLIC_AWS_URL}usersgoing?huddle-id=${huddle_id}`
   );
 // Not working
 //Returns: Array of UserId & UserName Objects
 
 export const getHuddleById = async (huddle_id: number) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/gethuddle_byid?huddle-id=${huddle_id}`
+    `${process.env.NEXT_PUBLIC_AWS_URL}gethuddle_byid?huddle-id=${huddle_id}`
   );
 //Returns: Array of One Huddle object.
 
 export const getHuddleCategories = async (id?: number) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/categories_of_huddle?huddle-id=${id}`
+    `${process.env.NEXT_PUBLIC_AWS_URL}categories_of_huddle?huddle-id=${id}`
   );
 //Returns: Array of CategoryID & CategoryName Objects
 
 //When you post a huddle the post function does not return the id yet, but it can return the date of creation. With that you can use a get to retrieve the id
 export const getIdOfHuddleByDateOfCreation = async (created_on: number) =>
   await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newhuddle/date-of-creation?date=${created_on}`
+    `${process.env.NEXT_PUBLIC_AWS_URL}newhuddle/date-of-creation?date=${created_on}`
   );
 // Returns: Array of One Object with HuddleID & UserID (author)
 
@@ -40,7 +38,7 @@ export const getIdOfHuddleByDateOfCreation = async (created_on: number) =>
 export const postHuddle = async (huddle: Huddle) => {
   try {
     const huddleToPost = await fetch(
-      'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/newhuddle',
+      `${process.env.NEXT_PUBLIC_AWS_URL}newhuddle`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -75,7 +73,7 @@ export const postHuddleCategory = async (huddleId: number, catId: number) => {
     console.log('trying to post huddle category', huddleId, catId);
 
     const huddleToPost = await fetch(
-      'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddle_category',
+      `${process.env.NEXT_PUBLIC_AWS_URL}huddle_category`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -100,7 +98,7 @@ export const postUserGoingToHuddle = async (
 ) => {
   try {
     const userToHuddle = await fetch(
-      'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/usersgoing',
+      `${process.env.NEXT_PUBLIC_AWS_URL}usersgoing`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -124,7 +122,7 @@ export const removeUserGoingToHuddle = async (
 ) => {
   try {
     const userToHuddle = await fetch(
-      'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/delete_user_huddle',
+      `${process.env.NEXT_PUBLIC_AWS_URL}delete_user_huddle`,
       {
         method: 'POST',
         mode: 'no-cors',
@@ -141,4 +139,13 @@ export const removeUserGoingToHuddle = async (
     console.log('Error checkin out user', e);
   }
 };
+
+
+
+
+
+
+
+
+
 
