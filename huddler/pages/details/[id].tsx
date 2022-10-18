@@ -77,6 +77,7 @@ const Details = ({ aws_id, user }: Props) => {
     return current == user.username;
   };
 
+
   useEffect(() => {
     socketInitializer();
     getter();

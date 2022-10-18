@@ -55,7 +55,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
           <Link
             href={{
               pathname: `/details/${huddle.id}`,
-              query: huddle.toString(),
+              query: huddle,
             }}
           >
             <a className=" underline">Event Details</a>
