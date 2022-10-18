@@ -21,13 +21,14 @@ const libraries: (
 type Props = {
   huddles?: Huddle[];
   currentPage: string;
-  // setLocation: React.Dispatch<React.SetStateAction<any>>;
+  setLocation: React.Dispatch<React.SetStateAction<any>>;
   updateList: Function;
   user: User;
 };
 export default function Map({
   huddles,
   currentPage,
+  setLocation,
   updateList,
   user,
 }: Props) {
