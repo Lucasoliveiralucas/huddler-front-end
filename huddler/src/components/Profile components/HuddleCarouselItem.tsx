@@ -59,7 +59,7 @@ function HuddleCarouselItem({
           <Link
             href={{
               pathname: `/details/${huddle.id}`,
-              query: huddle,
+              query: huddle.toString(),
             }}
           >
             <a className=' underline'>Event Details</a>

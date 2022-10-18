@@ -73,7 +73,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
         {/* <Huddles huddles={filterChoice} /> */}
         {mobileShowMap && (
           <div className="absolute lg:hidden block h-full w-full z-30">
-            <MobileMap huddles={filterChoice} user={user} updateList={updateList} />
+            <MobileMap huddles={filterChoice} user={user} updateList={updateList} currentPage={""} />
           </div>
         )}
 

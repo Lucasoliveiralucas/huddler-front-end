@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Category, Huddle } from "../../types";
 import { nowFormatted } from "../../utils/helperFunctions";
 import Image from "next/future/image";

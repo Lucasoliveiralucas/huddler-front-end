@@ -55,7 +55,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
           <Link
             href={{
               pathname: `/details/${huddle.id}`,
-              query: huddle,
+              query: huddle.toString(),
             }}
           >
             <a className=" underline">Event Details</a>
@@ -88,7 +88,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
       <div className="grid grid-cols-2 h-full">
         <div className="flex flex-col">
           <div className="h-full md:w-[24rem] flex flex-col">
-            <div className="flex rounded-lg h-32 lg:h-40 w-1/2 3xl:w-3/4 max-w-[70%] relative">
+            <div className="flex rounded-lg h-32 lg:h-40 w-2/3 3xl:w-3/4 lg:max-w-[50%] 3xl:max-w-[66%] relative">
               <Image
                 fill
                 src={huddle.image}

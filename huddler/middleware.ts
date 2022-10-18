@@ -1,15 +1,19 @@
 import { NextResponse, userAgent } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { Auth } from 'aws-amplify';
 
-export function middleware(request: NextRequest) {
+export async function middleware (request: NextRequest) {
   //auth
   // if (request.nextUrl.pathname === '/profile') {
   //   const url = request.nextUrl.clone();  
   //   url.pathname = 'profile/';
-  //   const response = NextResponse.redirect(url);
+  //   // const response = NextResponse.redirect(url);
+  //   // const { username } = await Auth.currentUserInfo();
+  //   const res = await fetch("http://localhost:3000/api/hello")
+  //   console.log(await res.status);
 
-  //   response.cookies.set('Cookies', 'Yum');
-  //   return response;
+  //   // return response;
+  //   return;
   // }
   if (request.nextUrl.pathname === '/logout') {
     const url = request.nextUrl.origin;  

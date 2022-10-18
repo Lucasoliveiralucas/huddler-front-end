@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "../../src/components/Profile components/Avatar";
 import UserInfo from "../../src/components/Profile components/UserInfo";
 import useSWR from "swr";
@@ -10,10 +10,7 @@ import { getUserById, getUserGoingHuddles } from "../../src/utils/APIServices/us
 import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
 import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
 import { withSSRContext } from 'aws-amplify';
-import { GetServerSideProps } from "next/types";
-import { NextRequest, NextResponse } from "next/server";
-import { NextApiResponse } from "next/types";
-import { NextApiRequest } from "next/types";
+import { NextApiResponse, NextApiRequest } from "next/types";
 
 type Props = {
   aws_id: string;
@@ -179,7 +176,7 @@ type Context = {
   res: NextApiResponse,
 }
 
-export const getServerSideProps:GetServerSideProps = async ({ req , res }:Context) => {
+export const getServerSideProps = async ({ req , res }:Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {

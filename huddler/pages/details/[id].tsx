@@ -210,7 +210,7 @@ const Details = ({ aws_id, user }: Props) => {
                   let time;
                   msg.timezone
                     ? (time = msg.timezone.slice(11, 16))
-                    : (time = dateFormatter(Date.now()).time.substring(0, 5));
+                    : (time = dateFormatter(Date.now().toString()).time.substring(0, 5));
                   return isMessageFromUser(msg.username) ? (
                     <div
                       key={i}

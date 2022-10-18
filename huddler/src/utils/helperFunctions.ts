@@ -63,3 +63,4 @@ export const getSession = async () => {
   const res = await Auth.currentAuthenticatedUser();
   return res.CognitoUser.username;
 };
+
