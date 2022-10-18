@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import UserImage from './UpdateUserImage';
 import { postUpdatedUserInfo } from '../../utils/APIServices/userServices';
 import { useRouter } from 'next/router';
+import { getUploadUrl, uploadImgToS3 } from '../../utils/APIServices/imageServices';
 
 type Props = {
   userData: User;
@@ -11,6 +12,7 @@ type Props = {
 const PersonalInfo = ({ userData }: Props) => {
   const [error, setError] = useState('');
   const [disabledButton, setDisabledButton] = useState(true);
+  const [newImg, setNewImg] = useState({});
 
   const router = useRouter();
   const nameRef = useRef<HTMLInputElement>(null);
@@ -21,7 +23,7 @@ const PersonalInfo = ({ userData }: Props) => {
 
   let userPersonalInfo = userData;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setError('');
@@ -50,6 +52,15 @@ const PersonalInfo = ({ userData }: Props) => {
         userPersonalInfo.last_name = lastNameRef.current.value;
       }
 
+      const data = await getUploadUrl();
+      const uploadUrl = data.uploadURL;
+      const filename = data.filename;
+      const fileURL = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/' + filename;
+      
+      userPersonalInfo.image = fileURL;
+      await uploadImgToS3(uploadUrl, newImg);
+
+
       postUpdatedUserInfo(userPersonalInfo, userData.aws_id as string);
       router.push('/profile');
     } catch {
@@ -66,6 +77,7 @@ const PersonalInfo = ({ userData }: Props) => {
             setDisabledButton={setDisabledButton}
             setError={setError}
             userPersonalInfo={userPersonalInfo}
+            setNewImg={setNewImg}
           />
           <label htmlFor='description'>Description</label>
           <textarea
