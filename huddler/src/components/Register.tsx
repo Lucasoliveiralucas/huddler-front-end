@@ -16,38 +16,49 @@ import { useAuth } from '../contexts/AuthContext';
 // Amplify.configure(awsExports);
 
 function Register({ signOut, user }: any) {
+
   // const router = useRouter()
+  
+  // Hub.listen('auth', data => {
+  //   console.log(data.payload.event);
+  //   switch (data.payload.event) {
+  //     case 'signUp':
+  //       router.push('/newuser', { shallow: true });
+  //       break;
+
+  //   }
+  // });
 
   // const [signUp, setSignUp] = useState(true)
   // useEffect(() => {
-    // Hub.listen('auth', (data) => {
-    //   const { payload } = data;
-    //   console.log(
-    //     'A newauthentication user event has happened: ',
-    //     payload.event
-    //   );
-    //   if (payload.event === 'signIn') {
-    //     console.log('User Signed In');
-    //     // // console.log('userName', currentUser.username);
-    //     setCurrentUser(user)
-    //     router.replace('/home')
-    //   }
-    //   if (payload.event === 'signOut') {
-    //     // console.log('User Signed Out');
-    //     // setCognitoUser(null);
-    //     // setCurrentUser(null);
-    //     // setIsAuthenticated(false);
-    //   }
+  // Hub.listen('auth', (data) => {
+  //   const { payload } = data;
+  //   console.log(
+  //     'A newauthentication user event has happened: ',
+  //     payload.event
+  //   );
+  //   if (payload.event === 'signIn') {
+  //     console.log('User Signed In');
+  //     // // console.log('userName', currentUser.username);
+  //     setCurrentUser(user)
+  //     router.replace('/home')
+  //   }
+  //   if (payload.event === 'signOut') {
+  //     // console.log('User Signed Out');
+  //     // setCognitoUser(null);
+  //     // setCurrentUser(null);
+  //     // setIsAuthenticated(false);
+  //   }
 
-    //   if (payload.event === 'signUp') {
-    //     console.log('User Signed Up');
-    //     // console.log('userName', currentUser.username);
-    //     // if (!currentUser.username) {
-    //     //   router.replace('/newuser');
-    //     // } else router.replace('/home');
-    //   }
-    // });
-    // loadCurrentUser();
+  //   if (payload.event === 'signUp') {
+  //     console.log('User Signed Up');
+  //     // console.log('userName', currentUser.username);
+  //     // if (!currentUser.username) {
+  //     //   router.replace('/newuser');
+  //     // } else router.replace('/home');
+  //   }
+  // });
+  // loadCurrentUser();
   // }, []);
 
   // const loadCurrentUser = async () => {
@@ -67,7 +78,7 @@ function Register({ signOut, user }: any) {
   //   // return () => {Hub.remove('auth')}
   // };
 
-  return(
+  return (
     <main className='h-auto w-auto flex flex-col items-center border-solid border-2 rounded border-indigo-600 bg-white absolute my-24 px-24 py-12 ml-[50%]'>
       <>
         <h1>Hello</h1>

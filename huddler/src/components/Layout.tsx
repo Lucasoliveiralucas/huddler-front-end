@@ -7,13 +7,11 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
-
-  const { currentUser } = useAuth()
   
   return (
     <>
       <div className='w-full h-screen flex flex-col justify-center' id="carousel">
-        { currentUser && <Navbar /> }
+        <Navbar />
         <div className='self-center h-full w-full mt-24 grid' id="carousel">
           <main>{children}</main>
         </div>

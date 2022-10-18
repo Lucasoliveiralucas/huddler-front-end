@@ -110,7 +110,13 @@ export const getServerSideProps = async ({ req, res }:Context) => {
     const recommended: Huddle[] = await recommendedForUser(username);
     const user: User[] = await getUserById(username);
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
-
+    if (!user.length) {
+      res.writeHead(302, { Location: "/" });
+      res.end();
+      return {
+        props: {},
+      };    
+    }
     return {
       props: {
         aws_id: username,

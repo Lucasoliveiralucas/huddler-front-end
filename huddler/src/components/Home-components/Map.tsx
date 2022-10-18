@@ -28,6 +28,7 @@ type Props = {
 export default function Map({
   huddles,
   currentPage,
+  setLocation,
   updateList,
   user,
   setLocation

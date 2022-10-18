@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
       if (payload.event === 'signIn') {
        loadUser()
       }
+
     });
     return () => {Hub.remove('auth')}
   }, []);
