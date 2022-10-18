@@ -6,6 +6,7 @@ import bg_img2 from "../public/bg_images/Park_img.jpg";
 import bg_img3 from "../public/bg_images/Motorcycle_img.jpeg";
 import bg_img4 from "../public/bg_images/terrace_img.jpeg";
 import Slider from "../src/components/Slider";
+import { useState } from "react";
 
 const LandingPage: NextPage = () => {
 
@@ -15,6 +16,19 @@ const LandingPage: NextPage = () => {
     bg_img3,
     bg_img4,
   ]
+
+  const [click, setClick] = useState(false);
+  const [button, setButton] = useState('Log in')
+
+  const toggle = () => {
+    if (click) {
+      setButton('Log in');
+      setClick(false);
+      return
+    }
+    setClick(true);
+    setButton('Back');
+  }
 
   return (
     <div className="w-full h-screen justify-center relative">
@@ -31,10 +45,10 @@ const LandingPage: NextPage = () => {
                        z-10
                        rounded-3xl
                        hover:scale-105
-                       " >Log in</button>
+                       " onClick={toggle}>{button}</button>
       {/* <Image alt={"image"} src={background[2]} sizes="100%" priority={true} /> */}
-      <h1 className="absolute z-10 left-[40vw] top-28 text-6xl font-extrabold text-slate-50">HUDDLER</h1>
-      {/* <Register /> */}
+      <h1 className="absolute z-[1] left-[40vw] top-28 text-6xl font-extrabold text-slate-50">HUDDLER</h1>
+      {click && <Register />}
     </div>
     
   );

@@ -20,24 +20,23 @@ const Slider = () => {
     <>
     <div className="slide-container w-screen bg-black">
       <Fade>
-        {fadeImages.map((fadeImage, i) => (
-          <>
-          <div className="absolute w-screen h-screen bg-[#1a0d05] opacity-75" key={i}></div>
-          <div className="each-fade brightness-[0.25]" key={i}
+        {fadeImages.map((fadeImage, key) => (
+          <div className="each-fade brightness-[0.25]"
+          key={key}
           style={
             {backgroundImage: `url(${fadeImage.url})`,
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
-            }}> 
+          }}> 
           </div>
-          </>
         ))}
       </Fade>
     </div>
     </>
   )
-
+  
+  {/* <div className="absolute w-screen h-screen bg-[#1a0d05] opacity-75" key={i}></div> */}
   
 
 
