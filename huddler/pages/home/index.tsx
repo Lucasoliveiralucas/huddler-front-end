@@ -1,63 +1,68 @@
 import React, { useEffect, useState } from "react";
+
+import Huddles from "../../src/components/Home-components/Huddles";
 import Map from "../../src/components/Home-components/Map";
 import { getAllHuddles } from "../../src/utils/APIServices/huddleServices";
-import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
-import { Huddle, User } from "../../src/types";
+import {
+  fetcher,
+  getSession,
+  recommendedForUser,
+} from "../../src/utils/helperFunctions";
+import { Huddle } from "../../src/types";
+// import HuddleCarousel from "../../src/components/Profile components/HuddleCarousel";
 import HuddlesNew from "../../src/components/Home-components/HuddlesNew";
+import NewHuddleCard from "../../src/components/Home-components/NewHuddleCard";
+import useSWR from "swr";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import MobileMap from "../../src/components/Home-components/MobileMap";
-import { withSSRContext } from "aws-amplify";
-import { NextApiResponse, NextApiRequest } from 'next';
-import {
-  getUserById,
-  getUserGoingHuddles,
-} from "../../src/utils/APIServices/userServices";
-import { GetServerSideProps } from "next";
+import { useAuth } from "../../src/contexts/AuthContext";
+import { Auth, withSSRContext } from "aws-amplify";
+import DropdownMenu from '../../src/components/Home-components/DropdownMenu';
+
 
 type Props = {
   recommended: Huddle[];
   huddlesUserIsGoing: Huddle[];
-  huddles: Huddle[];
-  goingTo: Huddle[];
-  user: User;
 };
 
-function Home({ recommended, huddles, user, goingTo }: Props) {
-  const [filterChoice, setFilterChoice] = useState<Huddle[]>(huddles); //by default recommended
+
+
+function Home({ recommended }: Props) {
+  const { currentUser } = useAuth();
+  const [filterChoice, setFilterChoice] = useState<Huddle[]>(recommended); //by default recommended
+  const { data: userCreatedHuddles, error: userHuddleError } = useSWR(
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${currentUser}`,
+    fetcher
+  );
+
+  const getter = async () => {
+    const data = await getAllHuddles();
+    setFilterChoice(data);
+  };
+  const [update, setUpdate] = useState(false);
   const [mobileShowMap, setMobileShowMap] = useState(false);
-  const [huddlesUserIsGoing, setHuddlesUserIsGoing] =
-    useState<Huddle[]>(goingTo);
-
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>();
   useEffect(() => {
-    setHuddlesUserIsGoing(goingTo);
-    if (recommended.length) {
-      setFilterChoice(recommended);
-    }
-    console.log(huddlesUserIsGoing);
-  }, []);
+    getter();
+    console.log("no loop pls");
+  }, [update]);
 
-  const updateList = async () => {
-    const response = await getUserGoingHuddles(user.aws_id);
-    setHuddlesUserIsGoing(await response);
-    console.log(huddlesUserIsGoing);
-  };
-
-  const setToAllHuddles = async () => {
-    try {
-      const data = await getAllHuddles();
-      setFilterChoice(data);
-    } catch (err) {}
-    return;
-  };
+  // if user uses another filter let's call a function that does it.
+  if (userHuddleError) return <div>failed to load</div>;
+  if (!userCreatedHuddles || !recommended) return <div>loading...</div>;
 
   return (
     <div className="sm:block md:flex xl:gap-10 mt-6 relative h-full md:px-24 lg:px-1 2xl:px-5">
       <div className="max-h-[87vh] overflow-y-auto w-full" id="carousel">
         <div className="flex p-5 mb-2 shadow-md justify-around md:justify-start">
-          <button className="mr-4" onClick={() => setFilterChoice(recommended)}>
+          <button
+            className="mr-4"
+            onClick={(e) => setFilterChoice(recommended)}
+          >
             Recommended
           </button>
-          <button onClick={() => setToAllHuddles()}>All Huddles</button>
+          <button onClick={(e) => getter()}>All Huddles</button>
+          <DropdownMenu setFilterChoice={setFilterChoice}/>
           <button
             onClick={() => setMobileShowMap(!mobileShowMap)}
             className="lg:hidden"
@@ -73,20 +78,19 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
         {/* <Huddles huddles={filterChoice} /> */}
         {mobileShowMap && (
           <div className="absolute lg:hidden block h-full w-full z-30">
-            <MobileMap huddles={filterChoice} user={user} updateList={updateList} />
+            <MobileMap huddles={filterChoice} />
           </div>
         )}
 
         <HuddlesNew
           huddles={filterChoice}
-          updateList={updateList}
+          update={update}
           huddlesUserIsGoing={huddlesUserIsGoing}
-          id={user.aws_id}
         />
       </div>
 
       <div className="mt-16 hidden lg:flex ">
-        <Map huddles={filterChoice} user={user} updateList={updateList} />
+        <Map huddles={filterChoice} update={update} />
       </div>
     </div>
   );
@@ -94,13 +98,8 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
 
 export default Home;
 
-type Context = {
-  req: NextApiRequest;
-  res: NextApiResponse;
-}
-
-export const getServerSideProps = async ({ req, res }:Context) => {
-  const { Auth } = withSSRContext({ req });
+export const getServerSideProps = async (context) => {
+  const { Auth } = withSSRContext(context);
 
   try {
     const huddles: Huddle[] = await fetcher(
@@ -108,30 +107,21 @@ export const getServerSideProps = async ({ req, res }:Context) => {
     );
     const { username } = await Auth.currentUserInfo();
     const recommended: Huddle[] = await recommendedForUser(username);
-    const user: User[] = await getUserById(username);
-    const goingTo: Huddle[] = await getUserGoingHuddles(username);
-    if (!user.length) {
-      res.writeHead(302, { Location: "/" });
-      res.end();
-      return {
-        props: {},
-      };    
-    }
     return {
       props: {
-        aws_id: username,
+        authenticated: true,
         username,
-        user: user.pop(),
         recommended,
-        goingTo,
         huddles,
       },
     };
   } catch (err) {
-    res.writeHead(302, { Location: "/" });
-    res.end();
     return {
-      props: {},
+      props: {
+        authenticated: false,
+        recommended: [],
+        huddles: [],
+      },
     };
   }
 };
