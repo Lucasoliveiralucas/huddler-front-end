@@ -88,7 +88,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
       <div className="grid grid-cols-2 h-full">
         <div className="flex flex-col">
           <div className="h-full md:w-[24rem] flex flex-col">
-            <div className="flex rounded-lg h-32 lg:h-40 w-1/2 3xl:w-3/4 relative">
+            <div className="flex rounded-lg h-32 lg:h-40 w-1/2 3xl:w-3/4 max-w-[70%] relative">
               <Image
                 fill
                 src={huddle.image}
@@ -98,7 +98,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
                        (max-width: 1800px) 230px,
                        300px"
                 placeholder="empty"
-                className="rounded-lg object-contain object-left"
+                className="rounded-lg object-left"
               />
             </div>
             <p className="hidden md:block">attending: {data.attending}</p>
