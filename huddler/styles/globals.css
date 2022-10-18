@@ -28,3 +28,19 @@
 .default-nav {
   display: none !important;
 }
+
+.orange-button {
+  color: white;
+  background-color: #ff8303;
+  border-radius: 24px;
+  padding: 8px;
+  padding-right: 24px;
+  padding-left: 24px;
+  cursor: pointer;
+  transition: transform 0.1;
+}
+
+.orange-button:hover {
+  transform: scale(0.95);
+  font-weight: bold;
+}

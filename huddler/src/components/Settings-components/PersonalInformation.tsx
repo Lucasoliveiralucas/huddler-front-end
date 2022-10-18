@@ -110,13 +110,16 @@ const PersonalInfo = ({ userData }: Props) => {
           />
           <br />
           <div className='flex justify-center'>
-            <button
+            <button className='orange-button' type='submit' disabled={disabledButton}>
+              Submit
+            </button>
+            {/* <button
               className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
               type='submit'
               disabled={disabledButton}
             >
               Submit
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

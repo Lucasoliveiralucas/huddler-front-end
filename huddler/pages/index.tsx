@@ -33,19 +33,7 @@ const LandingPage: NextPage = () => {
   return (
     <div className="w-full h-screen justify-center relative">
       <Slider></Slider>
-      <button className="cursor-pointer
-                       text-white
-                       bg-palette-orange
-                       absolute
-                       transform
-                       top-10
-                       right-10
-                       px-6
-                       p-2
-                       z-10
-                       rounded-3xl
-                       hover:scale-105
-                       " onClick={toggle}>{button}</button>
+      <button className="orange-button absolute transform top-10 right-10 z-10" onClick={toggle}>{button}</button>
       {/* <Image alt={"image"} src={background[2]} sizes="100%" priority={true} /> */}
       <h1 className="absolute z-[1] left-[40vw] top-28 text-6xl font-extrabold text-slate-50">HUDDLER</h1>
       {click && <Register />}

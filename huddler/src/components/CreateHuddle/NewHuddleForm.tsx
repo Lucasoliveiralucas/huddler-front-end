@@ -170,7 +170,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           autoComplete="on"
           required
         />
-        <label htmlFor="categories" className="mt-2">
+        <label htmlFor="categories" className="mt-6">
           Pick the tags of your huddle
         </label>
         {allCategories[0] ? (
@@ -245,8 +245,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         />
         <div className="flex">
           <div className="flex flex-col mt-2">
-            <label htmlFor="images">
-              Do you want images to show in your huddle?
+            <label htmlFor="images" className="mb-4">
+              Add images to your huddle:
             </label>
             <input
               className="border-none"
@@ -270,12 +270,13 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             </figure>
           )}
         </div>
-        <button
+        <button className="orange-button mt-6" type="submit">Submit</button>
+        {/* <button
           className="border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white font-medium mt-2"
           type="submit"
         >
           Submit
-        </button>
+        </button> */}
       </form>
     </main>
   );

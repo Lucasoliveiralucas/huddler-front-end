@@ -65,7 +65,7 @@ function NewHuddleCard({
             </button>
           ) : (
             <button
-              className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
+              className="justify-center orange-button"
               onClick={(e) => {
                 setGoing(!going);
                 postUserGoingToHuddle(id, huddle.id);
@@ -97,7 +97,7 @@ function NewHuddleCard({
                 return (
                   i <= 3 && (
                     <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+                      className="text-center font-bold py-0.5 w-3/4 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark"
                       key={category.id + (i - i)}
                     >
                       {category.name}
