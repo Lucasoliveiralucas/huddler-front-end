@@ -3,11 +3,13 @@ import dayjs from "dayjs";
 import { Category } from "../types";
 import { getHuddlesInCategory } from "./APIServices/categoryServices";
 import { getUserCategories } from "./APIServices/userServices";
+import { getUploadUrl } from "./APIServices/imageServices";
 
 // 1. Fetcher
 // 2. Recommended Huddles
 // 3. Dates handler
 // 4. Sort by name, any array of objects that contains the field name
+// 5. Get url of images
 
 // 1. Fetcher
 export const fetcher = async (...args: string[]) => {
@@ -63,3 +65,14 @@ export const getSession = async () => {
   const res = await Auth.currentAuthenticatedUser();
   return res.CognitoUser.username;
 };
+
+// 5. Get url of images
+
+export const getImageUrl = async () => {
+  const data = await getUploadUrl();
+    const uploadUrl = data.uploadURL
+    const filename = data.filename
+    const imgUrl = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/'+filename
+  return await { imgUrl, uploadUrl }
+}
+

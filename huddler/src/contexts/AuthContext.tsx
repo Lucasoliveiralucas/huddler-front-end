@@ -13,51 +13,75 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [firstTime, setFirstTime] = useState(false)
   const router = useRouter();
 
   useEffect(() => {
+    console.log('Hub initialized')
     Hub.listen('auth', (data) => {
       const { payload } = data;
-      if (payload.event === 'signIn') {
-        console.log('User Signed In');
-        loadCurrentUser();
-      }
-
       if (payload.event === 'signOut') {
         console.log('User Signed Out');
       }
 
-      if (payload.event === 'signUp') {
-        console.log('User Signed Up');
-        firstTimeUser();
+      if (payload.event === 'signIn') {
+       loadUser()
       }
     });
+    return () => {Hub.remove('auth')}
   }, []);
 
-  const loadCurrentUser = async () => {
-    try {
-      const userLoggedIn = await Auth.currentAuthenticatedUser();
+  const signDetector = (
+    user,
+    username,
+    email,
+    setIsAuthenticated,
+    setCurrentUser,
+    router
+  ) => {
+    if (user.username !== undefined) {
+      console.log('User already logged in');
       setIsAuthenticated(true);
-      const user = await getUserById(userLoggedIn.username);
       setCurrentUser(user);
       router.replace('/home');
-    } catch (error) {
-      console.error('Error trying to signin. Check in AuthContext');
+      return;
     }
-    setIsLoading(false);
+    console.log('First time user');
+    // if first time
+    setIsAuthenticated(true);
+    setCurrentUser({ email: email, aws_id: username });
+    router.replace('/newuser');
+    return;
   };
-  const firstTimeUser = async () => {
+
+  const loadUser = async () => {
     try {
       const { username, attributes } = await Auth.currentUserInfo();
-      setIsAuthenticated(true);
-      setCurrentUser({ email: attributes.email, aws_id: username });
-      router.replace('/newuser');
+      const user = await getUserById(username);
+      console.log('this is user', user)
+      // check if user already exists
+      const usr = {...user[0]}
+      console.log('this is usr', usr)
+      setTimeout(signDetector, 1000, usr, username, attributes.email, setIsAuthenticated, setCurrentUser, router)
     } catch (error) {
       console.error('Error trying to signup. Check in AuthContext');
     }
     setIsLoading(false);
   };
+
+  // const signDetector = (user, username, email) => {
+  //   if (user.username) {
+  //     setIsAuthenticated(true);
+  //     setCurrentUser(user);
+  //     router.replace('/home');
+  //     return;
+  //   }
+  //   // if first time
+  //   setIsAuthenticated(true);
+  //   setCurrentUser({ email: email, aws_id: username });
+  //   router.replace('/newuser');
+  //   return;
+  // }
 
   const logOut = async () => {
     await Auth.signOut();
@@ -83,4 +107,9 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+
+
+
+
 
