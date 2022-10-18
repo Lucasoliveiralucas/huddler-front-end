@@ -12,6 +12,8 @@ import HuddleCarouselItem from "../../src/components/Profile components/HuddleCa
 import { withSSRContext } from 'aws-amplify';
 import { GetServerSideProps } from "next/types";
 import { NextRequest, NextResponse } from "next/server";
+import { NextApiResponse } from "next/types";
+import { NextApiRequest } from "next/types";
 
 type Props = {
   aws_id: string;
@@ -173,8 +175,8 @@ function Profile({
 export default Profile;
 
 type Context = {
-  req: NextRequest,
-  res: NextResponse,
+  req: NextApiRequest,
+  res: NextApiResponse,
 }
 
 export const getServerSideProps:GetServerSideProps = async ({ req , res }:Context) => {
@@ -186,6 +188,13 @@ export const getServerSideProps:GetServerSideProps = async ({ req , res }:Contex
     const recommended: Huddle[] = await recommendedForUser(username);
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
     const user: User[] = await getUserById(username);
+    if (!user.length) {
+      res.writeHead(302, { Location: "/" });
+      res.end();
+      return {
+        props: {},
+      };
+    }
     return {
       props: {
         aws_id: username,
