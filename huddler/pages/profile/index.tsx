@@ -176,9 +176,11 @@ type Context = {
   res: NextApiResponse,
 }
 
-export const getServerSideProps = async ({ req , res }:Context) => {
-  const { Auth } = withSSRContext({ req });
+export const getServerSideProps = async ({ req, res, resolvedUrl }:Context) => {
 
+  const { Auth } = withSSRContext({ req });
+  console.log(resolvedUrl)
+  
   try {
     const huddles: Huddle[] = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted");
     const { username } = await Auth.currentUserInfo();
