@@ -31,7 +31,6 @@ export default function Map({
   setLocation,
   updateList,
   user,
-  setLocation
 }: Props) {
   // const { currentUser } = useAuth();
   // const [user, setUser] = useState<User>();
