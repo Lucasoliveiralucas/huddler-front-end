@@ -64,10 +64,9 @@ const Details = ({ aws_id, user }: Props) => {
   useEffect(() => {
     socketInitializer();
     getter();
-    scroll();
   }, []);
   useEffect(() => {
-    if (chatMsg && updateMsg) {
+    if (chatMsg && updateMsg && chatMsg[0]) {
       if (chatMsg[chatMsg.length - 1].message == updateMsg.message) return;
 
       setChatMsg([
@@ -78,9 +77,11 @@ const Details = ({ aws_id, user }: Props) => {
           username: updateMsg.username,
         },
       ]);
-      scroll();
     }
   }, [updateMsg]);
+  useEffect(() => {
+    scroll();
+  }, [chatMsg]);
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -108,15 +109,23 @@ const Details = ({ aws_id, user }: Props) => {
           className="rounded-lg h-[13rem] w-[18rem] my-4"
           alt={huddle.name}
         />{" "}
+        <p className="my-2 text-4xl">Description:</p>
         <p className="text-2xl mb-2">{huddle.description}</p>
+        <p className="my-2 text-4xl">Where:</p>
         <p className="text-2xl">{huddle.address}</p>
-        {categories ? (
-          categories.map((category) => {
-            return <p>{category.name}</p>;
-          })
-        ) : (
-          <></>
-        )}
+        <div className="grid grid-cols-3 gap-x-4 gap-y-2 mr-3 mt-2 mb-2 w-full">
+          {categories ? (
+            categories.map((category) => {
+              return (
+                <p className="text-center py-1 bg-palette-dark rounded-md text-white">
+                  {category.name}
+                </p>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </div>
         <p className="mt-4 text-4xl">Created By: </p>
         <div className="flex mb-4">
           <div className="relative h-12 w-12">
@@ -154,38 +163,40 @@ const Details = ({ aws_id, user }: Props) => {
       </div>
       <div id="huddle-chat" className="grid grid-cols-1 w-full mb-24">
         <div className="border border-palette-orange  mx-14 my-24 p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 relative">
-          <div className="h-[55rem] overflow-auto">
-            {chatMsg ? (
-              chatMsg.map((msg, i) => {
-                let time;
-                msg.time_of_creation
-                  ? (time = msg.time_of_creation.slice(11))
-                  : (time = "");
-                return isMessageFromUser(msg.username) ? (
-                  <div className="text-end bg-palette-orange ml-auto mr-0 mb-4 max-w-[60%] px-2 rounded-xl shadow-md">
-                    {/* <p className="py-1 font-medium">{msg.username}</p> */}
-                    <div className="flex pb-4 pt-2 justify-between">
-                      {time ? <p className="opacity-60">{time}</p> : <></>}
-                      <p id={i + ""} key={i}>
-                        {msg.message}
-                      </p>
+          <div className="table-cell align-bottom h-[55rem] w-screen">
+            <div className="max-h-[55rem] overflow-auto ">
+              {chatMsg ? (
+                chatMsg.map((msg, i) => {
+                  let time;
+                  msg.time_of_creation
+                    ? (time = msg.time_of_creation.slice(11, 16))
+                    : (time = dateFormatter(Date.now()).time.substring(0, 5));
+                  return isMessageFromUser(msg.username) ? (
+                    <div className="text-end bg-palette-orange bg-opacity-50 ml-auto mr-0 mb-4 max-w-[60%] px-2 rounded-xl shadow-md">
+                      {/* <p className="py-1 font-medium">{msg.username}</p> */}
+                      <div className="flex pb-4 pt-6 justify-between">
+                        {time ? <p className="opacity-60">{time}</p> : <></>}
+                        <p id={i + ""} key={i}>
+                          {msg.message}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className=" bg-palette-dark max-w-[60%] mb-4 p-2 pt-1 rounded-xl shadow-md">
-                    <p className="py-1 font-medium">{msg.username}</p>
-                    <div className="flex justify-between">
-                      <p id={i + ""} key={i}>
-                        {msg.message}
-                      </p>
-                      <p className="opacity-60">{time}</p>{" "}
+                  ) : (
+                    <div className=" bg-palette-dark bg-opacity-30 max-w-[60%] mb-4 p-2 pt-1 rounded-xl shadow-md">
+                      <p className="py-1 font-medium">{msg.username}</p>
+                      <div className="flex justify-between">
+                        <p id={i + ""} key={i}>
+                          {msg.message}
+                        </p>
+                        <p className="opacity-60">{time}</p>{" "}
+                      </div>
                     </div>
-                  </div>
-                );
-              })
-            ) : (
-              <></>
-            )}
+                  );
+                })
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
           <div className="inset-x-0 bottom-0 mb-6 rounded-xl h-12 bg-palette-dark bg-opacity-20 grid  content-center">
             <form onSubmit={(e) => submitHandler(e)}>
