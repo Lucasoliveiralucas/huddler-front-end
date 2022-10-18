@@ -14,12 +14,12 @@ const SettingsPage = () => {
   const router = useRouter();
 
   //@ts-ignore
-  const { currentUser, isAuthenticated, isLoading, logOut } = useAuth();
+  const { currentUser, isAuthenticated, isLoading } = useAuth();
   const [userData, setUserData] = useState<User>(currentUser);
   const [option, setOption] = useState('information');
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (isLoading && !isAuthenticated) {
       router.replace('/');
       return;
     }
@@ -32,7 +32,7 @@ const SettingsPage = () => {
     }
   }, [currentUser]);
 
-  return (
+  return currentUser ? (
     <main className='flex h-screen justify-center items-center'>
       <OptionsMenu setOption={setOption} />
 
@@ -51,7 +51,7 @@ const SettingsPage = () => {
       {option === 'interests' && <UpdateInterests userData={userData} />}
       {option === 'delete' && <DeleteUser userData={userData} />}
     </main>
-  );
+  ) : null;
 };
 
 export default SettingsPage;

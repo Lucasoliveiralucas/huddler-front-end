@@ -33,7 +33,7 @@ const UpdateLocation = ({
       };
       setUserData(updatedUser)
       updatedUser && await postUpdatedUserInfo(updatedUser, userData.aws_id as string);
-      // router.push('/profile');
+      router.push('/profile');
     
     } catch {
       setError("We weren't able to update your location. Please try again");
