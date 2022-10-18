@@ -58,6 +58,9 @@ function MainForm() {
     await postUserInfo(formData, userData.aws_id);
     setCurrentUser(formData)
     // // posting the categories to new huddle
+    categoriesPicked.forEach((category) => {
+      postUserCategory(userData.aws_id, category.id as number);
+    });
     router.replace('/home')
   };
 
