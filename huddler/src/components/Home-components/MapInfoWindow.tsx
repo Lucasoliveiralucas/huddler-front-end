@@ -1,6 +1,6 @@
 import { InfoWindowF } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
-import { Huddle} from "../../types";
+import { Huddle } from "../../types";
 import Image from "next/future/image";
 import {
   getUsersGoingToHuddle,
@@ -11,12 +11,17 @@ import { dateFormatter } from "../../utils/helperFunctions";
 
 type Props = {
   showHuddle: Huddle | undefined;
-  id: string;
+  id: string | undefined;
   updateList: Function;
   setShowHuddle: React.Dispatch<React.SetStateAction<Huddle | undefined>>;
 };
 
-export const MapInfoWindow = ({ showHuddle, setShowHuddle, id , updateList}: Props) => {
+export const MapInfoWindow = ({
+  showHuddle,
+  setShowHuddle,
+  id,
+  updateList,
+}: Props) => {
   const [checkedIn, setCheckedIn] = useState(false);
   const [dateTime, setDateTime] = useState<any>();
   const [goingToHuddle, setGoingToHuddle] = useState<number>();
@@ -73,12 +78,13 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, id , updateList}: Pro
               <button
                 className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
+                  //@ts-ignore
                   const val = goingToHuddle - 1;
                   setGoingToHuddle(val);
                   setCheckedIn(false);
+                  //@ts-ignore
                   removeUserGoingToHuddle(id, showHuddle.id as number);
                   updateList();
-
                 }}
               >
                 Check out
@@ -87,9 +93,11 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, id , updateList}: Pro
               <button
                 className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
+                  //@ts-ignore
                   const val = goingToHuddle + 1;
                   setGoingToHuddle(val);
                   setCheckedIn(true);
+                  //@ts-ignore
                   postUserGoingToHuddle(id, showHuddle.id as number);
                   updateList();
                 }}

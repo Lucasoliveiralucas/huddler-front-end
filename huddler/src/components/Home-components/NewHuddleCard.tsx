@@ -55,6 +55,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
           <Link
             href={{
               pathname: `/details/${huddle.id}`,
+              // @ts-ignore
               query: huddle,
             }}
           >

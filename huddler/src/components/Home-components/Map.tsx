@@ -21,7 +21,9 @@ const libraries: (
 type Props = {
   huddles?: Huddle[];
   currentPage?: string;
-  setLocation?: React.Dispatch<React.SetStateAction<{name: string, lat: number, lng: number}>>;
+  setLocation?: React.Dispatch<
+    React.SetStateAction<{ name: string; lat: number; lng: number }>
+  >;
   updateList?: Function;
   user?: User;
 };
@@ -188,7 +190,7 @@ export default function Map({
             huddles.map((huddle: Huddle) => {
               return (
                 <MarkerF
-                  key={huddle.id + ''}
+                  key={huddle.id + ""}
                   position={{
                     lat: Number(huddle.latitude),
                     lng: Number(huddle.longitude),
@@ -205,9 +207,11 @@ export default function Map({
             <></>
           )}
           <MapInfoWindow
+            //@ts-ignore
             id={user.aws_id}
             showHuddle={showHuddle}
             setShowHuddle={setShowHuddle}
+            //@ts-ignore
             updateList={updateList}
           />
         </GoogleMap>
@@ -220,8 +224,8 @@ export default function Map({
 type Context = {
   req: NextApiRequest;
   res: NextApiResponse;
-}
-export const getServerSideProps = async ({ req, res }:Context) => {
+};
+export const getServerSideProps = async ({ req, res }: Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {
@@ -240,4 +244,3 @@ export const getServerSideProps = async ({ req, res }:Context) => {
     };
   }
 };
-
