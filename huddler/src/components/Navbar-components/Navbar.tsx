@@ -46,7 +46,7 @@ function Navbar() {
         </a>
       </Link>
       <div className="w-20 h-20 relative">
-      {currentUser &&
+
         <Image
           src={currentUser ? currentUser[0].image : DefaultUserImage}
           alt='user-image'
@@ -59,7 +59,7 @@ function Navbar() {
                        100px"
           priority={true}
         />
-      }
+      
         {showDropDown && <Dropdown setShowDropDown={setShowDropDown} />}
       </div>
     </div>

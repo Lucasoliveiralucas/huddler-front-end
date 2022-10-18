@@ -11,7 +11,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^3.5.7",
     "@react-google-maps/api": "^2.13.1",
-    "aws-amplify": "^4.3.37",
+    "aws-amplify": "^4.3.39",
     "dayjs": "^1.11.5",
     "dotenv": "^16.0.3",
     "googleapis": "^108.0.0",
