@@ -212,6 +212,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             </ul>
           </div>
         }
+        {/* @ts-ignore  */}
         <TagList setAllCategories={setAllCategories} />
         <label className="mt-2" htmlFor="where">
           Where?

@@ -1,3 +1,4 @@
+//@ts-ignore
 import HuddleCard from "./HuddleCard";
 import { useState } from "react";
 import { Huddle } from "../../types";
@@ -18,7 +19,7 @@ function Huddles({ huddles }: Props) {
   };
 
   return (
-    <div className=''>
+    <div className="">
       {huddles.map((huddle: any) => (
         <HuddleCard
           item={huddle}
