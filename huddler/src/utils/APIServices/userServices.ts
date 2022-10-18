@@ -9,10 +9,11 @@ export const getAllUsers = async () =>
   );
 //Returns: Array of User Objects
 
-export const getUserById = async (aws_id: string) =>
-  await fetcher(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getuser_byid?user-id=${aws_id}`
-  );
+export const getUserById = async (aws_id: string) => {
+  const url = process.env.NEXT_PUBLIC_AWS_DB_URL
+  console.log('url', url)
+return await fetcher(process.env.NEXT_PUBLIC_AWS_DB_URL + `getuser_byid?user-id=${aws_id}`
+  );}
 // Returns: Array of One User Object
 
 export const getUserCategories = async (aws_id: string) =>
@@ -158,6 +159,7 @@ export const deleteAllUserCategories = async (aws_id: string) => {
     console.log('Error deleting all categories in DB  ', e);
   }
 };
+
 
 
 
