@@ -10,6 +10,7 @@ import { postUserInfo, postUserCategory, getUserById } from '../../utils/APIServ
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
 
 import { useAuth } from '../../contexts/AuthContext';
+import { getImageUrl } from '../../utils/helperFunctions';
 
 
 
@@ -40,15 +41,18 @@ function MainForm() {
   };
 
   const handleSubmit = async () => {
-    const data = await getUploadUrl();
-    const uploadUrl = data.uploadURL
-    const filename = data.filename
-    const fileURL = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/'+filename
+    // const data = await getUploadUrl();
+    // const uploadUrl = data.uploadURL
+    // const filename = data.filename
+    // const fileURL = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/'+filename
 
-    setUserData({ ...userData, image: fileURL});
+    const {imgUrl, uploadUrl} = getImageUrl()
+    console.log('this is the image url ', imgUrl);
+    console.log('this is the upload url ', uploadUrl);
+    setUserData({ ...userData, image: imgUrl});
     await uploadImgToS3(uploadUrl, userImg); 
 
-    const formData = {...userData, image: fileURL};
+    const formData = {...userData, image: imgUrl};
     console.log('This is userData', userData)
   
    
