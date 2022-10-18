@@ -32,7 +32,9 @@ export const AuthProvider = ({ children }) => {
         console.log('User Signed Up');
         firstTimeUser();
       }
+
     });
+    return () => {Hub.remove('auth')}
   }, []);
 
   const loadCurrentUser = async () => {

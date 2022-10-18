@@ -7,8 +7,6 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
-
-  const { currentUser } = useAuth()
   
   return (
     <>

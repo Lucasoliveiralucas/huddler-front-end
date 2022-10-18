@@ -46,9 +46,9 @@ function Navbar() {
         </a>
       </Link>
       <div className="w-20 h-20 relative">
-
+           
         <Image
-          src={currentUser.image || DefaultUserImage}
+          src={currentUser && currentUser.image ? currentUser.image : DefaultUserImage}
           alt='user-image'
           fill
           className=' rounded-full p-1 cursor-pointer'

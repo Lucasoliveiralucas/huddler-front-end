@@ -83,7 +83,7 @@ function NewHuddleCard({
       </div>
       <div className="grid grid-cols-2 h-full">
         <div className="flex flex-col">
-          <div className="h-full md:w-[24rem]">
+          <div className="h-full md:w-[24rem] flex flex-col">
             <div className="flex rounded-lg h-32 lg:h-40 md:w-3/4 relative">
               <Image
                 fill
@@ -93,7 +93,7 @@ function NewHuddleCard({
                        (max-width: 1200px) 230px,
                        300px"
                 placeholder="empty"
-                className="rounded-lg object-contain"
+                className="rounded-lg object-contain object-left"
               />
             </div>
             <p className="hidden md:block">attending: {data.attending}</p>
