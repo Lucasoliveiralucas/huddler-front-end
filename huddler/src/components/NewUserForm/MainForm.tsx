@@ -20,7 +20,7 @@ function MainForm() {
   const { setCurrentUser, currentUser } = useAuth()
   const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
   const [categoriesPicked, setCategoriesPicked] = useState<Category[]>([]);
-  const [userData, setUserData] = useState<any>(...currentUser);
+  const [userData, setUserData] = useState<any>(currentUser);
   console.log('this is userData', userData)
 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,15 +49,15 @@ function MainForm() {
     await uploadImgToS3(uploadUrl, userImg); 
 
     const formData = {...userData, image: fileURL};
-    // await postUserInfo(formData, aws_idRef.current);
-    // @ts-ignore
+    console.log('This is userData', userData)
+  
+   
+    // posting new user info to db
     await postUserInfo(formData, userData.aws_id);
-    // // posting the categories to new huddle
+    
+    // posting the categories to new huddle
     categoriesPicked.forEach((category) => {
-      // postUserCategory(aws_idRef.current, category.id as number);
-      // @ts-ignore
       postUserCategory(userData.aws_id, category.id as number);
-      setCurrentUser(userData)
     });
     Router.replace('./home');
   };

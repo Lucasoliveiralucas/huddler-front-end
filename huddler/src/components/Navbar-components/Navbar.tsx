@@ -9,7 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
   const {currentUser} = useAuth()
- 
+  // console.log('imageeeee', currentUser[0].image)
   // const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -45,7 +45,7 @@ function Navbar() {
       <div className="w-20 h-20 relative">
       {currentUser &&
         <Image
-          src={currentUser ? currentUser[0].image : DefaultUserImage}
+          src={DefaultUserImage}
           alt='user-image'
           fill
           className=' rounded-full p-1 cursor-pointer p-3'

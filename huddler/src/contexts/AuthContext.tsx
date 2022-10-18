@@ -11,53 +11,50 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [cognitoUser, setCognitoUser] = useState<any>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  // const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  useEffect(() => {
-    // Hub.listen('auth', (data) => {
-    //   const { payload } = data;
-    //   console.log(
-    //     'A newauthentication user event has happened: ',
-    //     payload.event
-    //   );
-    //   if (payload.event === 'signIn') {
-    //     console.log('User Signed In');
-    //     // console.log('userName', currentUser.username);
-    //     loadCurrentUser();
-    //   }
-    //   if (payload.event === 'signOut') {
-    //     console.log('User Signed Out');
-    //     setCognitoUser(null);
-    //     setCurrentUser(null);
-    //     setIsAuthenticated(false);
-    //   }
 
-    //   if (payload.event === 'signUp') {
-    //     console.log('User Signed In');
-    //     console.log('userName', currentUser.username);
-    //     if (!currentUser.username) {
-    //       router.replace('/newuser');
-    //     } else router.replace('/home');
-    //   }
-    // });
-    loadCurrentUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    Hub.listen('auth', (data) => {
+      const { payload } = data;
+      if (payload.event === 'signIn') {
+        console.log('User Signed In');
+        loadCurrentUser();
+      }
+
+      if (payload.event === 'signOut') {
+        console.log('User Signed Out');
+      }
+
+      if (payload.event === 'signUp') {
+        console.log('User Signed Up');
+        firstTimeUser();
+      }
+    });
   }, []);
 
   const loadCurrentUser = async () => {
     try {
       const userLoggedIn = await Auth.currentAuthenticatedUser();
       setIsAuthenticated(true);
-      setCognitoUser(userLoggedIn);
       const user = await getUserById(userLoggedIn.username);
       setCurrentUser(user);
       router.replace('/home');
     } catch (error) {
-      console.error(
-        'Error in cognito trying to signup or signin. Check in AuthContext'
-      );
+      console.error('Error trying to signin. Check in AuthContext');
+    }
+    setIsLoading(false);
+  };
+  const firstTimeUser = async () => {
+    try {
+      const { username, attributes } = await Auth.currentUserInfo();
+      setIsAuthenticated(true);
+      setCurrentUser({ email: attributes.email, aws_id: username });
+      router.replace('/newuser');
+    } catch (error) {
+      console.error('Error trying to signup. Check in AuthContext');
     }
     setIsLoading(false);
   };
@@ -66,10 +63,10 @@ export const AuthProvider = ({ children }) => {
     await Auth.signOut();
     setIsAuthenticated(false);
     setCurrentUser(null);
-    setCognitoUser(null);
     router.replace('/');
     return;
   };
+
   const changePassword = async (user: any, oldPsw: any, newPsw: any) => {
     console.log('Password is being changed');
     return await Auth.changePassword(user, oldPsw, newPsw);
@@ -79,7 +76,6 @@ export const AuthProvider = ({ children }) => {
     currentUser,
     isAuthenticated,
     isLoading,
-    cognitoUser,
     setCurrentUser,
     changePassword,
     logOut,
