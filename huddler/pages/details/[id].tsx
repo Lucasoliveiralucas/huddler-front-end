@@ -6,6 +6,8 @@ import { dateFormatter } from "../../src/utils/helperFunctions";
 import {
   getHuddleCategories,
   getUsersGoingToHuddle,
+  postUserGoingToHuddle,
+  removeUserGoingToHuddle,
 } from "../../src/utils/APIServices/huddleServices";
 import { getUserById } from "../../src/utils/APIServices/userServices";
 import io, { Socket } from "socket.io-client";
@@ -29,19 +31,27 @@ const Details = ({ aws_id, user }: Props) => {
   const [users, setUsers] = useState<any>();
   const [creator, setCreator] = useState<User>();
   const [categories, setCategories] = useState<Category[]>();
+  const [going, setGoing] = useState<string>();
   // @ts-ignore
   const huddle: Huddle = useRouter().query;
 
   const dateTime = dateFormatter(huddle.day_time);
-  const getter = async () => {
+  const getter = async (stop: boolean) => {
     const usersGoingTo = await getUsersGoingToHuddle(huddle.id);
     setUsers(usersGoingTo);
+    if (stop) return;
     const createdBy = await getUserById(huddle.fk_author_id);
     setCreator(createdBy[0]);
     const allMsgs = await getMsgsFromHuddle(huddle.id);
     setChatMsg(allMsgs);
     const categories = await getHuddleCategories(huddle.id);
     setCategories(categories);
+    usersGoingTo.find((users: User) => {
+      console.log(users);
+      return (users.aws_id = aws_id);
+    })
+      ? setGoing("Join")
+      : setGoing("Leave");
   };
   const socketInitializer = async () => {
     await fetch(`/api/chat/chat`);
@@ -66,10 +76,15 @@ const Details = ({ aws_id, user }: Props) => {
   const isMessageFromUser = (current: string) => {
     return current == user.username;
   };
+
   useEffect(() => {
     socketInitializer();
-    getter();
+    getter(false);
   }, []);
+
+  useEffect(() => {
+    getter(true);
+  }, [going]);
   useEffect(() => {
     if (chatMsg && updateMsg && chatMsg[0]) {
       if (chatMsg[chatMsg.length - 1].message == updateMsg.message) return;
@@ -105,7 +120,7 @@ const Details = ({ aws_id, user }: Props) => {
         <p className="text-4xl font-extrabold text-palette-orange">
           {huddle.name}
         </p>
-        <p>
+        <p className="pt-2">
           {" "}
           {dateTime.monthDayYear} at {dateTime.time}
         </p>
@@ -173,18 +188,29 @@ const Details = ({ aws_id, user }: Props) => {
         )}
       </div>
       <div id="huddle-chat" className="grid grid-cols-1 w-full mb-24">
-        <div className="border border-palette-orange  mx-14 my-24 p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 relative">
+        <button
+          onClick={(e) => {
+            if (going === "Join") {
+              postUserGoingToHuddle(user.aws_id, huddle.id);
+              setGoing("Leave");
+            } else {
+              removeUserGoingToHuddle(user.aws_id, huddle.id);
+              setGoing("Join");
+            }
+          }}
+          className="mr-14 ml-auto mb-4 justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
+        >
+          {going}
+        </button>
+        <div className="border border-palette-orange  mx-14  p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 relative">
           <div className="table-cell align-bottom h-[55rem] w-screen">
             <div className="max-h-[55rem] overflow-auto ">
               {chatMsg ? (
                 chatMsg.map((msg, i) => {
                   let time;
-                  msg.time_of_creation
-                    ? (time = msg.time_of_creation.slice(11, 16))
-                    : (time = dateFormatter(Date.now() + "").time.substring(
-                        0,
-                        5
-                      ));
+                  msg.timezone
+                    ? (time = msg.timezone.slice(11, 16))
+                    : (time = dateFormatter(Date.now()).time.substring(0, 5));
                   return isMessageFromUser(msg.username) ? (
                     <div
                       key={i}

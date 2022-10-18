@@ -41,11 +41,11 @@ export const recommendedForUser = async (aws_id: string) => {
 export const dateFormatter = (date: string) => {
   const toFormat = dayjs(date);
   const dateTime = {
-    day: toFormat.format('DD'),
-    month: toFormat.format('MMMM'),
-    year: toFormat.format('YYYY'),
-    time: toFormat.format('hh:mmA'),
-    monthDayYear: toFormat.format('MMMM DD, YYYY'),
+    day: toFormat.format("DD"),
+    month: toFormat.format("MMMM"),
+    year: toFormat.format("YYYY"),
+    time: toFormat.format("hh:mmA"),
+    monthDayYear: toFormat.format("MMMM DD, YYYY"),
   };
   return dateTime;
 };
@@ -63,4 +63,3 @@ export const getSession = async () => {
   const res = await Auth.currentAuthenticatedUser();
   return res.CognitoUser.username;
 };
-
