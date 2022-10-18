@@ -8,11 +8,11 @@ import {
   getUsersGoingToHuddle,
 } from "../../src/utils/APIServices/huddleServices";
 import { getUserById } from "../../src/utils/APIServices/userServices";
-import io from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import { getMsgsFromHuddle } from "../../src/utils/APIServices/chatService";
 import { withSSRContext } from "aws-amplify";
 import { GetServerSideProps } from "next";
-let socket;
+let socket: Socket;
 
 type Props = {
   aws_id: string;
@@ -21,10 +21,15 @@ type Props = {
 
 const Details = ({ aws_id, user }: Props) => {
   const [chatMsg, setChatMsg] = useState<any[]>();
-  const [updateMsg, setUpdateMsg] = useState<string>();
+  const [updateMsg, setUpdateMsg] = useState<{
+    huddle_id: number;
+    message: string;
+    username: string;
+  }>();
   const [users, setUsers] = useState<any>();
   const [creator, setCreator] = useState<User>();
   const [categories, setCategories] = useState<Category[]>();
+  // @ts-ignore
   const huddle: Huddle = useRouter().query;
 
   const dateTime = dateFormatter(huddle.day_time);
@@ -64,10 +69,9 @@ const Details = ({ aws_id, user }: Props) => {
   useEffect(() => {
     socketInitializer();
     getter();
-    scroll();
   }, []);
   useEffect(() => {
-    if (chatMsg && updateMsg) {
+    if (chatMsg && updateMsg && chatMsg[0]) {
       if (chatMsg[chatMsg.length - 1].message == updateMsg.message) return;
 
       setChatMsg([
@@ -78,14 +82,18 @@ const Details = ({ aws_id, user }: Props) => {
           username: updateMsg.username,
         },
       ]);
-      scroll();
     }
   }, [updateMsg]);
+  useEffect(() => {
+    scroll();
+  }, [chatMsg]);
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     //emits message e.target.value to room huddle.id
+    // @ts-ignore
     socket.emit("input-change", e.target[0].value, huddle.id, user.username);
+    // @ts-ignore
     e.target[0].value = "";
   };
   return (
@@ -108,15 +116,26 @@ const Details = ({ aws_id, user }: Props) => {
           className="rounded-lg h-[13rem] w-[18rem] my-4"
           alt={huddle.name}
         />{" "}
+        <p className="my-2 text-4xl">Description:</p>
         <p className="text-2xl mb-2">{huddle.description}</p>
+        <p className="my-2 text-4xl">Where:</p>
         <p className="text-2xl">{huddle.address}</p>
-        {categories ? (
-          categories.map((category) => {
-            return <p>{category.name}</p>;
-          })
-        ) : (
-          <></>
-        )}
+        <div className="grid grid-cols-3 gap-x-4 gap-y-2 mr-3 mt-2 mb-2 w-full">
+          {categories ? (
+            categories.map((category, i) => {
+              return (
+                <p
+                  key={i}
+                  className="text-center py-1 bg-palette-dark rounded-md text-white"
+                >
+                  {category.name}
+                </p>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </div>
         <p className="mt-4 text-4xl">Created By: </p>
         <div className="flex mb-4">
           <div className="relative h-12 w-12">
@@ -124,19 +143,20 @@ const Details = ({ aws_id, user }: Props) => {
               className="flex rounded-full "
               fill
               alt="user image"
+              // @ts-ignore
               src={creator?.image}
             />
           </div>
           <p className="self-center ml-2 text-2xl">{creator?.username}</p>
         </div>
-        <p className="my-2 text-4xl">Who's going:</p>
+        <p className="my-2 text-4xl">Who&apos;s going:</p>
         {users ? (
           users.map((user: any, i: number) => {
             return (
-              <div className="flex mb-4">
+              <div key={i} className="flex mb-4">
                 <div className="relative h-12 w-12">
                   <Image
-                    className="flex rounded-full "
+                    className="flex rounded-full"
                     fill
                     alt="user image"
                     src={user.image}
@@ -154,38 +174,49 @@ const Details = ({ aws_id, user }: Props) => {
       </div>
       <div id="huddle-chat" className="grid grid-cols-1 w-full mb-24">
         <div className="border border-palette-orange  mx-14 my-24 p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 relative">
-          <div className="h-[55rem] overflow-auto">
-            {chatMsg ? (
-              chatMsg.map((msg, i) => {
-                let time;
-                msg.time_of_creation
-                  ? (time = msg.time_of_creation.slice(11))
-                  : (time = "");
-                return isMessageFromUser(msg.username) ? (
-                  <div className="text-end bg-palette-orange ml-auto mr-0 mb-4 max-w-[60%] px-2 rounded-xl shadow-md">
-                    {/* <p className="py-1 font-medium">{msg.username}</p> */}
-                    <div className="flex pb-4 pt-2 justify-between">
-                      {time ? <p className="opacity-60">{time}</p> : <></>}
-                      <p id={i + ""} key={i}>
-                        {msg.message}
-                      </p>
+          <div className="table-cell align-bottom h-[55rem] w-screen">
+            <div className="max-h-[55rem] overflow-auto ">
+              {chatMsg ? (
+                chatMsg.map((msg, i) => {
+                  let time;
+                  msg.time_of_creation
+                    ? (time = msg.time_of_creation.slice(11, 16))
+                    : (time = dateFormatter(Date.now() + "").time.substring(
+                        0,
+                        5
+                      ));
+                  return isMessageFromUser(msg.username) ? (
+                    <div
+                      key={i}
+                      className="text-end bg-palette-orange bg-opacity-50 ml-auto mr-0 mb-4 max-w-[60%] px-2 rounded-xl shadow-md"
+                    >
+                      {/* <p className="py-1 font-medium">{msg.username}</p> */}
+                      <div className="flex pb-4 pt-6 justify-between">
+                        {time ? <p className="opacity-60">{time}</p> : <></>}
+                        <p id={i + ""} key={i}>
+                          {msg.message}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className=" bg-palette-dark max-w-[60%] mb-4 p-2 pt-1 rounded-xl shadow-md">
-                    <p className="py-1 font-medium">{msg.username}</p>
-                    <div className="flex justify-between">
-                      <p id={i + ""} key={i}>
-                        {msg.message}
-                      </p>
-                      <p className="opacity-60">{time}</p>{" "}
+                  ) : (
+                    <div
+                      key={i}
+                      className=" bg-palette-dark bg-opacity-30 max-w-[60%] mb-4 p-2 pt-1 rounded-xl shadow-md"
+                    >
+                      <p className="py-1 font-medium">{msg.username}</p>
+                      <div className="flex justify-between">
+                        <p id={i + ""} key={i}>
+                          {msg.message}
+                        </p>
+                        <p className="opacity-60">{time}</p>{" "}
+                      </div>
                     </div>
-                  </div>
-                );
-              })
-            ) : (
-              <></>
-            )}
+                  );
+                })
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
           <div className="inset-x-0 bottom-0 mb-6 rounded-xl h-12 bg-palette-dark bg-opacity-20 grid  content-center">
             <form onSubmit={(e) => submitHandler(e)}>

@@ -90,9 +90,9 @@ function HuddleCarouselItem({
         </div>
       </div>
 
-      <div className='flex'>
-        <div className='w-[24rem] mr-3'>
-          <div className='rounded-lg h-32 lg:h-40 relative'>
+      <div className="flex">
+        <div className="w-[24rem] mr-3">
+          <div className="rounded-lg h-32 lg:h-36 relative">
             <Image
               fill
               src={huddle.image}

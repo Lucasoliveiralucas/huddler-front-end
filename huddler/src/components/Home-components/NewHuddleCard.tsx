@@ -51,7 +51,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
         <h1 className="font-extrabold text-palette-orange text-2xl">
           {huddle.name}
         </h1>
-        <div className="ml-auto mr-3">
+        <div className="ml-auto flex gap-4 mr-3">
           <Link
             href={{
               pathname: `/details/${huddle.id}`,
@@ -88,13 +88,14 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
       <div className="grid grid-cols-2 h-full">
         <div className="flex flex-col">
           <div className="h-full md:w-[24rem] flex flex-col">
-            <div className="flex rounded-lg h-32 lg:h-40 md:w-3/4 relative">
+            <div className="flex rounded-lg h-32 lg:h-40 w-1/2 3xl:w-3/4 relative">
               <Image
                 fill
                 src={huddle.image}
                 alt={huddle.name}
                 sizes="(max-width: 768px) 100px,
-                       (max-width: 1200px) 230px,
+                       (max-width: 1200px) 150px,
+                       (max-width: 1800px) 230px,
                        300px"
                 placeholder="empty"
                 className="rounded-lg object-contain object-left"
@@ -102,7 +103,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
             </div>
             <p className="hidden md:block">attending: {data.attending}</p>
 
-            <div className="hidden md:grid grid-cols-2 gap-2 w-2/3">
+            <div className="hidden md:grid grid-cols-2 gap-2 w-1/2">
               {data.categories.map((category, i) => {
                 return (
                   i <= 3 && (
