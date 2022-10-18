@@ -39,19 +39,22 @@ const Details = ({ aws_id, user }: Props) => {
   const getter = async (stop: boolean) => {
     const usersGoingTo = await getUsersGoingToHuddle(huddle.id);
     setUsers(usersGoingTo);
-    if (stop) return;
+
+    if (stop) {
+      usersGoingTo.find((users: User) => {
+        console.log(users);
+        return users.aws_id == aws_id;
+      })
+        ? setGoing("Leave")
+        : setGoing("Join");
+      return;
+    }
     const createdBy = await getUserById(huddle.fk_author_id);
     setCreator(createdBy[0]);
     const allMsgs = await getMsgsFromHuddle(huddle.id);
     setChatMsg(allMsgs);
     const categories = await getHuddleCategories(huddle.id);
     setCategories(categories);
-    usersGoingTo.find((users: User) => {
-      console.log(users);
-      return (users.aws_id = aws_id);
-    })
-      ? setGoing("Join")
-      : setGoing("Leave");
   };
   const socketInitializer = async () => {
     await fetch(`/api/chat/chat`);
@@ -79,7 +82,7 @@ const Details = ({ aws_id, user }: Props) => {
 
   useEffect(() => {
     socketInitializer();
-    getter(false);
+    getter(true);
   }, []);
 
   useEffect(() => {
@@ -189,12 +192,12 @@ const Details = ({ aws_id, user }: Props) => {
       </div>
       <div id="huddle-chat" className="grid grid-cols-1 w-full mb-24">
         <button
-          onClick={(e) => {
+          onClick={async (e) => {
             if (going === "Join") {
-              postUserGoingToHuddle(user.aws_id, huddle.id);
+              await postUserGoingToHuddle(user.aws_id, huddle.id);
               setGoing("Leave");
             } else {
-              removeUserGoingToHuddle(user.aws_id, huddle.id);
+              await removeUserGoingToHuddle(user.aws_id, huddle.id);
               setGoing("Join");
             }
           }}
