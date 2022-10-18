@@ -10,20 +10,16 @@ import {
 } from "../../utils/APIServices/huddleServices";
 import { useAuth } from "../../contexts/AuthContext";
 import { AiOutlineConsoleSql } from "react-icons/ai";
+import Link from "next/link";
 
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  updateList: any,
+  updateList: any;
   id: string;
 };
 
-function NewHuddleCard({
-  huddle,
-  huddlesUserIsGoing,
-  updateList,
-  id,
-}: Props) {
+function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
   const dateTime = dateFormatter(huddle.day_time);
   // dateFormatter(huddle.day_time);
   const [going, setGoing] = useState(false);
@@ -34,7 +30,7 @@ function NewHuddleCard({
   });
 
   useEffect(() => {
-    console.log(huddlesUserIsGoing)
+    console.log(huddlesUserIsGoing);
     if (huddlesUserIsGoing) {
       huddlesUserIsGoing.find((h) => h.id === huddle.id)
         ? setGoing(true)
@@ -57,6 +53,14 @@ function NewHuddleCard({
           {huddle.name}
         </h1>
         <div className="ml-auto mr-3">
+          <Link
+            href={{
+              pathname: `/details/${huddle.id}`,
+              query: huddle,
+            }}
+          >
+            <a className=" underline">Event Details</a>
+          </Link>
           {going ? (
             <button
               className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
