@@ -51,7 +51,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
         <h1 className="font-extrabold text-palette-orange text-2xl">
           {huddle.name}
         </h1>
-        <div className="ml-auto mr-3">
+        <div className="ml-auto flex gap-4 mr-3">
           <Link
             href={{
               pathname: `/details/${huddle.id}`,
