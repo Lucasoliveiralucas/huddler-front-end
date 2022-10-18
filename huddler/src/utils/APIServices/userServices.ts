@@ -1,11 +1,11 @@
-import { User } from "../../types";
-import { fetcher } from "../helperFunctions";
+import { User } from '../../types';
+import { fetcher } from '../helperFunctions';
 
 // GET Functions
 
 export const getAllUsers = async () =>
   await fetcher(
-    "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers"
+    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers'
   );
 //Returns: Array of User Objects
 
@@ -33,10 +33,9 @@ export const getUserGoingHuddles = async (aws_id: string) =>
   );
 //Return: Array of Huddle Objects
 
-
 // POST Functions
 
-export const postUserInfo = async (user: User, aws_id: string, ) => {
+export const postUserInfo = async (user: User, aws_id: string) => {
   try {
     console.log('trying to post userinfo', user, aws_id);
 
@@ -59,7 +58,10 @@ export const postUserInfo = async (user: User, aws_id: string, ) => {
   }
 };
 
-export const postUserCategory = async (aws_id: string, userCategory: number) => {
+export const postUserCategory = async (
+  aws_id: string,
+  userCategory: number
+) => {
   try {
     console.log('trying to post huddle category', aws_id, userCategory);
 
@@ -108,7 +110,10 @@ export const deleteUser = async (aws_id: string) => {
   }
 };
 
-export const deleteOneUserCategory = async (aws_id: string, categoryId: number) => {
+export const deleteOneUserCategory = async (
+  aws_id: string,
+  categoryId: number
+) => {
   try {
     console.log(
       `trying to delete a user categories, user_id ${aws_id}, categoryId: ${categoryId}`
@@ -158,34 +163,4 @@ export const deleteAllUserCategories = async (aws_id: string) => {
     console.log('Error deleting all categories in DB  ', e);
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

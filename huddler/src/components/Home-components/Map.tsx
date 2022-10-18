@@ -4,12 +4,12 @@ import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle, User } from "../../types";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
-import { useAuth } from "../../contexts/AuthContext";
+
 import { getUserById } from "../../utils/APIServices/userServices";
 import { withSSRContext } from "aws-amplify";
-import { GetServerSideProps } from "next/types";
+
 import { NextApiResponse, NextApiRequest } from "next/types";
-const image = require("../../../public/location-pin-svgrepo-com.svg");
+
 const libraries: (
   | "places"
   | "drawing"
@@ -20,10 +20,10 @@ const libraries: (
 
 type Props = {
   huddles?: Huddle[];
-  currentPage: string;
-  setLocation: React.Dispatch<React.SetStateAction<any>>;
-  updateList: Function;
-  user: User;
+  currentPage?: string;
+  setLocation?: React.Dispatch<React.SetStateAction<{name: string, lat: number, lng: number}>>;
+  updateList?: Function;
+  user?: User;
 };
 export default function Map({
   huddles,
@@ -32,8 +32,6 @@ export default function Map({
   updateList,
   user,
 }: Props) {
-  // const { currentUser } = useAuth();
-  // const [user, setUser] = useState<User>();
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
   const [locationName, setLocationName] = useState("");
   const [selected, setSelected] = useState(false);
@@ -77,6 +75,7 @@ export default function Map({
   useEffect(() => {
     if (center.lat === Number(user?.default_latitude)) setSelected(false);
     if (currentPage)
+      //@ts-ignore
       setLocation({
         name: locationName,
         lat: center.lat,
@@ -85,15 +84,10 @@ export default function Map({
   }, [center]);
   useEffect(() => {
     const getter = async () => {
-      // const userData = await getUserById(currentUser);
-      // console.log(userData);
-      // setUser(userData[0]);
-      console.log("over herer", user.default_latitude);
-
-      user.default_latitude !== 1
+      user!.default_latitude !== 1
         ? setCenter({
-            lat: Number(user.default_latitude),
-            lng: Number(user.default_longitude),
+            lat: Number(user!.default_latitude),
+            lng: Number(user!.default_longitude),
           })
         : setCenter({ lat: 41.39, lng: 2.15 });
     };
@@ -163,7 +157,7 @@ export default function Map({
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
-            id={user.aws_id}
+            id={user!.aws_id}
           />
         </div>
       </div>
@@ -179,6 +173,7 @@ export default function Map({
           {selected && (
             <MarkerF
               position={center}
+              // @ts-ignore
               animation={google.maps.Animation.BOUNCE}
               draggable={true}
               onDragEnd={(e) =>
@@ -193,11 +188,12 @@ export default function Map({
             huddles.map((huddle: Huddle) => {
               return (
                 <MarkerF
-                  key={huddle.id + ""}
+                  key={huddle.id + ''}
                   position={{
                     lat: Number(huddle.latitude),
                     lng: Number(huddle.longitude),
                   }}
+                  // @ts-ignore
                   animation={google.maps.Animation.DROP}
                   onClick={() => {
                     setShowHuddle(huddle);
@@ -244,3 +240,4 @@ export const getServerSideProps = async ({ req, res }:Context) => {
     };
   }
 };
+

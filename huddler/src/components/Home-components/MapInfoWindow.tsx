@@ -1,6 +1,6 @@
 import { InfoWindowF } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
-import { Huddle, User } from "../../types";
+import { Huddle} from "../../types";
 import Image from "next/future/image";
 import {
   getUsersGoingToHuddle,

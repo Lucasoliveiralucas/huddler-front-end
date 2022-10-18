@@ -4,27 +4,27 @@ import { getAllCategories } from '../utils/APIServices/categoryServices';
 import { getUserCategories } from '../utils/APIServices/userServices';
 import { sortByName } from '../utils/helperFunctions';
 
+const notSelectedClass =
+  'h-[40px] text-xl py-2 px-2 text-center rounded text-white cursor-pointer active:translate-x-[1px] active:translate-y-[1px] bg-palette-orange hover:opacity-50';
+const selectedClass = notSelectedClass + ' bg-orange-600';
+
 type Props = {
-  categoriesPicked?: any;
-  setCategoriesPicked?: any;
-  userCategories?: any;
-  setUserCategories?: any;
+  chosenCategories?: Category[];
+  setChosenCategories?: React.Dispatch<React.SetStateAction<Category[]>>;
+  userCategories?: Category[];
+  setUserCategories?: React.Dispatch<React.SetStateAction<Category[] | undefined>>;
 };
 
 const CategoriesContainer = ({
-  categoriesPicked,
-  setCategoriesPicked,
+  chosenCategories,
+  setChosenCategories,
   userCategories,
   setUserCategories,
 }: Props) => {
-  const notSelectedClass =
-    'h-[40px] text-xl py-2 px-2 text-center rounded text-white cursor-pointer active:translate-x-[1px] active:translate-y-[1px] bg-palette-orange hover:opacity-50';
-  const selectedClass = notSelectedClass + ' bg-orange-600';
-
   const [displayCategories, setDisplayCategories] = useState<Category[]>([]);
 
-  // TODO Change initial interests for those that he picks in the initial form, or those that he already have and wants to change in settings
-  const interests = categoriesPicked || userCategories || [];
+  // Depending if the user is choosing categories for the first time or wants to update categories
+  const interests = chosenCategories || userCategories || [];
 
   useEffect(() => {
     loadCategories();
@@ -32,63 +32,68 @@ const CategoriesContainer = ({
 
   const loadCategories = async () => {
     const categories = await getAllCategories();
-    console.log('these are categorieees', categories)
     setDisplayCategories(sortByName(categories));
     return categories;
   };
-  console.log('these are display categories', displayCategories)
-  const handleClick = (e: any, category: Category) => {
-    if (e.target.dataset.selected === 'false') {
-      e.target.className = selectedClass;
+
+  const onClickAddOrDeleteCategory = (
+    e: React.MouseEvent<HTMLElement>,
+    category: Category
+  ) => {
+    if (e.currentTarget.dataset.selected === 'false') {
+      e.currentTarget.className = selectedClass;
       interests.push(category);
-      e.target.dataset.selected = 'true';
+      e.currentTarget.dataset.selected = 'true';
     } else {
-      e.target.className = notSelectedClass;
+      e.currentTarget.className = notSelectedClass;
       interests.splice(interests.indexOf(category), 1);
-      e.target.dataset.selected = 'false';
+      e.currentTarget.dataset.selected = 'false';
     }
-    categoriesPicked
-      ? setCategoriesPicked(interests)
-      : setUserCategories(interests);
-    console.log('these are userCategories', userCategories);
-    console.log('these are CategoriesPicked', categoriesPicked);
+
+    if (chosenCategories) {
+      //@ts-ignore (it thinks it's undefined because of the question mark in props. We may or may not pass it depending of where it comes )
+      setChosenCategories(interests);
+      console.log('these are CategoriesPicked', chosenCategories);
+    } else {
+      //@ts-ignore
+      setUserCategories(interests);
+      console.log('these are userCategories', userCategories);
+    }
+
     return;
   };
 
-  return (userCategories || categoriesPicked) && (
-    <div className='grid grid-cols-4 grid-flow-auto gap-4 py-4 w-full'>
-      {displayCategories.map((category: Category, i) => (
-        <h1
-          className={
-            categoriesPicked
-              ? notSelectedClass
-              : userCategories.some((cat) => cat.name === category.name)
-              ? selectedClass
-              : notSelectedClass
-          }
-          key={i}
-          data-selected={
-            categoriesPicked
-              ? 'false'
-              : userCategories.some((cat) => cat.name === category.name)
-              ? 'true'
-              : 'false'
-          }
-          onClick={(e) => {
-            handleClick(e, category);
-          }}
-        >
-          {category.name}
-        </h1>
-      ))}
-    </div>
+  return (
+    (userCategories || chosenCategories) && (
+      <div className='grid grid-cols-4 grid-flow-auto gap-4 py-4 w-full'>
+        {displayCategories.map((category: Category, i) => (
+          <h1
+            className={
+              chosenCategories
+                ? notSelectedClass
+                : userCategories!.some((cat) => cat.name === category.name)
+                ? selectedClass
+                : notSelectedClass
+            }
+            key={i}
+            data-selected={
+              chosenCategories
+                ? 'false'
+                : userCategories!.some((cat) => cat.name === category.name)
+                ? 'true'
+                : 'false'
+            }
+            onClick={(e) => {
+              onClickAddOrDeleteCategory(e, category);
+            }}
+          >
+            {category.name}
+          </h1>
+        ))}
+      </div>
+    )
   );
 };
 
 export default CategoriesContainer;
-
-
-
-
-
 

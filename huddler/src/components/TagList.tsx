@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Category } from "../types";
-import { getAllCategories } from "../utils/APIServices/categoryServices";
+import React, { useEffect, useState } from 'react';
+import { Category } from '../types';
+import { getAllCategories } from '../utils/APIServices/categoryServices';
 
 type Props = {
   setAllCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 };
 const TagList = ({ setAllCategories }: Props) => {
   //should compare string in input to categories and display ones that match
-  const [comparator, setComparator] = useState("");
+  const [comparator, setComparator] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
 
   const getter = async () => {
     const data = await getAllCategories();
-    const array = data.map(function (el) {
+    const array = data.map(function (el: Category) {
       return { id: el.id, name: el.name.trim() };
     });
     setCategories(array);
@@ -23,7 +23,7 @@ const TagList = ({ setAllCategories }: Props) => {
 
   //matches input with categories to display
   useEffect(() => {
-    setAllCategories([{ id: 0, name: "" }]);
+    setAllCategories([{ id: 0, name: '' }]);
     let arr: Category[] = [];
     categories.forEach((el) => {
       const name = el.name.toLowerCase();
@@ -39,9 +39,9 @@ const TagList = ({ setAllCategories }: Props) => {
   return (
     <div>
       <input
-        placeholder="Add Tags..."
-        type="text"
-        className="outline-palette-orange outline-1 shadow-sm rounded-md w-[100%]"
+        placeholder='Add Tags...'
+        type='text'
+        className='outline-palette-orange outline-1 shadow-sm rounded-md w-[100%]'
         onChange={(e) => setComparator(e.target.value)}
       ></input>
     </div>
@@ -49,3 +49,4 @@ const TagList = ({ setAllCategories }: Props) => {
 };
 
 export default TagList;
+

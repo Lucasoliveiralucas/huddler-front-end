@@ -6,6 +6,7 @@ export const getMsgsFromHuddle = async (huddleId: number) => {
     const res = await data.json();
     return res;
   } catch (error) {
-    console.log("error getting chat messages", error);
+    console.log('error getting chat messages', error);
   }
 };
+

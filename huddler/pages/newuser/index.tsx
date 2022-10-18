@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import MainForm from '../../src/components/NewUserForm/MainForm';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../src/contexts/AuthContext';
-import Link from 'next/link';
 
 function Index() {
   //@ts-ignore
@@ -19,6 +18,7 @@ function Index() {
   return currentUser ? (
     <div className='flex justify-center '>
       <div className='border-solid border-[1px] border-palette-orange min-w-fit w-[50%] mt-10 px-3 rounded-[5px] shadow-md'>
+        {/* @ts-ignore */}
         <MainForm currentUser={currentUser} />
       </div>
     </div>

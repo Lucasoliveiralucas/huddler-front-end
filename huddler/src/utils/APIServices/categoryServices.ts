@@ -23,7 +23,3 @@ export const getHuddlesInCategory = async (category_id?: number) => {
 
 //Returns: Array of Huddle Objects
 
-// export const getCategoryById = () => useSWRImmutable(, fetcher);
-
-// POST Functions
-

@@ -1,21 +1,22 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { deleteAllUserCategories, deleteUser } from '../../utils/APIServices/userServices';
+import {
+  deleteAllUserCategories,
+  deleteUser,
+} from '../../utils/APIServices/userServices';
 
 type Props = {
   userData: any;
 };
 
-const DeleteUser = ({ userData}: Props) => {
+const DeleteUser = ({ userData }: Props) => {
   const router = useRouter();
   const [error, setError] = useState('');
 
   const handleDelete = async () => {
     try {
-      // await some function that with the currentUserId deletes the user in authentication provider and in our DB
-      console.log('uuserData', userData.aws_id);
-      await deleteUser(userData.aws_id)
-      await deleteAllUserCategories(userData.aws_id)
+      await deleteUser(userData.aws_id);
+      await deleteAllUserCategories(userData.aws_id);
       //TODO delete user from congnito
       router.replace('/');
     } catch {
@@ -43,7 +44,4 @@ const DeleteUser = ({ userData}: Props) => {
 };
 
 export default DeleteUser;
-
-
-
 
