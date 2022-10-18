@@ -179,7 +179,7 @@ type Context = {
   res: NextApiResponse,
 }
 
-export const getServerSideProps = async ({ req, res, resolvedUrl }:Context) => {
+export const getServerSideProps = async ({ req, res }:Context) => {
 
   const { Auth } = withSSRContext({ req });
   
