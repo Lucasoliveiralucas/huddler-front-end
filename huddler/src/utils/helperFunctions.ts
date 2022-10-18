@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Category } from "../types";
 import { getHuddlesInCategory } from "./APIServices/categoryServices";
 import { getUserCategories } from "./APIServices/userServices";
-
+import moment from "moment";
 
 // 1. Fetcher
 // 2. Recommended Huddles
@@ -46,7 +46,7 @@ export const dateFormatter = (date: string) => {
     day: toFormat.format("DD"),
     month: toFormat.format("MMMM"),
     year: toFormat.format("YYYY"),
-    time: toFormat.format("hh:mmA"),
+    time: toFormat.format("H:mm"),
     monthDayYear: toFormat.format("MMMM DD, YYYY"),
   };
   return dateTime;
@@ -65,4 +65,3 @@ export const getSession = async () => {
   const res = await Auth.currentAuthenticatedUser();
   return res.CognitoUser.username;
 };
-
