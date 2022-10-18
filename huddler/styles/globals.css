@@ -12,3 +12,19 @@
     display: none;
 }
 
+.react-slideshow-wrapper.slide {
+  height: 100vh;
+}
+
+.images-wrap {
+  height: 100vh;
+  color: #1a0d05;
+}
+
+.each-fade {
+  height: 100vh;
+}
+
+.default-nav {
+  display: none !important;
+}
