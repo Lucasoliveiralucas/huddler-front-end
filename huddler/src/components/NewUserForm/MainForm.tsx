@@ -1,7 +1,7 @@
 //MainForm
 
 import React, { useEffect, useRef, useState } from 'react';
-import Router from 'next/router';
+import {useRouter} from 'next/router';
 import Interests from './FirstInterests';
 import Location from './SecondLocation';
 import UserInfo from './ThirdUserInfo';
@@ -10,11 +10,12 @@ import { postUserInfo, postUserCategory, getUserById } from '../../utils/APIServ
 import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
 
 import { useAuth } from '../../contexts/AuthContext';
-import { getImageUrl } from '../../utils/helperFunctions';
+
 
 
 
 function MainForm() {
+  const router = useRouter()
   const [page, setPage] = useState(1);
   const [userImg, setUserImg] = useState({});
 
@@ -41,29 +42,23 @@ function MainForm() {
   };
 
   const handleSubmit = async () => {
-    // const data = await getUploadUrl();
-    // const uploadUrl = data.uploadURL
-    // const filename = data.filename
-    // const fileURL = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/'+filename
+    const data = await getUploadUrl();
+    const uploadUrl = data.uploadURL
+    const filename = data.filename
+    const fileURL = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/'+filename
 
-    const {imgUrl, uploadUrl} = getImageUrl()
-    console.log('this is the image url ', imgUrl);
-    console.log('this is the upload url ', uploadUrl);
-    setUserData({ ...userData, image: imgUrl});
+    setUserData({ ...userData, image: fileURL });
     await uploadImgToS3(uploadUrl, userImg); 
 
-    const formData = {...userData, image: imgUrl};
+    const formData = { ...userData, image: fileURL };
     console.log('This is userData', userData)
   
    
-    // posting new user info to db
+    // // posting new user info to db
     await postUserInfo(formData, userData.aws_id);
-    
-    // posting the categories to new huddle
-    categoriesPicked.forEach((category) => {
-      postUserCategory(userData.aws_id, category.id as number);
-    });
-    Router.replace('./home');
+    setCurrentUser(formData)
+    // // posting the categories to new huddle
+    router.replace('/home')
   };
 
   return (

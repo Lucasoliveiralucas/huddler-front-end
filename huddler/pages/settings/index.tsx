@@ -17,8 +17,6 @@ const SettingsPage = () => {
 
   //@ts-ignore
   const { currentUser, isAuthenticated, isLoading, logOut } = useAuth();
-  // if (!aws_id) router.replace('/');
-  // logOut()
   const [userData, setUserData] = useState<any>(currentUser);
   const [option, setOption] = useState("information");
 
@@ -31,8 +29,8 @@ const SettingsPage = () => {
 
   useEffect(() => {
     if (currentUser) {
-      setUserData(currentUser[0]);
-      console.log("this is current user", currentUser[0]);
+      setUserData(currentUser);
+      console.log("this is current user", currentUser);
     }
   }, [currentUser]);
 

@@ -28,8 +28,9 @@ const UpdateInterests = ({userData}: Props) => {
 
   
   const loadUserCategories = async () => {
+    console.log('iddddd', userData.aws_id)
     const categories = await getUserCategories(userData.aws_id);
-    console.log('categories', categories)
+    console.log('user categories', categories)
     setUserCategories([...categories]);
   };
 

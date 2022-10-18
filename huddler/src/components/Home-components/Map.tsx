@@ -21,7 +21,7 @@ const libraries: (
 type Props = {
   huddles?: Huddle[];
   currentPage: string;
-  // setLocation: React.Dispatch<React.SetStateAction<any>>;
+  setLocation: React.Dispatch<React.SetStateAction<any>>;
   updateList: Function;
   user: User;
 };
@@ -30,6 +30,7 @@ export default function Map({
   currentPage,
   updateList,
   user,
+  setLocation
 }: Props) {
   // const { currentUser } = useAuth();
   // const [user, setUser] = useState<User>();
