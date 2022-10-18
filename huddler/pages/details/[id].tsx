@@ -36,19 +36,16 @@ const Details = ({ aws_id, user }: Props) => {
   const huddle: Huddle = useRouter().query;
 
   const dateTime = dateFormatter(huddle.day_time);
-  const getter = async (stop: boolean) => {
+  const getter = async () => {
     const usersGoingTo = await getUsersGoingToHuddle(huddle.id);
     setUsers(usersGoingTo);
 
-    if (stop) {
-      usersGoingTo.find((users: User) => {
-        console.log(users);
-        return users.aws_id == aws_id;
-      })
-        ? setGoing("Leave")
-        : setGoing("Join");
-      return;
-    }
+    usersGoingTo.find((users: User) => {
+      console.log(users);
+      return users.aws_id == aws_id;
+    })
+      ? setGoing("Leave")
+      : setGoing("Join");
     const createdBy = await getUserById(huddle.fk_author_id);
     setCreator(createdBy[0]);
     const allMsgs = await getMsgsFromHuddle(huddle.id);
@@ -82,11 +79,11 @@ const Details = ({ aws_id, user }: Props) => {
 
   useEffect(() => {
     socketInitializer();
-    getter(true);
+    getter();
   }, []);
 
   useEffect(() => {
-    getter(true);
+    getter();
   }, [going]);
   useEffect(() => {
     if (chatMsg && updateMsg && chatMsg[0]) {
