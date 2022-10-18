@@ -13,7 +13,7 @@ function Index() {
       router.replace('/');
       return
     }
-  }, [isLoading, isAuthenticated]);
+  }, [isAuthenticated]);
 
   return currentUser ? (
     <div className='flex justify-center '>
