@@ -38,18 +38,19 @@ export const recommendedForUser = async (aws_id: string) => {
     (previousValue, currentValue) => [...previousValue, ...currentValue],
     []
   );
+  console.log('huddles in categories', huddlesInCategoriesArr);
+
   const userCreated = await getUserCreatedHuddles(aws_id);
+  console.log('user created huddles', userCreated);
+    if (!userCreated.length) return huddlesInCategoriesArr
+      //To not recommend the user's created huddles
+      const recommendNotCreated: Huddle[] = [];
 
-  //To not recommend the user's created huddles
-  const recommendNotCreated = [];
-
-  huddlesInCategoriesArr.forEach((huddle: Huddle) => {
-    if (!userCreated!.some((hud: Huddle) => hud.fk_author_id === huddle.fk_author_id) {
-      recommendNotCreated.pushgit (huddle);
+  userCreated.forEach((huddle: Huddle) => {
+    if (!huddlesInCategoriesArr!.some((hud: Huddle) => hud.id === huddle.id)) {
+      recommendNotCreated.push(huddle);
     }
   });
-  
-
 
   console.log('recommendNotCreated', recommendNotCreated);
   return recommendNotCreated;
