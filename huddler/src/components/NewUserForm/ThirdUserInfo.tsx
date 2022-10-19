@@ -30,8 +30,8 @@ function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
     setUserImg(img);
   };
   return (
-    <>
-      <div className='flex flex-col py-8 w-1/2 px-10'>
+    <div className='md:flex 3xl:gap-32'>
+      <div className='flex flex-col py-8 md:w-1/2 md:px-10'>
         <form className='flex flex-col'>
           <h1 className='font-bold text-2xl pb-4 self-center'>User details</h1>
           <label>Choose a User Name</label>
@@ -64,13 +64,13 @@ function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
           ></textarea>
         </form>
       </div>
-      <div className='flex flex-col items-center py-8 w-1/2 h-full'>
+      <div className='flex flex-col items-center py-8 md:w-1/2 h-full'>
         <h1 className='font-bold text-xl'>
           Do you want to upload a profile image?
         </h1>
-        <div className='flex flex-col items-center justify-center mt-20'>
-          <div>
-            Click on the image to change it
+        
+          <div className='flex flex-col justify-center items-center gap-5 mt-4 lg:mt-16'>
+            <label>Click on the image to change it</label>
             <input
               type='file'
               className='hidden'
@@ -79,17 +79,17 @@ function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
               onChange={changeUserImage}
             />
             <Image
-              className='rounded-full hover:cursor-pointer ml-10'
+              className='rounded-full hover:cursor-pointer'
               alt='image-preview'
               src={imageSelected}
-              width={150}
-              height={150}
+              width={180}
+              height={180}
               onClick={() => imageRef.current!.click()}
             />
           </div>
-        </div>
+     
       </div>
-    </>
+    </div>
   );
 }
 

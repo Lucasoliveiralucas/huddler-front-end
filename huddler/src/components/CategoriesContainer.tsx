@@ -5,7 +5,7 @@ import { getUserCategories } from '../utils/APIServices/userServices';
 import { sortByName } from '../utils/helperFunctions';
 
 const notSelectedClass =
-  'h-[40px] text-xl py-2 px-2 text-center rounded text-white cursor-pointer active:translate-x-[1px] active:translate-y-[1px] bg-palette-orange hover:opacity-50';
+  'h-[40px] md:text-xl py-2 md:px-2 text-center rounded text-white cursor-pointer active:translate-x-[1px] active:translate-y-[1px] bg-palette-orange hover:opacity-50';
 const selectedClass = notSelectedClass + ' bg-orange-600';
 
 type Props = {
@@ -70,7 +70,7 @@ const CategoriesContainer = ({
 
   return (
     (userCategories || chosenCategories) && (
-      <div className='grid grid-cols-4 grid-flow-auto gap-4 py-4 w-full'>
+      <div className='grid grid-cols-3 md:grid-cols-4 grid-flow-auto gap-4 py-4 w-full'>
         {displayCategories.map((category: Category, i) => (
           <h1
             className={
