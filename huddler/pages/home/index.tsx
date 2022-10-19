@@ -26,6 +26,7 @@ type Props = {
 function Home({ recommended, huddles, user, goingTo }: Props) {
   const [filterChoice, setFilterChoice] = useState<Huddle[]>(huddles); //by default recommended
   const [mobileShowMap, setMobileShowMap] = useState(false);
+  const [revertCatBtn, setRevertCatBtn] = useState(false);
   const [huddlesUserIsGoing, setHuddlesUserIsGoing] =
     useState<Huddle[]>(goingTo);
 
@@ -58,13 +59,28 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
           className="flex w-screen py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start"
           id="1"
         >
-          <button className="mr-4" onClick={() => setFilterChoice(recommended)}>
+          <button
+            className="mr-4"
+            onClick={() => {
+              setRevertCatBtn(!revertCatBtn);
+              setFilterChoice(recommended);
+            }}
+          >
             Recommended
           </button>
-          <button className="mr-4" onClick={() => setToAllHuddles()}>
+          <button
+            className="mr-4"
+            onClick={() => {
+              setRevertCatBtn(!revertCatBtn);
+              setToAllHuddles();
+            }}
+          >
             All Huddles
           </button>
-          <DropdownMenu setFilterChoice={setFilterChoice} />
+          <DropdownMenu
+            setFilterChoice={setFilterChoice}
+            revert={revertCatBtn}
+          />
           <button
             onClick={() => setMobileShowMap(!mobileShowMap)}
             className="lg:hidden"

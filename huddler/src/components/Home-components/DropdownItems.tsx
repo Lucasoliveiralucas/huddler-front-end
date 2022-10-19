@@ -38,7 +38,7 @@ const DropdownItems: React.FC<DropdownProps> = ({
         return (
           <p
             key={index}
-            className="px-1"
+            className="pr-4"
             onClick={(): void => {
               onClickHandler(category);
             }}
