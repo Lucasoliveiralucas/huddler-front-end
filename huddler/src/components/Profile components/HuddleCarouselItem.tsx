@@ -66,7 +66,7 @@ function HuddleCarouselItem({
           </Link>
           {going ? (
             <button
-              className="justify-center orange-button"
+              className="justify-center leave-button"
               onClick={(e) => {
                 setGoing(!going);
                 setUpdate(!update);
@@ -109,10 +109,7 @@ function HuddleCarouselItem({
             {data.categories.map((category, i) => {
               return (
                 i <= 3 && (
-                  <p
-                    className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                    key={category.id + (i - i)}
-                  >
+                  <p className="category-icon" key={category.id + (i - i)}>
                     {category.name}
                   </p>
                 )
