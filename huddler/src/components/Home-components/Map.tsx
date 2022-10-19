@@ -71,7 +71,7 @@ export default function Map({
   }, [center]);
   useEffect(() => {
     const getter = async () => {
-      user!.default_latitude !== 1
+      user && user!.default_latitude !== 1
         ? setCenter({
             lat: Number(user!.default_latitude),
             lng: Number(user!.default_longitude),
