@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: Props) => {
       const userFromDb = await getUserById(username);
 
       const user = { ...userFromDb[0] };
-      setTimeout(signEventDetector, 10, user, username, attributes.email);
+      setTimeout(signEventDetector, 5, user, username, attributes.email);
     } catch (error) {
       console.error(
         "Error trying to signin or signup. Check contexts/AuthContext"

@@ -13,6 +13,7 @@ import { User } from "../../types";
 
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
+  // @ts-ignore
   const { currentUser } = useAuth();
 
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -86,9 +87,9 @@ function Navbar() {
           </button>
 
           <div className="w-20 h-20 relative">
-            {
+            { currentUser &&
               <Image
-                src={currentUser ? currentUser.image : DefaultUserImage}
+                src={currentUser.hasOwnProperty('image') ? currentUser.image : DefaultUserImage}
                 alt="user-image"
                 fill
                 className=" rounded-full cursor-pointer p-3"

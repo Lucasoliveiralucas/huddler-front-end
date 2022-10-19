@@ -88,11 +88,11 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           filename,
         date_of_creation: date,
         link: "",
-        fk_author_id: currentUser[0].aws_id, //here we'll require the uid from the authentication
+        fk_author_id: currentUser.aws_id, //here we'll require the uid from the authentication
       };
       // Post huddle in DB
       console.log("new huddle", newHuddle);
-      console.log("user", currentUser[0].aws_id);
+      console.log("user", currentUser.aws_id);
       const huddleDateOfCreation = await postHuddle(newHuddle);
 
       // getting id of huddle
