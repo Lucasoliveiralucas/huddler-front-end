@@ -48,7 +48,7 @@ const DropdownMenu = ({ setFilterChoice, revert }: Props) => {
   };
 
   return (
-    <div className="dropdown-div overflow-x-auto scrollbar-hidden">
+    <div className="dropdown-div overflow-x-auto scrollbar-hide">
       <button
         className={`${showDropdown ? "active" : "noActive"}`}
         onClick={(): void => toggleDropdown()}
