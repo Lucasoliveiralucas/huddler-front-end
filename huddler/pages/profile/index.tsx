@@ -46,14 +46,19 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
       fetcher
     ) || [];
 
-  const getter = () => {
-    if (goingTo.length) {
+  const getter = async () => {
+    const huddlesUserIsGoing = await getUserGoingHuddles(aws_id);
+    console.log(huddlesUserIsGoing);
+
+    if (huddlesUserIsGoing.length) {
       try {
-        const sorted: Huddle[] = goingTo.sort((a: Huddle, b: Huddle) => {
-          return (
-            new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf()
-          );
-        });
+        const sorted: Huddle[] = huddlesUserIsGoing.sort(
+          (a: Huddle, b: Huddle) => {
+            return (
+              new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf()
+            );
+          }
+        );
         setHuddlesUserIsGoing(sorted);
       } catch (err) {
         console.log(err);
@@ -160,7 +165,9 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               id={aws_id}
             />
           </>
-        ) : <></>}
+        ) : (
+          <></>
+        )}
 
         {Array.isArray(huddlesUserIsGoing) && huddlesUserIsGoing.length ? (
           <>
@@ -175,7 +182,9 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               id={aws_id}
             />
           </>
-        ) : <></>}
+        ) : (
+          <></>
+        )}
 
         {Array.isArray(lastRow.huddles) && lastRow.huddles.length ? (
           <>
