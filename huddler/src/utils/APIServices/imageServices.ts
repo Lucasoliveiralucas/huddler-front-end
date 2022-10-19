@@ -24,7 +24,7 @@ export const uploadImgToS3 = async (uploadUrlForS3: string, file: File | {}) => 
 
 export const deleteOldImg = async (image: string) => {
   try {
-    const deleteImage = await fetch(`https://4l0t24dc3e.execute-api.eu-west-1.amazonaws.com/test/deleteuserimage?filename=${image}`, {
+    const deleteImage = await fetch(`${process.env.NEXT_PUBLIC_AWS_DELETE_IMAGE}=${image}`, {
       method: 'GET',
       mode: 'cors',
     })
