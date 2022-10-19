@@ -73,7 +73,7 @@ function MainForm() {
   };
 
   return (
-    <div className='flex items-center flex-col py-3'>
+    <div className='flex h-full items-center flex-col py-3'>
       <h1 className='my-0'>{page}/3</h1>
       <div className='h-[70vh] w-full flex justify-center'>
         {page === 1 && (
