@@ -92,84 +92,29 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
                 <AiOutlineArrowUp className=" rotate-180" />
               )}{" "}
             </button>
+          </div>
 
-            <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2">
-              {/* <Huddles huddles={filterChoice} /> */}
-              {mobileShowMap && (
-                <div className="absolute lg:hidden block h-full w-full z-30">
-                  <MobileMap
-                    huddles={filterChoice}
-                    user={user}
-                    updateList={updateList}
-                  />
-                </div>
-              )}
-
-              <HuddlesNew
-                huddles={filterChoice}
-                updateList={updateList}
-                huddlesUserIsGoing={huddlesUserIsGoing}
-                id={user.aws_id}
-              />
-
-              <div className="hidden sticky lg:flex ">
-                <Map
+          <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2">
+            {/* <Huddles huddles={filterChoice} /> */}
+            {mobileShowMap && (
+              <div className="absolute lg:hidden block h-full w-full z-30">
+                <MobileMap
                   huddles={filterChoice}
                   user={user}
                   updateList={updateList}
                 />
               </div>
-            </div>
-          </div>
-        </div>
-        {/* <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2"> */}
-        {/* <Huddles huddles={filterChoice} /> */}
-        {/* {mobileShowMap && (
-          <div className="absolute lg:hidden block h-full w-full z-30">
-            <MobileMap huddles={filterChoice} /> */}
-        <div className="flex flex-col w-screen h-full" id="0">
-          <div
-            className="flex py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start"
-            id="1"
-          >
-            <button
-              className="mr-4"
-              onClick={() => setFilterChoice(recommended)}
-            >
-              Recommended
-            </button>
-            <button onClick={() => setToAllHuddles()}>All Huddles</button>
-            <button
-              onClick={() => setMobileShowMap(!mobileShowMap)}
-              className="lg:hidden"
-            >
-              {mobileShowMap ? (
-                <AiOutlineArrowUp />
-              ) : (
-                <AiOutlineArrowUp className=" rotate-180" />
-              )}{" "}
-            </button>
-          </div>
-
-          <div className="flex max-h-[80vh] py-6 px-10 " id="carousel 2">
-            {/* <Huddles huddles={filterChoice} /> */}
-            {mobileShowMap && (
-              <div className="absolute lg:hidden block h-full  w-full z-30">
-                <MobileMap huddles={filterChoice} />
-              </div>
             )}
 
-            <div className="shrink-0 grow-1">
-              <HuddlesNew
-                huddles={filterChoice}
-                updateList={updateList}
-                huddlesUserIsGoing={huddlesUserIsGoing}
-                id={user.aws_id}
-              />
-            </div>
+            <HuddlesNew
+              huddles={filterChoice}
+              updateList={updateList}
+              huddlesUserIsGoing={huddlesUserIsGoing}
+              id={user.aws_id}
+            />
 
-            <div className="hidden sticky shrink-1 grow-2 ml-20 lg:flex ">
-              <Map huddles={filterChoice} updateList={updateList} />
+            <div className="hidden sticky lg:flex ">
+              <Map huddles={filterChoice} user={user} updateList={updateList} />
             </div>
           </div>
         </div>
