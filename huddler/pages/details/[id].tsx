@@ -150,23 +150,29 @@ const Details = ({ aws_id, user, huddle }: Props) => {
             <></>
           )}
         </div>
-        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">Created By: </p>
+        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">
+          Created By:{" "}
+        </p>
         <div className="flex mb-2">
           <div className="relative h-12 w-12">
             <Image
               className="flex rounded-full "
               fill
               alt="user image"
-              sizes='(max-width: 768px) 0px,
+              sizes="(max-width: 768px) 0px,
                        (max-width: 1200px) 300px,
-                       400px'
+                       400px"
               // @ts-ignore
               src={creator?.image}
             />
           </div>
-          <p className="self-center ml-3 font-medium text-xl">{creator?.username}</p>
+          <p className="self-center ml-3 font-medium text-xl">
+            {creator?.username}
+          </p>
         </div>
-        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">Who&apos;s going:</p>
+        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">
+          Who&apos;s going:
+        </p>
         {users ? (
           users.map((user: any, i: number) => {
             return (
@@ -177,9 +183,9 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                     fill
                     alt="user image"
                     src={user.image}
-                    sizes='(max-width: 768px) 0px,
+                    sizes="(max-width: 768px) 0px,
                        (max-width: 1200px) 300px,
-                       400px'
+                       400px"
                   />
                 </div>
                 <p key={i} className="self-center ml-3 font-medium text-xl">
@@ -218,9 +224,9 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                   msg.timezone
                     ? (time = msg.timezone.slice(11, 16))
                     : (time = dateFormatter(
-                       // @ts-ignore
+                        // @ts-ignore
                         Date.now() // Don't turn this into a string!!!
-                      ).time.substring(0, 5));
+                      ).time);
                   return isMessageFromUser(msg.username) ? (
                     <div
                       key={i}
@@ -253,21 +259,24 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                 <></>
               )}
             </div>
-          <div className="relative h-24 mt-2 rounded-xl bg-palette-dark bg-opacity-20">
-            <form className="flex p-2 h-full w-full items-center" onSubmit={(e) => submitHandler(e)}>
-              <input
-                type="text"
-                className="ml-2 rounded-lg w-[85%] h-[80%] placeholder:pl-2"
-                placeholder="Send a message"
-              ></input>
-              <button
-                className="bg-palette-dark h-[80%] w-[12%] bg-opacity-40 px-6 py-2 rounded-lg ml-4 text-orange-100 font-bold self-center"
-                type="submit"
+            <div className="relative h-24 mt-2 rounded-xl bg-palette-dark bg-opacity-20">
+              <form
+                className="flex p-2 h-full w-full items-center"
+                onSubmit={(e) => submitHandler(e)}
               >
-                Send
-              </button>
-            </form>
-          </div>
+                <input
+                  type="text"
+                  className="ml-2 rounded-lg w-[85%] h-[80%] placeholder:pl-2"
+                  placeholder="Send a message"
+                ></input>
+                <button
+                  className="bg-palette-dark h-[80%] w-[12%] bg-opacity-40 px-6 py-2 rounded-lg ml-4 text-orange-100 font-bold self-center"
+                  type="submit"
+                >
+                  Send
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
