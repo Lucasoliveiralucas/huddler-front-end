@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import { Auth } from 'aws-amplify';
 import dayjs from 'dayjs';
 import { Category, Huddle } from '../types';
 import { getHuddlesInCategory } from './APIServices/categoryServices';
 import { getUserCategories, getUserCreatedHuddles } from './APIServices/userServices';
+=======
+import { Auth } from "aws-amplify";
+import dayjs from "dayjs";
+import { Category, Huddle } from "../types";
+import { getHuddlesInCategory } from "./APIServices/categoryServices";
+import { getUserCategories } from "./APIServices/userServices";
+>>>>>>> 611bf8dcbb1945d4d4c6ad34be7c18c632f69338
 
 // 1. Fetcher
 // 2. Recommended Huddles
@@ -16,7 +24,7 @@ export const fetcher = async (...args: string[]) => {
     const data = await fetch(...args);
     return await data.json();
   } catch (e) {
-    console.log('There has been an error fetching data: ', e);
+    console.log("There has been an error fetching data: ", e);
     return e;
   }
 };
@@ -59,14 +67,14 @@ export const dateFormatter = (date: string) => {
     day: toFormat.format("DD"),
     month: toFormat.format("MMMM"),
     year: toFormat.format("YYYY"),
-    time: toFormat.format("hh:mmA"),
+    time: toFormat.format("HH:mm"),
     monthDayYear: toFormat.format("MMMM DD, YYYY"),
   };
   return dateTime;
 };
 
 export const nowFormatted = () => {
-  return dayjs(Date.now()).format('YYYY-MM-DDTHH:mm');
+  return dayjs(Date.now()).format("YYYY-MM-DDTHH:mm");
 };
 
 // 4. Sort by name
@@ -81,13 +89,14 @@ export const getSession = async () => {
 
 export const sortHuddlesByDate = (huddlesToSort: Huddle[]) => {
   //@ts-ignore
-  return huddlesToSort.sort((a, b) => {return new Date(a.day_time) - new Date(b.day_time)})
-}
+  return huddlesToSort.sort((a, b) => {
+    return new Date(a.day_time) - new Date(b.day_time);
+  });
+};
 
 export const getActiveHuddles = (huddlesToFileter: Huddle[]) => {
-  //@ts-ignore
-  return huddlesToFileter.filter((huddle) => new Date(huddle.day_time) > Date.now())
-
-
-
-}
+  return huddlesToFileter.filter(
+    //@ts-ignore
+    (huddle) => new Date(huddle.day_time) > Date.now()
+  );
+};

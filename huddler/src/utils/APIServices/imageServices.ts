@@ -21,3 +21,15 @@ export const uploadImgToS3 = async (uploadUrlForS3: string, file: File | {}) => 
     .then((res) => res.text())
     .catch((err) => console.log(err));
 };
+
+export const deleteOldImg = async (image: string) => {
+  try {
+    const deleteImage = await fetch(`${process.env.NEXT_PUBLIC_AWS_DELETE_IMAGE}=${image}`, {
+      method: 'GET',
+      mode: 'cors',
+    })
+    console.log('Deleted img with file name :', deleteImage);
+  } catch (error) {
+    console.log('ERROR deleting old Image in S3:', error)
+  }
+}
