@@ -7,14 +7,17 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
-
-  const { currentUser } = useAuth()
   
   return (
     <>
       <div className='w-full h-screen flex flex-col justify-center' id="carousel">
+<<<<<<< HEAD
         { currentUser && <Navbar /> }
         <div className='self-center h-full w-full grid' id="carousel">
+=======
+        <Navbar />
+        <div className='self-center h-full w-full mt-24 grid' id="carousel">
+>>>>>>> workingBranch
           <main>{children}</main>
         </div>
       </div>

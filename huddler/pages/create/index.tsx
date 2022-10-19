@@ -23,7 +23,7 @@ export const getServerSideProps = async (context) => {
   }
 }
 
-function index(props) {
+function Index(props) {
   console.log(props.username);
 
   const { currentUser } = useAuth()
@@ -44,5 +44,5 @@ function index(props) {
   return <h1>hi</h1>;
 }
 
-export default index;
+export default Index;
 

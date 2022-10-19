@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { User } from '../../types';
 import Image, { StaticImageData } from 'next/future/image';
 import DefaultUserImage from '../../../public/defaultUserImage.png';
+import { useAuth } from '../../contexts/AuthContext';
 type Props = {
   userData: User;
   setUserData: React.Dispatch<React.SetStateAction<User>>;
@@ -12,6 +13,8 @@ type Props = {
 // Contains a form for the user details
 
 function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
+ 
+  
   const [imageSelected, setImageSelected] = useState<StaticImageData | string>(
     DefaultUserImage
   );

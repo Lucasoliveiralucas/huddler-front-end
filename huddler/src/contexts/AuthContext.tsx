@@ -1,68 +1,94 @@
-import React, { useContext, useState, useEffect, createContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Auth, Hub } from 'aws-amplify';
 import { useRouter } from 'next/router';
 import { getUserById } from '../utils/APIServices/userServices';
+import { User } from '../types';
 
+//@ts-ignore
 export const AuthContext = React.createContext();
 
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<any>(null);
-  const [cognitoUser, setCognitoUser] = useState<any>(null);
+type Props = {
+  children: JSX.Element;
+};
+
+export const AuthProvider = ({ children }: Props) => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  // const [loading, setLoading] = useState(true);
+  const [cognitoUser, setCognitoUser] = useState<any>();
   const router = useRouter();
+
   useEffect(() => {
-    loadCurrentUser();
+    Hub.listen('auth', (data) => {
+      const { payload } = data;
+      if (payload.event === 'signOut') console.log('User Signed Out');
+      if (payload.event === 'signIn') loadUser();
+    });
+    return () => {
+      //@ts-ignore
+      Hub.remove('auth');
+    };
   }, []);
 
-  const loadCurrentUser = async () => {
+  const loadUser = async () => {
     try {
-      const userLoggedIn = await Auth.currentAuthenticatedUser();
-      if (!userLoggedIn) {
-        router.replace('/');
-        return;
-      }
+      const cognitoUser = await Auth.currentUserInfo();
+      const { username, attributes } = cognitoUser;
+      // we only use cognito user when changing password and probably deleteing account
+      setCognitoUser(cognitoUser);
 
-      setIsAuthenticated(true);
-      setCognitoUser(userLoggedIn);
-      setCognitoUser(userLoggedIn);
-      const user = await getUserById(userLoggedIn.username);
-      setCurrentUser(user);
-      Hub.listen('auth', (data) => {
-        const { payload } = data;
-        console.log('A newauthentication user event has happened: ', data);
-        if (payload.event === 'signOut') {
-          console.log('User Signed Out');
-          setCognitoUser(null);
-          setCurrentUser(null);
-          setIsAuthenticated(false);
-        }
-      });
+      const userFromDb = await getUserById(username);
+
+      const user = { ...userFromDb[0] };
+      setTimeout(signEventDetector, 1000, user, username, attributes.email);
     } catch (error) {
       console.error(
-        'Error in cognito trying to signup or signin. Check in AuthContext'
+        'Error trying to signin or signup. Check contexts/AuthContext'
       );
     }
     setIsLoading(false);
+  };
+
+  const signEventDetector = (user: User, username: string, email: string) => {
+    if (user.username !== undefined) {
+      console.log('User already logged in');
+      setIsAuthenticated(true);
+      setCurrentUser(user);
+      router.replace('/home');
+      return;
+    }
+    // if first time
+    console.log('First time user');
+    setIsAuthenticated(true);
+    setCurrentUser({ email: email, aws_id: username });
+    router.replace('/newuser');
+    return;
   };
 
   const logOut = async () => {
     await Auth.signOut();
     setIsAuthenticated(false);
     setCurrentUser(null);
-    setCognitoUser(null);
     router.replace('/');
+    return;
+  };
+
+  const changePassword = async (user: any, oldPsw: any, newPsw: any) => {
+    console.log('Password is being changed');
+    return await Auth.changePassword(user, oldPsw, newPsw);
   };
 
   const value = {
     currentUser,
     isAuthenticated,
     isLoading,
+    cognitoUser,
+    setCurrentUser,
+    changePassword,
     logOut,
   };
 

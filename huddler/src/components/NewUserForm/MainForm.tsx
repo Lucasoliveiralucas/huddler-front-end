@@ -1,27 +1,33 @@
 //MainForm
 
 import React, { useEffect, useRef, useState } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import Interests from './FirstInterests';
 import Location from './SecondLocation';
 import UserInfo from './ThirdUserInfo';
 import { Category, User } from '../../types';
-import { postUserInfo, postUserCategory, getUserById } from '../../utils/APIServices/userServices';
-import { getUploadUrl, uploadImgToS3} from '../../utils/APIServices/imageServices'
+import {
+  postUserInfo,
+  postUserCategory,
+  getUserById,
+} from '../../utils/APIServices/userServices';
+import {
+  getUploadUrl,
+  uploadImgToS3,
+} from '../../utils/APIServices/imageServices';
 
 import { useAuth } from '../../contexts/AuthContext';
 
-
-
 function MainForm() {
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [userImg, setUserImg] = useState({});
 
-  const { currentUser } = useAuth()
+  const { setCurrentUser, currentUser } = useAuth();
   const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
-  const [categoriesPicked, setCategoriesPicked] = useState<Category[]>([]);
-  const [userData, setUserData] = useState<any>(...currentUser);
-  console.log('this is userData', userData)
+  const [chosenCategories, setChosenCategories] = useState<Category[]>([]);
+  const [userData, setUserData] = useState<any>(currentUser);
+  console.log('this is userData', userData);
 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -41,24 +47,25 @@ function MainForm() {
 
   const handleSubmit = async () => {
     const data = await getUploadUrl();
-    const uploadUrl = data.uploadURL
-    const filename = data.filename
-    const fileURL = 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/'+filename
+    const uploadUrl = data.uploadURL;
+    const filename = data.filename;
+    const fileURL =
+      'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/' + filename;
 
-    setUserData({ ...userData, image: fileURL});
-    await uploadImgToS3(uploadUrl, userImg); 
+    setUserData({ ...userData, image: fileURL });
+    await uploadImgToS3(uploadUrl, userImg);
 
-    const formData = {...userData, image: fileURL};
-    // await postUserInfo(formData, aws_idRef.current);
-    // @ts-ignore
+    const formData = { ...userData, image: fileURL };
+    console.log('This is userData', userData);
+
+    // // posting new user info to db
     await postUserInfo(formData, userData.aws_id);
+    setCurrentUser(formData);
     // // posting the categories to new huddle
-    categoriesPicked.forEach((category) => {
-      // postUserCategory(aws_idRef.current, category.id as number);
-      // @ts-ignore
+    chosenCategories.forEach((category) => {
       postUserCategory(userData.aws_id, category.id as number);
     });
-    Router.replace('./home');
+    router.replace('/home');
   };
 
   return (
@@ -67,8 +74,8 @@ function MainForm() {
       <div className='h-[60vh] w-full flex justify-center'>
         {page === 1 && (
           <Interests
-            categoriesPicked={categoriesPicked}
-            setCategoriesPicked={setCategoriesPicked}
+            chosenCategories={chosenCategories}
+            setChosenCategories={setChosenCategories}
           />
         )}
         {page === 2 && (
@@ -124,5 +131,3 @@ export default MainForm;
 function postuserCategories(arg0: number, arg1: number) {
   throw new Error('Function not implemented.');
 }
-
-

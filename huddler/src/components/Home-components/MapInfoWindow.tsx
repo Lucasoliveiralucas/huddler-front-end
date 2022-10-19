@@ -1,6 +1,6 @@
 import { InfoWindowF } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
-import { Huddle, User } from "../../types";
+import { Huddle} from "../../types";
 import Image from "next/future/image";
 import {
   getUsersGoingToHuddle,
@@ -11,11 +11,12 @@ import { dateFormatter } from "../../utils/helperFunctions";
 
 type Props = {
   showHuddle: Huddle | undefined;
-  user: User;
+  id: string;
+  updateList: Function;
   setShowHuddle: React.Dispatch<React.SetStateAction<Huddle | undefined>>;
 };
 
-export const MapInfoWindow = ({ showHuddle, setShowHuddle, user }: Props) => {
+export const MapInfoWindow = ({ showHuddle, setShowHuddle, id , updateList}: Props) => {
   const [checkedIn, setCheckedIn] = useState(false);
   const [dateTime, setDateTime] = useState<any>();
   const [goingToHuddle, setGoingToHuddle] = useState<number>();
@@ -24,7 +25,8 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, user }: Props) => {
       const users = await getUsersGoingToHuddle(showHuddle.id as number);
       setGoingToHuddle(users.length);
       //CHANGE TO CURRENT USER
-      users.find((users: any) => users.aws_id === user.aws_id)
+      console.log(id);
+      users.find((users: any) => users.aws_id === id)
         ? setCheckedIn(true)
         : setCheckedIn(false);
     }
@@ -74,7 +76,9 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, user }: Props) => {
                   const val = goingToHuddle - 1;
                   setGoingToHuddle(val);
                   setCheckedIn(false);
-                  removeUserGoingToHuddle(user.aws_id, showHuddle.id as number);
+                  removeUserGoingToHuddle(id, showHuddle.id as number);
+                  updateList();
+
                 }}
               >
                 Check out
@@ -84,10 +88,10 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, user }: Props) => {
                 className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
                   const val = goingToHuddle + 1;
-
                   setGoingToHuddle(val);
                   setCheckedIn(true);
-                  postUserGoingToHuddle(user.aws_id, showHuddle.id as number);
+                  postUserGoingToHuddle(id, showHuddle.id as number);
+                  updateList();
                 }}
               >
                 Check in

@@ -1,11 +1,6 @@
 import Image from 'next/future/image';
 import { useState } from 'react';
 import rightArrow from '../../../public/right-arrow.png';
-import { Auth} from 'aws-amplify'
-import { useAuth } from '../../contexts/AuthContext';
-type Props = {
-  setOption: React.Dispatch<React.SetStateAction<string>>;
-};
 
 const arrowImage = (
   <Image
@@ -22,6 +17,9 @@ const defaultClass =
 const defaultClassTop = defaultClass + '  rounded-t-[15px]';
 const defaultClassBottom = defaultClass + '  rounded-b-[15px]';
 
+type Props = {
+  setOption: React.Dispatch<React.SetStateAction<string>>;
+};
 
 const OptionsMenu = ({ setOption }: Props) => {
   const [selected, setSelected] = useState({
@@ -32,7 +30,7 @@ const OptionsMenu = ({ setOption }: Props) => {
     delete: false,
   });
 
-  //once an option in the settings page is clicked
+  //once an option in the menu of settings page is clicked
   const handleOption = async (e: React.MouseEvent<HTMLLIElement>) => {
     for (let option of Object.keys(selected)) {
       //@ts-ignore

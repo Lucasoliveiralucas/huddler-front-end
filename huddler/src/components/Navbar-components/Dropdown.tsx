@@ -6,6 +6,8 @@ import { AiOutlineCompass } from 'react-icons/ai';
 import { useAuth } from '../../contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useOnclickOutside from 'react-cool-onclickoutside';
+
 const serviceDropdown = [
   { name: 'Explore', path: '/home', icon: <AiOutlineCompass /> },
   { name: 'Profile', path: '/profile', icon: <CgProfile /> },
@@ -25,40 +27,16 @@ type Props = {
 const Dropdown = ({ setShowDropDown }: Props) => {
   //@ts-ignore
   const { currentUser, logOut } = useAuth();
-  const [dropDown, setDropDown] = useState<HTMLElement | null>(null);
-  console.log('logouuut', currentUser);
-  const router = useRouter();
-  let dropDownRef = useRef<HTMLElement>();
 
-  const handleLogoutClick = () => {
-    console.log('hit hereeee');
-    // if (currentUser) return logOut();
-    // router.replace('/');
-    return;
-  };
-
-  // useEffect(() => {
-  //   //@ts-ignore
-  //   dropDownRef.current = document.getElementById('dropdown')
-  //   console.log('droppy' , dropDown)
-  //   setDropDown(dropDown)
-  //   document.addEventListener('click', handleClickOutsideDropdown, true);
-  // }, []);
-
-  // function handleClickOutsideDropdown(this: HTMLElement) {
-  //   // console.log('thiiiiiis', this)
-  //   // console.log('Reeeeef', dropDownRef.current);
-  //   // console.log('DropDooooown',dropDown)
-  //   if (dropDownRef.current?.contains(this)) return;
-  //   if (!dropDownRef.current!.contains(this)) setShowDropDown(false);
-  // }
+  const dropDownref = useOnclickOutside(() => {
+    setShowDropDown(false);
+  });
 
   return (
     <div>
       <div
-        className='mt-24 w-full rounded-[5px] shadow-md'
-        // id='dropdown'
-        // onMouseLeave={() => setShowDropDown(false)}
+        ref={dropDownref}
+        className='hidden md:block mt-24 w-full rounded-[5px] shadow-md'
       >
         <ul className=' w-64 absolute bg-palette-dark -right-[50%] rounded-[10px] mr-[5px] mt-[5px] pt-0'>
           {serviceDropdown.map((menuItem, i) => {
@@ -70,7 +48,6 @@ const Dropdown = ({ setShowDropDown }: Props) => {
                       i === 0 ? topClass : i === 3 ? bottomClass : defaultClass
                     }
                     onClick={() => {
-                      console.log('hereee');
                       logOut();
                     }}
                   >
@@ -91,6 +68,52 @@ const Dropdown = ({ setShowDropDown }: Props) => {
                         // onClick={i === serviceDropdown.length - 1 && handleLogoutClick}
                       >
                         <p className='text-3xl'>{menuItem.icon}</p>
+                        <p>{menuItem.name}</p>
+                      </a>
+                    </Link>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </ul>
+      </div>
+      {/* Mobile */}
+      <div
+        ref={dropDownref}
+        className='mt-20 w-full rounded-[5px] shadow-md md:hidden'
+      >
+        <ul className=' w-screen absolute bg-palette-dark -right-[75%] rounded-[10px] mt-[5px]'>
+          {serviceDropdown.map((menuItem, i) => {
+            return (
+              <div key={i}>
+                {i === serviceDropdown.length - 1 ? (
+                  <div
+                    className={
+                      i === 0 ? topClass : i === 3 ? bottomClass : defaultClass
+                    }
+                    onClick={() => {
+                      console.log('hereee');
+                      logOut();
+                    }}
+                  >
+                    <p className='text-6xl'>{menuItem.icon}</p>
+                    <p>{menuItem.name}</p>
+                  </div>
+                ) : (
+                  <>
+                    <Link href={menuItem.path}>
+                      <a
+                        className={
+                          i === 0
+                            ? topClass
+                            : i === 3
+                            ? bottomClass
+                            : defaultClass
+                        }
+                        // onClick={i === serviceDropdown.length - 1 && handleLogoutClick}
+                      >
+                        <p className='text-6xl'>{menuItem.icon}</p>
                         <p>{menuItem.name}</p>
                       </a>
                     </Link>

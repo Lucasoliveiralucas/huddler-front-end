@@ -10,18 +10,16 @@ import {
 } from "../../utils/APIServices/huddleServices";
 import { useAuth } from "../../contexts/AuthContext";
 import { AiOutlineConsoleSql } from "react-icons/ai";
+import Link from "next/link";
 
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  id:string ;
+  updateList: any;
+  id: string;
 };
 
-function NewHuddleCard({
-  huddle,
-  huddlesUserIsGoing,
-  id
-}: Props) {
+function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
   const dateTime = dateFormatter(huddle.day_time);
   // dateFormatter(huddle.day_time);
   const [going, setGoing] = useState(false);
@@ -37,6 +35,7 @@ function NewHuddleCard({
         ? setGoing(true)
         : setGoing(false);
     }
+
     const getter = async () => {
       const attending = await getUsersGoingToHuddle(huddle.id);
       const categories = await getHuddleCategories(huddle.id);
@@ -52,13 +51,22 @@ function NewHuddleCard({
         <h1 className="font-extrabold text-palette-orange text-2xl">
           {huddle.name}
         </h1>
-        <div className="ml-auto mr-3">
+        <div className="ml-auto flex gap-4 mr-3">
+          <Link
+            href={{
+              pathname: `/details/${huddle.id}`,
+              query: huddle,
+            }}
+          >
+            <a className=" underline">Event Details</a>
+          </Link>
           {going ? (
             <button
               className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
               onClick={(e) => {
                 setGoing(!going);
                 removeUserGoingToHuddle(id, huddle.id);
+                updateList();
               }}
             >
               Leave
@@ -69,6 +77,7 @@ function NewHuddleCard({
               onClick={(e) => {
                 setGoing(!going);
                 postUserGoingToHuddle(id, huddle.id);
+                updateList();
               }}
             >
               Join
@@ -76,27 +85,30 @@ function NewHuddleCard({
           )}
         </div>
       </div>
-      <div className="grid grid-cols-2 md:flex h-full">
-        <div className="flex">
-          <div className="h-3/4 md:w-[24rem] mr-3">
-            <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
+      <div className="grid grid-cols-2 h-full">
+        <div className="flex flex-col">
+          <div className="h-full md:w-[24rem] flex flex-col">
+            <div className="flex rounded-lg h-32 lg:h-40 w-1/2 3xl:w-3/4 max-w-[70%] relative">
               <Image
                 fill
-                src={huddle.image}              
+                src={huddle.image}
                 alt={huddle.name}
-                sizes="100vw"
+                sizes="(max-width: 768px) 100px,
+                       (max-width: 1200px) 150px,
+                       (max-width: 1800px) 230px,
+                       300px"
                 placeholder="empty"
-                className="rounded-lg object-contain"
+                className="rounded-lg object-left"
               />
             </div>
+            <p className="hidden md:block">attending: {data.attending}</p>
 
-            <p>attending: {data.attending}</p>
-
-            <div className="hidden md:grid grid-cols-2 gap-2">
+            <div className="hidden md:grid grid-cols-2 gap-2 w-1/2">
               {data.categories.map((category, i) => {
                 return (
                   i <= 3 && (
                     <p
+<<<<<<< HEAD
                       className="text-center font-bold py-0.5 w-3/4 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark"
                       key={category.id + (i - i)}
                     >
@@ -113,6 +125,9 @@ function NewHuddleCard({
                   i <= 1 && (
                     <p
                       className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+=======
+                      className="text-center py-0.5 bg-palette-dark rounded-md text-white "
+>>>>>>> workingBranch
                       key={category.id + (i - i)}
                     >
                       {category.name}
@@ -122,15 +137,30 @@ function NewHuddleCard({
               })}
             </div>
           </div>
-          {/* Description */}
-          <div className="grid max-w-[300px] md:h-56 py-2 w-full space-x-0 ">
-            <p>{huddle.description}</p>
-            <p className="text-sm self-end">
-              At {huddle.address}
-              <br></br>
-              {dateTime.monthDayYear} at {dateTime.time}
-            </p>
+          {/* Mobile */}
+          <div className="grid md:hidden grid-cols-2 gap-1 py-1">
+            {data.categories.map((category, i) => {
+              return (
+                i <= 1 && (
+                  <p
+                    className="text-center py-0.5 bg-palette-dark rounded-md text-white"
+                    key={category.id + (i - i)}
+                  >
+                    {category.name}
+                  </p>
+                )
+              );
+            })}
           </div>
+        </div>
+        {/* Description */}
+        <div className="grid max-w-[300px] md:h-56 py-2 w-full pl-4 ">
+          <p>{huddle.description}</p>
+          <p className="text-sm self-end">
+            At {huddle.address}
+            <br></br>
+            {dateTime.monthDayYear} at {dateTime.time}
+          </p>
         </div>
       </div>
     </div>

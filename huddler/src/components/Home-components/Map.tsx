@@ -4,9 +4,12 @@ import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle, User } from "../../types";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
-import { useAuth } from "../../contexts/AuthContext";
+
 import { getUserById } from "../../utils/APIServices/userServices";
-const image = require("../../../public/location-pin-svgrepo-com.svg");
+import { withSSRContext } from "aws-amplify";
+
+import { NextApiResponse, NextApiRequest } from "next/types";
+
 const libraries: (
   | "places"
   | "drawing"
@@ -17,20 +20,20 @@ const libraries: (
 
 type Props = {
   huddles?: Huddle[];
-  currentPage: string;
-  setLocation: React.Dispatch<React.SetStateAction<any>>;
-  update: boolean;
-  id: string;
+  currentPage?: string;
+  setLocation?: React.Dispatch<
+    React.SetStateAction<{ name: string; lat: number; lng: number }>
+  >;
+  updateList?: Function;
+  user?: User;
 };
 export default function Map({
   huddles,
   currentPage,
   setLocation,
-  update,
-  id,
+  updateList,
+  user,
 }: Props) {
-  const { currentUser } = useAuth();
-  const [user, setUser] = useState<User>();
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
   const [locationName, setLocationName] = useState("");
   const [selected, setSelected] = useState(false);
@@ -74,6 +77,7 @@ export default function Map({
   useEffect(() => {
     if (center.lat === Number(user?.default_latitude)) setSelected(false);
     if (currentPage)
+      //@ts-ignore
       setLocation({
         name: locationName,
         lat: center.lat,
@@ -82,12 +86,10 @@ export default function Map({
   }, [center]);
   useEffect(() => {
     const getter = async () => {
-      const userData = await getUserById(currentUser);
-      setUser(userData[0]);
-      user
+      user!.default_latitude !== 1
         ? setCenter({
-            lat: Number(userData[0].default_latitude),
-            lng: Number(userData[0].default_longitude),
+            lat: Number(user!.default_latitude),
+            lng: Number(user!.default_longitude),
           })
         : setCenter({ lat: 41.39, lng: 2.15 });
     };
@@ -157,8 +159,7 @@ export default function Map({
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
-            update={update}
-            id={id}
+            id={user!.aws_id}
           />
         </div>
       </div>
@@ -174,6 +175,7 @@ export default function Map({
           {selected && (
             <MarkerF
               position={center}
+              // @ts-ignore
               animation={google.maps.Animation.BOUNCE}
               draggable={true}
               onDragEnd={(e) =>
@@ -193,6 +195,7 @@ export default function Map({
                     lat: Number(huddle.latitude),
                     lng: Number(huddle.longitude),
                   }}
+                  // @ts-ignore
                   animation={google.maps.Animation.DROP}
                   onClick={() => {
                     setShowHuddle(huddle);
@@ -204,14 +207,38 @@ export default function Map({
             <></>
           )}
           <MapInfoWindow
-            user={user}
+            id={user.aws_id}
             showHuddle={showHuddle}
             setShowHuddle={setShowHuddle}
+            updateList={updateList}
           />
         </GoogleMap>
       </div>
     </div>
   ) : (
-    <></>
+    <p>Loading...</p>
   );
 }
+type Context = {
+  req: NextApiRequest;
+  res: NextApiResponse;
+};
+export const getServerSideProps = async ({ req, res }: Context) => {
+  const { Auth } = withSSRContext({ req });
+
+  try {
+    const { username } = await Auth.currentUserInfo();
+    const user: User[] = await getUserById(username);
+    return {
+      props: {
+        user: user.pop(),
+      },
+    };
+  } catch (err) {
+    res.writeHead(302, { Location: "/" });
+    res.end();
+    return {
+      props: {},
+    };
+  }
+};

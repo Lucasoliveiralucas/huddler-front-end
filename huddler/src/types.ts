@@ -18,7 +18,7 @@ export interface User {
   default_latitude?: number;
   description?: string;
   categories?: Category[];
-  aws_id?: string;
+  aws_id: string;
 }
 
 export interface Huddle {
@@ -27,7 +27,7 @@ export interface Huddle {
   day_time: string;
   address: string;
   description: string;
-  fk_author_id: number;
+  fk_author_id: string;
   longitude: number;
   latitude: number;
   id?: number;

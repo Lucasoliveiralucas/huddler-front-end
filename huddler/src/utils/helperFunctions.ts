@@ -1,8 +1,8 @@
-import { Auth } from "aws-amplify";
-import dayjs from "dayjs";
-import { Category } from "../types";
-import { getHuddlesInCategory } from "./APIServices/categoryServices";
-import { getUserCategories } from "./APIServices/userServices";
+import { Auth } from 'aws-amplify';
+import dayjs from 'dayjs';
+import { Category } from '../types';
+import { getHuddlesInCategory } from './APIServices/categoryServices';
+import { getUserCategories } from './APIServices/userServices';
 
 // 1. Fetcher
 // 2. Recommended Huddles
@@ -16,7 +16,7 @@ export const fetcher = async (...args: string[]) => {
     const data = await fetch(...args);
     return await data.json();
   } catch (e) {
-    console.log("There has been an error fetching data: ", e);
+    console.log('There has been an error fetching data: ', e);
     return e;
   }
 };
@@ -51,11 +51,11 @@ export const dateFormatter = (date: string) => {
 };
 
 export const nowFormatted = () => {
-  return dayjs(Date.now()).format("YYYY-MM-DDTHH:mm");
+  return dayjs(Date.now()).format('YYYY-MM-DDTHH:mm');
 };
 
 // 4. Sort by name
-export const sortByName = (arrOfObj) => {
+export const sortByName = (arrOfObj: Category[]) => {
   return arrOfObj.sort((a, b) => a.name.localeCompare(b.name));
 };
 

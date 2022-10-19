@@ -2,8 +2,8 @@ import { User } from '../../types';
 import { useState, useRef } from 'react';
 import UserImage from './UpdateUserImage';
 import { postUserInfo } from '../../utils/APIServices/userServices';
-import DefaultUserImage from '../../../public/defaultUserImage.png'
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
+
 type Props = {
   userData: User;
 };
@@ -11,7 +11,8 @@ type Props = {
 const PersonalInfo = ({ userData }: Props) => {
   const [error, setError] = useState('');
   const [disabledButton, setDisabledButton] = useState(true);
-  const router = useRouter()
+
+  const router = useRouter();
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
@@ -19,17 +20,19 @@ const PersonalInfo = ({ userData }: Props) => {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   let userPersonalInfo = userData;
-  console.log('userPersonalInforrrrrrrr', userPersonalInfo)
-  const handleSubmit = (e:any) => {
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('hit hereee')
     try {
       setError('');
       if (nameRef.current && nameRef.current!.value !== userData.username) {
         userPersonalInfo.username = nameRef.current.value;
       }
 
-      if (emailRef.current && emailRef.current!.value !== userPersonalInfo.email) {
+      if (
+        emailRef.current &&
+        emailRef.current!.value !== userPersonalInfo.email
+      ) {
         userPersonalInfo.email = emailRef.current.value;
       }
 
@@ -47,12 +50,13 @@ const PersonalInfo = ({ userData }: Props) => {
         userPersonalInfo.last_name = lastNameRef.current.value;
       }
 
-      postUserInfo(userPersonalInfo, userData.aws_id as string)
-      router.push('/profile')
+      postUserInfo(userPersonalInfo, userData.aws_id as string);
+      router.push('/profile');
     } catch {
       setError("We weren't able to update your profile. Please try again");
     }
   };
+
   return (
     <>
       {error && <div className='bg-red-600'>{error}</div>}
@@ -128,6 +132,4 @@ const PersonalInfo = ({ userData }: Props) => {
 };
 
 export default PersonalInfo;
-
-
 
