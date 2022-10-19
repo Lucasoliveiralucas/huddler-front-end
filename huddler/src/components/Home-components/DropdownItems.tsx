@@ -37,9 +37,9 @@ const DropdownItems: React.FC<DropdownProps> = ({
     <div className="flex flex-col md:flex-row w-fit absolute px-3 z-40 gap-1 mt-6 md:mt-0 bg-white">
       {categories.map((category: Category, index: number): JSX.Element => {
         return (
-          <div className="h-full w-full py-2">
+          <div className="h-full w-full py-2" key={category.id}>
           <p 
-            key={index}
+            
             onClick={(): void => {
               onClickHandler(category);
             }}
