@@ -91,7 +91,7 @@ function HuddleCarouselItem({
                   onClick={(e) => {
                     setGoing(!going);
                     setUpdate(!update);
-                    removeUserGoingToHuddle(currentUser, huddle.id);
+                    removeUserGoingToHuddle(aws_id, huddle.id);
                   }}
                 >
                   Leave
@@ -102,7 +102,7 @@ function HuddleCarouselItem({
                   onClick={(e) => {
                     setGoing(!going);
                     setUpdate(!update);
-                    postUserGoingToHuddle(currentUser, huddle.id);
+                    postUserGoingToHuddle(aws_id, huddle.id);
                   }}
                 >
                   Join
