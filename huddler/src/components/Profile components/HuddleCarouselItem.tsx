@@ -58,8 +58,8 @@ function HuddleCarouselItem({
   }, []);
   const toggleGoingToHuddle = async (isGoing: boolean) => {
     isGoing
-      ? await postUserGoingToHuddle(id, huddle.id)
-      : await removeUserGoingToHuddle(id, huddle.id);
+      ? await postUserGoingToHuddle(aws_id, huddle.id)
+      : await removeUserGoingToHuddle(aws_id, huddle.id);
 
     setUpdate(!update);
   };
@@ -90,8 +90,7 @@ function HuddleCarouselItem({
                   className="justify-center orange-button mr-6"
                   onClick={(e) => {
                     setGoing(!going);
-                    setUpdate(!update);
-                    removeUserGoingToHuddle(aws_id, huddle.id);
+                    toggleGoingToHuddle(false);
                   }}
                 >
                   Leave
@@ -101,8 +100,7 @@ function HuddleCarouselItem({
                   className="justify-center orange-button mr-6"
                   onClick={(e) => {
                     setGoing(!going);
-                    setUpdate(!update);
-                    postUserGoingToHuddle(aws_id, huddle.id);
+                    toggleGoingToHuddle(true);
                   }}
                 >
                   Join
