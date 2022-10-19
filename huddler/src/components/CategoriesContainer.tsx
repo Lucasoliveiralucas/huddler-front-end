@@ -5,8 +5,20 @@ import { getUserCategories } from '../utils/APIServices/userServices';
 import { sortByName } from '../utils/helperFunctions';
 
 const notSelectedClass =
-  'h-[40px] md:text-xl py-2 md:px-2 text-center rounded text-white cursor-pointer active:translate-x-[1px] active:translate-y-[1px] bg-palette-orange hover:opacity-50';
-const selectedClass = notSelectedClass + ' bg-orange-600';
+  ` p-4
+  text-center
+  font-bold
+  py-0.5
+  rounded-2xl
+  border-palette-dark
+  border-[1px]
+  bg-tansparent
+  text-palette-dark
+  cursor-pointer
+  active:translate-x-[1px]
+  active:translate-y-[1px]
+  hover:opacity-50`;
+const selectedClass = notSelectedClass + ' bg-orange-600 text-palette-light border-none';
 
 type Props = {
   chosenCategories?: Category[];

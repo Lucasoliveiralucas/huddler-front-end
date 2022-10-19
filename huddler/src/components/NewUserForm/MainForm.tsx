@@ -104,7 +104,7 @@ function MainForm() {
         {page > 1 && (
           <button
             onClick={(e) => prevPage(e)}
-            className='px-6 py-2 bg-palette-dark text-white'
+            className='rounded-3xl hover:font-bold px-6 py-2 border-[1px]  border-palette-dark bg-transparent text-palette-dark'
           >
             Previous
           </button>
@@ -115,7 +115,7 @@ function MainForm() {
               nextPage(e);
               handleSubmit();
             }}
-            className='px-6 py-2 bg-palette-dark text-white'
+            className='rounded-3xl font-bold px-6 py-2 bg-palette-dark text-white'
           >
             Submit
           </button>
@@ -123,14 +123,14 @@ function MainForm() {
           <button
             disabled={disabledButton}
             onClick={(e) => nextPage(e)}
-            className='px-6 py-2 bg-palette-dark text-white'
+            className='rounded-3xl font-bold px-6 py-2 bg-palette-dark text-white'
           >
             Next
           </button>
         ) : (
           <button
             onClick={(e) => nextPage(e)}
-            className='px-6 py-2 bg-palette-dark text-white'
+            className='rounded-3xl font-bold px-6 py-2 bg-palette-dark text-white'
           >
             Next
           </button>

@@ -39,7 +39,7 @@ const Dropdown = ({ setShowDropDown }: Props) => {
         onMouseLeave={() => setShowDropDown(false)}
         className='hidden md:block mt-24 w-full rounded-[5px] shadow-md'
       >
-        <ul className=' w-64 absolute bg-palette-dark -right-[50%] rounded-[10px] mr-[5px] mt-[5px] pt-0'>
+        <ul className=' w-64 absolute bg-[#c4915f] -right-[50%] rounded-[10px] mr-[5px] mt-[5px] pt-0'>
           {serviceDropdown.map((menuItem, i) => {
             return (
               <div key={i}>

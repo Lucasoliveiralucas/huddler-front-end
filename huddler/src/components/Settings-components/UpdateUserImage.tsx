@@ -52,7 +52,7 @@ const UserImage = ({
         accept='.jpg, jpeg, .png, .gif'
         onChange={changeUserImage}
       />
-      <div className="relative h-[8rem] w-[8rem] mt-10 md:mt-32 lg:mt-0 lg:h-[15rem] lg:w-[15rem]">
+      <div className="relative mb-4 md:mb-8 h-[8rem] w-[8rem] mt-10 md:mt-32 lg:mt-0 lg:h-[15rem] lg:w-[15rem]">
         <Image
         src={userImage || userPersonalInfo.image || DefaultUserImage}
         className='rounded-full hover:cursor-pointer'

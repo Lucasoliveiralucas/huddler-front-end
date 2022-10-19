@@ -42,7 +42,8 @@ const OptionsMenu = ({ setOption }: Props) => {
   };
 
   return (
-    <ul className='flex flex-col justify-center mt-24 md:mr-10 xl:mr-48 lg:mr-10 shadow-md border-solid border-[0.2px] rounded-[15px] border-gray-300'>
+    // <div className='fixed left-6'>
+    <ul className='flex flex-col justify-center mt-16 md:mr-10 xl:mr-48 lg:mr-10 shadow-md border-solid border-[0.2px] rounded-[15px] border-gray-300'>
       <li
         className={
           selected.information
@@ -100,6 +101,7 @@ const OptionsMenu = ({ setOption }: Props) => {
         {arrowImage}
       </li>
     </ul>
+    // </div>
   );
 };
 

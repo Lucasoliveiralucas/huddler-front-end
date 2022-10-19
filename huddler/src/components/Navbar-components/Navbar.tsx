@@ -85,10 +85,21 @@ function Navbar() {
         <div className="flex items-center justify-end">
           <button
             className="
-        w-20 h-full md:w-40 relative text-center font-bold
-        py-2 text-sm md:text-lg rounded-3xl border-palette-dark border-[1px]
-        bg-tansparent hover:bg-[#7c2d12] text-palette-dark
-        hover:text-white"
+            w-14
+            md:w-40
+            relative
+            text-center
+            font-bold
+            py-2
+            text-sm
+            md:text-lg
+            rounded-3xl
+            border-palette-dark
+            border-[1px]
+            bg-tansparent
+            hover:bg-[#7c2d12]
+            text-palette-dark
+            hover:text-white"
             onClick={() => toggleCreate()}
           >
             New huddle

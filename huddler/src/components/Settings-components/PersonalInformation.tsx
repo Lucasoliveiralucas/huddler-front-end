@@ -126,7 +126,7 @@ const PersonalInfo = ({ userData }: Props) => {
           />
         </div>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='name' className='lg:text-lg text-[#721D25]'>User name</label>
+          <label htmlFor='name' className='ml-1 lg:text-lg text-[#721D25]'>User name</label>
           <input
             ref={nameRef}
             className='block w-80 h-10 rounded-md mb-3'
@@ -134,7 +134,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.username}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='email' className='text-lg text-[#721D25]'>Email</label>
+          <label htmlFor='email' className='ml-1 after:text-lg text-[#721D25]'>Email</label>
           <input
             ref={emailRef}
             id='email'
@@ -143,7 +143,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.email || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='first-name' className='lg:text-lg text-[#721D25]'>First name</label>
+          <label htmlFor='first-name' className='ml-1 lg:text-lg text-[#721D25]'>First name</label>
           <input
             ref={firstNameRef}
             id='first-name'
@@ -152,7 +152,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.first_name || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='last-name' className='lg:text-lg text-[#721D25]'>Last name</label>
+          <label htmlFor='last-name' className='ml-1 lg:text-lg text-[#721D25]'>Last name</label>
           <input
             ref={lastNameRef}
             id='last-name'
@@ -161,7 +161,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.last_name || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='description' className='lg:text-lg text-[#721D25]'>Description</label>
+          <label htmlFor='description' className='ml-1 lg:text-lg text-[#721D25]'>Description</label>
           <textarea
             ref={descriptionRef}
             id='description'
@@ -181,7 +181,7 @@ const PersonalInfo = ({ userData }: Props) => {
             ) : (
               <button
                 className={` ${
-                  disabledButton === true ? 'leave-button' : 'orange-button'
+                  disabledButton === true ? 'leave-button mb-8' : 'orange-button mb-8'
                 }`}
                 type='submit'
                 disabled={disabledButton}
