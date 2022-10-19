@@ -38,7 +38,7 @@ function HuddleCarousel({
       ))}
     </div>
   ) : (
-    <div className='pl-1 h-64 lg:h-72 flex'> </div>
+    <div className='pl-1 h-64 lg:h-72 flex'></div>
   );
 }
 
