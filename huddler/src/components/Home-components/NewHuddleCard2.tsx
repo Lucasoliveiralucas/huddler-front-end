@@ -11,19 +11,15 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 import { AiOutlineConsoleSql } from "react-icons/ai";
 import { GrGroup } from "react-icons/gr";
-
+import Link from "next/link";
 
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  id:string ;
+  id: string;
 };
 
-function NewHuddleCard({
-  huddle,
-  huddlesUserIsGoing,
-  id
-}: Props) {
+function NewHuddleCard({ huddle, huddlesUserIsGoing, id }: Props) {
   const dateTime = dateFormatter(huddle.day_time);
   // dateFormatter(huddle.day_time);
   const [going, setGoing] = useState(false);
@@ -50,78 +46,77 @@ function NewHuddleCard({
 
   return (
     // <div id="card-container">
-        <div className="flex flex-col"> 
-        
-            <div className="flex flex-row">
-                <div className="basis-1/4 relative">
-                    <picture className="">
-                        <img 
-                            src={huddle.image} 
-                            alt={huddle.name}
-                            className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
-                        />
-                    </picture>
-                </div>
+    <div className="flex flex-col">
+      <div className="flex flex-row">
+        <div className="basis-1/4 relative">
+          <picture className="">
+            <img
+              src={huddle.image}
+              alt={huddle.name}
+              className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
+            />
+          </picture>
+        </div>
 
-                <div className="basis-3/4 flex flex-col mt-4 ml-4" >
-                        <div id="title" className="flex flex-row justify-between">
-
-                            <h1 className="font-extrabold font-yantra font-medium text-palette-dark text-2xl">
-                                {huddle.name}
-                            </h1>
-
-                            <div className="">
-                                {going ? (
-                                <button
-                                className="justify-center font-karla orange-button mr-6"
-                                onClick={(e) => {
-                                    setGoing(!going);
-                                    removeUserGoingToHuddle(id, huddle.id);
-                                }}
-                                >
-                                Leave
-                                </button>
-                            ) : (
-                                <button
-                                className="justify-center font-karla orange-button mr-6"
-                                onClick={(e) => {
-                                    setGoing(!going);
-                                    postUserGoingToHuddle(id, huddle.id);
-                                }}
-                                >
-                                Join
-                                </button>
-                            )}
-                            </div>
-                        </div>
-
-                        <div id="details" className="flex flex-col">
-                            <p className="font-karla">{huddle.description}</p>
-                            <p className="font-karla font-light italic">
-                                {huddle.address}
-                               
-                                {dateTime.monthDayYear} at {dateTime.time}
-                            </p>
-
-                            <div className="flex flex-row mt-2">
-                                <GrGroup/>
-                                <p className="ml-2 -mt-1 font-karla font-light">{data.attending}</p>
-                            </div>
-
-                        </div>
-                </div>
-                 
+        <div className="basis-3/4 flex flex-col mt-4 ml-4">
+          <div id="title" className="flex flex-row justify-between">
+            <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
+              <h1 className="font-extrabold text-palette-dark text-2xl cursor-pointer">
+                {huddle.name}
+              </h1>
+            </Link>
+            <div className="">
+              {going ? (
+                <button
+                  className="justify-center leave-button mr-6"
+                  onClick={(e) => {
+                    setGoing(!going);
+                    removeUserGoingToHuddle(id, huddle.id);
+                  }}
+                >
+                  Leave
+                </button>
+              ) : (
+                <button
+                  className="justify-center orange-button mr-6"
+                  onClick={(e) => {
+                    setGoing(!going);
+                    postUserGoingToHuddle(id, huddle.id);
+                  }}
+                >
+                  Join
+                </button>
+              )}
             </div>
-            <div id="tags" className="grid grid-cols-5 gap-2 mx-4 mt-2">
-                            {data.categories.map((category, i) => {
-                              return (
-                                  <p className="text-center font-publicSans font-bold py-0.5 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark" key={category.id + (i - i)}>
-                                      {category.name}
-                                  </p>);
-                            })}
-                        </div>
-            
           </div>
+          <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
+            <div id="details" className="flex flex-col cursor-pointer">
+              <p>{huddle.description}</p>
+              <p className="text-sm italic pt-2">
+                {huddle.address} {dateTime.monthDayYear} at {dateTime.time}
+              </p>
+
+              <div className="flex flex-row mt-2">
+                <GrGroup />
+                <p className="ml-2 -mt-1">{data.attending}</p>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
+      <div id="tags" className="grid grid-cols-5 gap-2 mx-4 mt-2">
+        {data.categories.map((category, i) => {
+          return (
+            <p
+              className="text-center font-bold py-0.5 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark"
+              key={category.id + (i - i)}
+            >
+              {category.name}
+            </p>
+          );
+        })}
+      </div>
+    </div>
     // </div>
   );
 }
