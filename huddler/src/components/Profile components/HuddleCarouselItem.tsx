@@ -9,6 +9,13 @@ import {
   removeUserGoingToHuddle,
 } from "../../utils/APIServices/huddleServices";
 import Link from "next/link";
+<<<<<<< HEAD
+=======
+import { useAuth } from "../../contexts/AuthContext";
+import { GrGroup } from "react-icons/gr";
+
+
+>>>>>>> landing_page_slider
 
 type Props = {
   huddle: Huddle;
@@ -50,6 +57,7 @@ function HuddleCarouselItem({
     getter();
   }, []);
   return (
+<<<<<<< HEAD
     <div className="ml-3 mr-3 mt-3">
       <div className="flex mb-1">
         <h1 className="font-extrabold text-palette-orange text-2xl">
@@ -142,6 +150,86 @@ function HuddleCarouselItem({
         </div>
       </div>
     </div>
+=======
+    <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
+     
+        <div className="flex flex-col"> 
+              <div className="flex flex-row">
+                  <div className="basis-1/4 relative">
+                      <picture>
+                          <img 
+                              src={huddle.image} 
+                              alt={huddle.name}
+                              className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
+                          />
+                      </picture>
+                  </div>
+
+                  <div className="basis-3/4 flex flex-col mt-4 ml-4" >
+                          <div id="title" className="flex flex-row justify-between">
+
+                              <h1 className="font-extrabold text-palette-dark text-2xl">
+                                  {huddle.name}
+                              </h1>
+
+                              <div className="">
+                                  {going ? (
+                                  <button
+                                  className="justify-center orange-button mr-6"
+                                  onClick={(e) => {
+                                    setGoing(!going);
+                                    setUpdate(!update);
+                                    removeUserGoingToHuddle(currentUser, huddle.id);
+                                  }}
+                                  >
+                                  Leave
+                                  </button>
+                              ) : (
+                                  <button
+                                  className="justify-center orange-button mr-6"
+                                  onClick={(e) => {
+                                    setGoing(!going);
+                                    setUpdate(!update);
+                                    postUserGoingToHuddle(currentUser, huddle.id);
+                                  }}
+                                  >
+                                  Join
+                                  </button>
+                              )}
+                              </div>
+                          </div>
+
+                          <div id="details" className="flex flex-col">
+                              <p>{huddle.description}</p>
+                              <p className="text-sm italic pt-2">
+                                  {huddle.address}
+                                
+                                  {dateTime.monthDayYear} at {dateTime.time}
+                              </p>
+
+                              <div className="flex flex-row mt-2">
+                                  <GrGroup/>
+                                  <p className="ml-2 -mt-1">{data.attending}</p>
+                              </div>
+
+                          </div>
+                  </div>             
+              </div>
+
+              <div id="tags" className="grid grid-cols-5 gap-2 mx-4 mt-2">
+                              {data.categories.map((category, i) => {
+                                return (
+                                    <p className="text-center font-bold py-0.5 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark" key={category.id + (i - i)}>
+                                        {category.name}
+                                    </p>);
+                              })}
+              </div>
+              
+        </div>    
+      
+
+    </Link>
+>>>>>>> landing_page_slider
   );
 }
 
