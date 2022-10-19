@@ -66,14 +66,14 @@ function NewHuddleCard({
                 <div className="basis-3/4 flex flex-col mt-4 ml-4" >
                         <div id="title" className="flex flex-row justify-between">
 
-                            <h1 className="font-extrabold text-palette-dark text-2xl">
+                            <h1 className="font-extrabold font-yantra font-medium text-palette-dark text-2xl">
                                 {huddle.name}
                             </h1>
 
                             <div className="">
                                 {going ? (
                                 <button
-                                className="justify-center orange-button mr-6"
+                                className="justify-center font-karla orange-button mr-6"
                                 onClick={(e) => {
                                     setGoing(!going);
                                     removeUserGoingToHuddle(id, huddle.id);
@@ -83,7 +83,7 @@ function NewHuddleCard({
                                 </button>
                             ) : (
                                 <button
-                                className="justify-center orange-button mr-6"
+                                className="justify-center font-karla orange-button mr-6"
                                 onClick={(e) => {
                                     setGoing(!going);
                                     postUserGoingToHuddle(id, huddle.id);
@@ -96,8 +96,8 @@ function NewHuddleCard({
                         </div>
 
                         <div id="details" className="flex flex-col">
-                            <p>{huddle.description}</p>
-                            <p className="text-sm italic pt-2">
+                            <p className="font-karla">{huddle.description}</p>
+                            <p className="font-karla font-light italic">
                                 {huddle.address}
                                
                                 {dateTime.monthDayYear} at {dateTime.time}
@@ -105,7 +105,7 @@ function NewHuddleCard({
 
                             <div className="flex flex-row mt-2">
                                 <GrGroup/>
-                                <p className="ml-2 -mt-1">{data.attending}</p>
+                                <p className="ml-2 -mt-1 font-karla font-light">{data.attending}</p>
                             </div>
 
                         </div>
@@ -115,7 +115,7 @@ function NewHuddleCard({
             <div id="tags" className="grid grid-cols-5 gap-2 mx-4 mt-2">
                             {data.categories.map((category, i) => {
                               return (
-                                  <p className="text-center font-bold py-0.5 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark" key={category.id + (i - i)}>
+                                  <p className="text-center font-publicSans font-bold py-0.5 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark" key={category.id + (i - i)}>
                                       {category.name}
                                   </p>);
                             })}
