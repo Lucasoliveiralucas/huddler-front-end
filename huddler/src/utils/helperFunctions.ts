@@ -65,15 +65,15 @@ export const getSession = async () => {
 };
 
 export const sortHuddlesByDate = (huddlesToSort: Huddle[]) => {
-  //@ts-ignore
   return huddlesToSort.sort((a, b) => {
+    //@ts-ignore
     return new Date(a.day_time) - new Date(b.day_time);
   });
 };
 
 export const getActiveHuddles = (huddlesToFileter: Huddle[]) => {
-  //@ts-ignore
   return huddlesToFileter.filter(
+    //@ts-ignore
     (huddle) => new Date(huddle.day_time) > Date.now()
   );
 };

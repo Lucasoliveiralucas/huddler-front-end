@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Map from "../../src/components/Home-components/Map";
 import { getAllHuddles } from "../../src/utils/APIServices/huddleServices";
 import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";

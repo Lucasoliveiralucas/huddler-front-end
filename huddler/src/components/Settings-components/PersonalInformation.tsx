@@ -4,6 +4,7 @@ import UserImage from './UpdateUserImage';
 import { postUpdatedUserInfo } from '../../utils/APIServices/userServices';
 import { useRouter } from 'next/router';
 import {
+            // @ts-ignore
   deleteOldImg,
   getUploadUrl,
   uploadImgToS3,
@@ -78,6 +79,7 @@ const PersonalInfo = ({ userData }: Props) => {
         console.log('imageurl BEFORE editing : '+ userPersonalInfo.image);
         const oldImageInfoPath: any = userPersonalInfo.image
         const oldImageInfo = /[^/]*$/.exec(oldImageInfoPath);
+          // @ts-ignore
         const oldImage = oldImageInfo[0];
         deleteOldImg(oldImage);
 
