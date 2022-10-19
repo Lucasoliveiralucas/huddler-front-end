@@ -65,6 +65,7 @@ function HuddleCarouselItem({
     <div className="flex flex-col">
       <div className="flex flex-row">
         <div className="basis-1/4 relative">
+                {/* @ts-ignore */}
           <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
             <picture>
               <img
@@ -111,6 +112,7 @@ function HuddleCarouselItem({
             <p>{huddle.description}</p>
             <p className="text-sm italic pt-2">
               {huddle.address}
+                    {/* @ts-ignore */}
               {dateTime.monthDayYear} at {dateTime.time}
             </p>
 

@@ -24,7 +24,6 @@ type Props = {
     name: string;
     lat: string;
     lng: string;
-    id?: string;
   };
   update?: boolean;
   setCenter: React.Dispatch<
