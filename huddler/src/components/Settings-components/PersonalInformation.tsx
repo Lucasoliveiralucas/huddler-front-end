@@ -80,7 +80,8 @@ const PersonalInfo = ({ userData }: Props) => {
       userPersonalInfo.image = fileURL;
       await uploadImgToS3(uploadUrl, newImg);
 
-      postUpdatedUserInfo(userPersonalInfo, userData.aws_id as string);
+      await postUpdatedUserInfo(userPersonalInfo, userData.aws_id as string);
+      sessionStorage.setItem('user', JSON.stringify(userPersonalInfo));
       setSuccess("Success! Your personal information was updated");
     } catch {
       setError("We weren't able to update your profile. Please try again");
@@ -175,3 +176,4 @@ const PersonalInfo = ({ userData }: Props) => {
 };
 
 export default PersonalInfo;
+

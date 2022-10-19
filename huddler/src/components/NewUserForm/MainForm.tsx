@@ -63,6 +63,7 @@ function MainForm() {
     // // posting new user info to db
     await postNewUserInfo(formData, userData.aws_id);
     setCurrentUser(formData);
+    sessionStorage.setItem('user', JSON.stringify(formData));
     // // posting the categories to new huddle
     chosenCategories.forEach((category) => {
       postUserCategory(userData.aws_id, category.id as number);
