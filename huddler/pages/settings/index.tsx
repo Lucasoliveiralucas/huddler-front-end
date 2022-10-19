@@ -14,16 +14,15 @@ const SettingsPage = () => {
   const router = useRouter();
 
   //@ts-ignore
-  const { currentUser, isAuthenticated, isLoading } = useAuth();
+  const { currentUser } = useAuth();
   const [userData, setUserData] = useState<User>(currentUser);
   const [option, setOption] = useState('information');
+  const [isAuth, setIsAuth] = useState(false)
 
   useEffect(() => {
-    if (isLoading && !isAuthenticated) {
-      router.replace('/');
-      return;
-    }
-  }, [isLoading, isAuthenticated]);
+    const checkAuth = sessionStorage.getItem('user')
+    if (!JSON.parse(checkAuth!)) {setIsAuth(false); router.replace('/');
+  } else {setIsAuth(true)}}, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -32,7 +31,7 @@ const SettingsPage = () => {
     }
   }, [currentUser]);
 
-  return currentUser ? (
+  return isAuth && currentUser ? (
     <main className='flex h-screen justify-center items-center'>
       <OptionsMenu setOption={setOption} />
 

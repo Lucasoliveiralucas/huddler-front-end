@@ -27,6 +27,7 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
       setUserData(updatedUser);
       updatedUser &&
         (await postUpdatedUserInfo(updatedUser, userData.aws_id as string));
+      sessionStorage.setItem('user', JSON.stringify(updatedUser));
       setSuccess('Success, you updated yout location');
     } catch {
       setError("We weren't able to update your location. Please try again");

@@ -22,7 +22,11 @@ export const AuthProvider = ({ children }: Props) => {
   const [cognitoUser, setCognitoUser] = useState<any>();
   const router = useRouter();
 
+  
   useEffect(() => {
+    const sessionJSON = sessionStorage.getItem('user')
+    const sessionUser = JSON.parse(sessionJSON!)
+    sessionUser && setCurrentUser(sessionUser)
     Hub.listen("auth", (data) => {
       const { payload } = data;
       if (payload.event === "signOut") console.log("User Signed Out");
@@ -34,6 +38,7 @@ export const AuthProvider = ({ children }: Props) => {
     };
   }, []);
 
+  
   const loadUser = async () => {
     try {
       const cognitoUser = await Auth.currentUserInfo();
@@ -58,19 +63,25 @@ export const AuthProvider = ({ children }: Props) => {
       console.log("User already logged in");
       setIsAuthenticated(true);
       setCurrentUser(user);
+      // console.log('user to storeeee ', user)
       router.replace("/home");
+      sessionStorage.setItem('user', JSON.stringify(user));
+      
       return;
     }
     // if first time
     console.log("First time user");
     setIsAuthenticated(true);
-    setCurrentUser({ email: email, aws_id: username });
+    const newUser = { email: email, aws_id: username };
+    setCurrentUser(newUser);
+    sessionStorage.setItem('user', JSON.stringify(newUser));
     router.replace("/newuser");
     return;
   };
 
   const logOut = async () => {
     await Auth.signOut();
+    sessionStorage.removeItem('user')
     setIsAuthenticated(false);
     setCurrentUser(null);
     router.replace("/");
@@ -104,3 +115,6 @@ export const AuthProvider = ({ children }: Props) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+
+

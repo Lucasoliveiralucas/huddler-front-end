@@ -70,7 +70,7 @@ function Navbar() {
   };
   return (
     <>
-      <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-10">
+      <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-40">
         <Link href={"/home"} rel="prefetch" as="image">
           <a className="w-48">
             <Image src={huddler_logo} alt="logo" priority={true} />
@@ -120,13 +120,13 @@ function Navbar() {
         // border-[0.5px]
         // border-palette-dark"
         className="w-screen
-    mt-20
-    h-[100vh]
-    hidden
-    z-10
-    justify-center 
-    backdrop-blur-sm
-    white/30"
+          mt-24
+          h-full
+          hidden
+          z-10
+          justify-center 
+          backdrop-blur-sm
+          white/30"
       >
         <NewHuddleForm
           center={center}
