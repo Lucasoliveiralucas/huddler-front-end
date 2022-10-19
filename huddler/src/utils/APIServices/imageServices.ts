@@ -18,8 +18,6 @@ export const uploadImgToS3 = async (uploadUrlForS3: string, file: File | {}) => 
           //@ts-ignore
     body: file,
   })
-    .then((res) => res.json())
+    .then((res) => res.text())
     .catch((err) => console.log(err));
 };
-
-

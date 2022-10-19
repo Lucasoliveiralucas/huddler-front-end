@@ -6,9 +6,10 @@ import { Category, Huddle } from "../../types";
 
 type Props = {
   setFilterChoice: React.Dispatch<React.SetStateAction<Huddle[]>>;
+  revert: boolean;
 };
 
-const DropdownMenu = ({ setFilterChoice }: Props) => {
+const DropdownMenu = ({ setFilterChoice, revert }: Props) => {
   const [categories, setCategories] = useState<any>([]);
   const [showDropdown, setShowDropdwon] = useState<boolean>(false);
   const [selectCategory, setSelectCategory] = useState<string>("");
@@ -29,6 +30,9 @@ const DropdownMenu = ({ setFilterChoice }: Props) => {
     loadCategories();
   }, []);
 
+  useEffect(() => {
+    setSelectCategory("");
+  }, [revert]);
   const toggleDropdown = () => {
     setShowDropdwon(!showDropdown);
   };
@@ -44,9 +48,9 @@ const DropdownMenu = ({ setFilterChoice }: Props) => {
   };
 
   return (
-    <div className="dropdown-div relative overflow-auto scrollbar-hide">
+    <div className="dropdown-div overflow-x-auto scrollbar-hide">
       <button
-        className={showDropdown ? "active" : "noActive"}
+        className={`${showDropdown ? "active" : "noActive"}`}
         onClick={(): void => toggleDropdown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
