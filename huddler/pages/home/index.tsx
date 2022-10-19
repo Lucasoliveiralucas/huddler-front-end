@@ -84,8 +84,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
               <MobileMap
                 huddles={filterChoice}
                 user={user}
-                updateList={updateList}
-                currentPage={"/home"} />
+                updateList={updateList} />
             </div>
           )}
 

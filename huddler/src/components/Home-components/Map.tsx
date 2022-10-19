@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle, User } from "../../types";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
-
 import { getUserById } from "../../utils/APIServices/userServices";
 import { withSSRContext } from "aws-amplify";
 
@@ -21,10 +20,8 @@ const libraries: (
 type Props = {
   huddles?: Huddle[];
   currentPage?: string;
-  setLocation?: React.Dispatch<
-    React.SetStateAction<{ name: string; lat: number; lng: number }>
-  >;
   updateList?: Function;
+  setLocation?: React.Dispatch<React.SetStateAction<{ name: string; lat: number; lng: number }>>;
   user: User;
 };
 export default function Map({
@@ -88,9 +85,9 @@ export default function Map({
     const getter = async () => {
       user!.default_latitude !== 1
         ? setCenter({
-            lat: Number(user!.default_latitude),
-            lng: Number(user!.default_longitude),
-          })
+          lat: Number(user!.default_latitude),
+          lng: Number(user!.default_longitude),
+        })
         : setCenter({ lat: 41.39, lng: 2.15 });
     };
     getter();
@@ -108,38 +105,6 @@ export default function Map({
   return isLoaded ? (
     <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
-        <div className="flex">
-          {/* {containerSize.width == "40vw" ? (
-            <button
-              className="p-2 bg-white  shadow-md rounded-sm"
-              onClick={() => setContainerSize(mapSize)}
-            >
-              &#x2770;
-            </button>
-          ) : (
-            <button
-              className="p-2"
-              onClick={() =>
-                setContainerSize({
-                  width: "40vw",
-                  height: "40vw",
-                })
-              }
-            >
-              &#x2771;
-            </button>
-          )} */}
-          {/* {currentPage === "newuser" ? (
-            <></>
-          ) : (
-            <button
-              className="bg-white shadow-md ml-3 p-2 rounded-sm"
-              onClick={() => toggleCreate()}
-            >
-              Create
-            </button>
-          )} */}
-        </div>
         <div className="z-10 mt-3 w-60">
           <PlacesAutocomplete
             hook={setCenter}
@@ -175,7 +140,6 @@ export default function Map({
           {selected && (
             <MarkerF
               position={center}
-              // @ts-ignore
               animation={google.maps.Animation.BOUNCE}
               draggable={true}
               onDragEnd={(e) =>
@@ -195,7 +159,6 @@ export default function Map({
                     lat: Number(huddle.latitude),
                     lng: Number(huddle.longitude),
                   }}
-                  // @ts-ignore
                   animation={google.maps.Animation.DROP}
                   onClick={() => {
                     setShowHuddle(huddle);

@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import { Huddle, User } from "../../types";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
-const image = require("../../../public/location-pin-svgrepo-com.svg");
+import { getUserById } from "../../utils/APIServices/userServices";
+import { withSSRContext } from "aws-amplify";
+import { NextApiResponse, NextApiRequest } from "next/types";
+
 const libraries: (
-  | "places"
-  | "drawing"
-  | "geometry"
-  | "localContext"
-  | "visualization"
+    | "places"
+    | "drawing"
+    | "geometry"
+    | "localContext"
+    | "visualization"
 )[] = ["places"];
 
 type Props = {
     huddles?: Huddle[];
-    currentPage: string;
+    currentPage?: string;
     updateList: Function;
     setLocation?: React.Dispatch<React.SetStateAction<{ name: string, lat: number, lng: number }>>;
     user: User;
@@ -62,9 +65,9 @@ export default function MobileMap({ huddles, currentPage, user, setLocation, upd
         setCreateBox(true);
     };
     useEffect(() => {
-        if (center.lat !== 41.39) setSelected(true);
+        if (center.lat === Number(user?.default_latitude)) setSelected(false);
         if (currentPage)
-                 //@ts-ignore
+            //@ts-ignore
             setLocation({
                 name: locationName,
                 lat: center.lat,
@@ -86,38 +89,6 @@ export default function MobileMap({ huddles, currentPage, user, setLocation, upd
     return isLoaded ? (
         <div className="mt-0">
             <div className="absolute pl-3 z-10 mt-24">
-                {/* <div className="flex">
-                    {containerSize.width == "40vw" ? (
-                        <button
-                            className="p-2 bg-white  shadow-md rounded-sm"
-                            onClick={() => setContainerSize(mapSize)}
-                        >
-                            &#x2770;
-                        </button>
-                    ) : (
-                        <button
-                            className="p-2  bg-white shadow-md "
-                            onClick={() =>
-                                setContainerSize({
-                                    width: "40vw",
-                                    height: "40vw",
-                                })
-                            }
-                        >
-                            &#x2771;
-                        </button>
-                    )} */}
-          {/* {currentPage === "newuser" ? (
-                        <></>
-                    ) : (
-                        <button
-                            className="bg-white shadow-md ml-3 p-2 rounded-sm"
-                            onClick={() => toggleCreate()}
-                        >
-                            Create
-                        </button>
-                    )}
-                </div> */}
                 <div className="z-10 mt-3 w-60">
                     <PlacesAutocomplete
                         hook={setCenter}
@@ -155,7 +126,6 @@ export default function MobileMap({ huddles, currentPage, user, setLocation, upd
                             position={center}
                             animation={google.maps.Animation.DROP}
                             draggable={true}
-                            // icon={{ path: "../../../public/location-pin-svgrepo-com.svg" }}
                             onDragEnd={(e) =>
                                 setCenter({
                                     lat: e.latLng?.lat() || center.lat,
@@ -193,6 +163,7 @@ export default function MobileMap({ huddles, currentPage, user, setLocation, upd
             </div>
         </div>
     ) : (
-        <></>
+        <p>Loading...</p>
     );
 }
+

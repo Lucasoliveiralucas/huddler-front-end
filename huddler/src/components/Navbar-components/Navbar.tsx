@@ -63,7 +63,6 @@ function Navbar() {
   //       window.removeEventListener('scroll', controlNavbar);
   //     };
   // }, [controlNavbar]);
-  console.log(currentUser)
 
   const handleClickOnImg = () => {
     setShowDropDown(!showDropDown);

@@ -24,7 +24,7 @@ function MainForm() {
   const [userImg, setUserImg] = useState({});
   //@ts-ignore
   const { setCurrentUser, currentUser } = useAuth();
-  const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
+  const [location, setLocation] = useState({ name: '', lat: 41.3873974, lng: 2.168568 });
   const [chosenCategories, setChosenCategories] = useState<Category[]>([]);
   const [userData, setUserData] = useState<any>(currentUser);
   let [disabledButton, setDisabledButton] = useState(true);
