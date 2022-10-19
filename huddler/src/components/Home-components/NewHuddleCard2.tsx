@@ -54,11 +54,11 @@ function NewHuddleCard({
         
             <div className="flex flex-row">
                 <div className="basis-1/4 relative">
-                    <picture>
+                    <picture className="">
                         <img 
                             src={huddle.image} 
                             alt={huddle.name}
-                            className="absolute  h-full object-cover rounded-tl-md rounded-br-lg"
+                            className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
                         />
                     </picture>
                 </div>

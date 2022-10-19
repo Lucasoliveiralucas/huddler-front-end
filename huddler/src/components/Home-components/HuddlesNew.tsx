@@ -40,7 +40,7 @@ function Huddles({ huddles, update, setUpdate, id }: Props) {
             <div className="flex flex-col">
             {huddles.map((huddle) => (
                 <div
-                    className="h-48 md:h-48 lg:h-56 flex-grow-1 flex-shrink-1 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border m-4 relative rounded-lg"
+                    className="h-48 md:h-48 lg:h-56 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border m-4 relative rounded-lg"
                     key={huddle.id}
                 >
                     {/* <HuddleCarouselItem */}

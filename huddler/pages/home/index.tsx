@@ -103,7 +103,7 @@ function Home({ recommended, huddles, user }: Props) {
                 <MobileMap huddles={filterChoice} />
               </div>)}
 
-              <div className="">
+              <div className="shrink-0 grow-1">
                   <HuddlesNew
                     
                     huddles={filterChoice}
@@ -114,7 +114,7 @@ function Home({ recommended, huddles, user }: Props) {
               </div>
              
       
-              <div className="hidden sticky ml-20 lg:flex ">
+              <div className="hidden sticky shrink-1 grow-2 ml-20 lg:flex ">
                 <Map huddles={filterChoice} update={update} id={user.aws_id} />
               </div>
           </div>

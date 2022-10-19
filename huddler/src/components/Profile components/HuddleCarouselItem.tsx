@@ -10,6 +10,10 @@ import {
 } from "../../utils/APIServices/huddleServices";
 import Link from "next/link";
 import { useAuth } from "../../contexts/AuthContext";
+import { GrGroup } from "react-icons/gr";
+
+
+
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
@@ -51,91 +55,82 @@ function HuddleCarouselItem({
   }, []);
   return (
     <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
-      <div className="ml-3 mr-3 mt-3">
-        <div className="flex mb-1">
-          <h1 className="font-extrabold text-palette-orange text-2xl">
-            {huddle.name}
-          </h1>
-          <div className="ml-auto mr-3">
-            {going ? (
-              <button
-                className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
-                onClick={(e) => {
-                  setGoing(!going);
-                  setUpdate(!update);
-                  removeUserGoingToHuddle(currentUser, huddle.id);
-                }}
-              >
-                Leave
-              </button>
-            ) : (
-              <button
-                className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
-                onClick={(e) => {
-                  setGoing(!going);
-                  setUpdate(!update);
-                  postUserGoingToHuddle(currentUser, huddle.id);
-                }}
-              >
-                Join
-              </button>
-            )}
-          </div>
-        </div>
+     
+        <div className="flex flex-col"> 
+              <div className="flex flex-row">
+                  <div className="basis-1/4 relative">
+                      <picture>
+                          <img 
+                              src={huddle.image} 
+                              alt={huddle.name}
+                              className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
+                          />
+                      </picture>
+                  </div>
 
-        <div className="flex">
-          <div className="w-[24rem] mr-3">
-            <div className="rounded-lg h-32 lg:h-40 md:w-3/4 relative">
-              <Image
-                src={huddle.image}
-                fill
-                placeholder="empty"
-                sizes="150px"
-                className="rounded-lg"
-                alt={huddle.name}
-              />
-            </div>
-            <p>attending: {data.attending}</p>
-            <div className="hidden md:grid grid-cols-2 gap-2">
-              {data.categories.map((category, i) => {
-                return (
-                  i <= 3 && (
-                    <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                      key={category.id + (i - i)}
-                    >
-                      {category.name}
-                    </p>
-                  )
-                );
-              })}
-            </div>
-            {/* mobile */}
-            <div className="md:hidden grid grid-cols-2 gap-2">
-              {data.categories.map((category, i) => {
-                return (
-                  i <= 1 && (
-                    <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                      key={category.id + (i - i)}
-                    >
-                      {category.name}
-                    </p>
-                  )
-                );
-              })}
-            </div>
-          </div>
-          <div className="grid max-w-[300px] md:h-56 w-full space-x-0 ">
-            <p>{huddle.description}</p>
-            <p className="text-sm self-end">
-              At {huddle.address}
-              <br></br>
-              {/* {dateTime.monthDayYear} at {dateTime.time} */}
-            </p>
-          </div>
-        </div>
-      </div>
+                  <div className="basis-3/4 flex flex-col mt-4 ml-4" >
+                          <div id="title" className="flex flex-row justify-between">
+
+                              <h1 className="font-extrabold text-palette-dark text-2xl">
+                                  {huddle.name}
+                              </h1>
+
+                              <div className="">
+                                  {going ? (
+                                  <button
+                                  className="justify-center orange-button mr-6"
+                                  onClick={(e) => {
+                                    setGoing(!going);
+                                    setUpdate(!update);
+                                    removeUserGoingToHuddle(currentUser, huddle.id);
+                                  }}
+                                  >
+                                  Leave
+                                  </button>
+                              ) : (
+                                  <button
+                                  className="justify-center orange-button mr-6"
+                                  onClick={(e) => {
+                                    setGoing(!going);
+                                    setUpdate(!update);
+                                    postUserGoingToHuddle(currentUser, huddle.id);
+                                  }}
+                                  >
+                                  Join
+                                  </button>
+                              )}
+                              </div>
+                          </div>
+
+                          <div id="details" className="flex flex-col">
+                              <p>{huddle.description}</p>
+                              <p className="text-sm italic pt-2">
+                                  {huddle.address}
+                                
+                                  {dateTime.monthDayYear} at {dateTime.time}
+                              </p>
+
+                              <div className="flex flex-row mt-2">
+                                  <GrGroup/>
+                                  <p className="ml-2 -mt-1">{data.attending}</p>
+                              </div>
+
+                          </div>
+                  </div>             
+              </div>
+
+              <div id="tags" className="grid grid-cols-5 gap-2 mx-4 mt-2">
+                              {data.categories.map((category, i) => {
+                                return (
+                                    <p className="text-center font-bold py-0.5 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark" key={category.id + (i - i)}>
+                                        {category.name}
+                                    </p>);
+                              })}
+              </div>
+              
+        </div>    
+      
+
     </Link>
   );
 }

@@ -18,12 +18,12 @@ function HuddleCarousel({
 
   return Array.isArray(huddles) ? (
     <div
-      className="pl-1 h-64 lg:h-[19rem] flex overflow-x-scroll gap-4 px-2"
+      className="pl-1 h-64 lg:h-[19rem] flex overflow-x-auto gap-4"
       id="carousel"
     >
       {huddles.map((huddle) => (
         <div
-          className="w-full px-0.5 md:w-[30rem] h-68 lg:h-[19rem] shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
+          className="w-full  shrink-0 md:w-[30rem] h-68 lg:h-[16rem] shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
           key={huddle.id}
         >
           <HuddleCarouselItem
