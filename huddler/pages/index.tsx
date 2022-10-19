@@ -8,13 +8,14 @@ import bg_img4 from "../public/bg_images/terrace_img.jpeg";
 import Slider from "../src/components/Slider";
 import { useEffect, useState } from "react";
 import { useAuth } from "../src/contexts/AuthContext";
+import usePlacesAutocomplete from "use-places-autocomplete";
 
 const LandingPage: NextPage = () => {
   const background = [bg_img1, bg_img2, bg_img3, bg_img4];
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState("Log in");
-       //@ts-ignore
+  //@ts-ignore
   const { logOut } = useAuth();
   useEffect(() => {
     logOut();
@@ -31,6 +32,10 @@ const LandingPage: NextPage = () => {
 
   return (
     <div className="w-full h-screen justify-center relative">
+      <script
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`}
+      ></script>
+
       <Slider></Slider>
       <button
         className="orange-button absolute transform top-10 right-10 z-10"

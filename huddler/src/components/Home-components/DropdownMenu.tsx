@@ -34,6 +34,7 @@ const DropdownMenu = ({ setFilterChoice, revert }: Props) => {
     setSelectCategory("");
   }, [revert]);
   const toggleDropdown = () => {
+    const element = document.getElementsByClassName;
     setShowDropdwon(!showDropdown);
   };
 
