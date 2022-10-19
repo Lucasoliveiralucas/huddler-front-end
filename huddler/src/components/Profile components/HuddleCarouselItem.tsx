@@ -49,6 +49,13 @@ function HuddleCarouselItem({
     };
     getter();
   }, []);
+  const toggleGoingToHuddle = async (isGoing: boolean) => {
+    isGoing
+      ? await postUserGoingToHuddle(id, huddle.id)
+      : await removeUserGoingToHuddle(id, huddle.id);
+
+    setUpdate(!update);
+  };
   return (
     <div className="ml-3 mr-3 mt-3">
       <div className="flex mb-1">
@@ -69,8 +76,7 @@ function HuddleCarouselItem({
               className="justify-center leave-button"
               onClick={(e) => {
                 setGoing(!going);
-                setUpdate(!update);
-                removeUserGoingToHuddle(id, huddle.id);
+                toggleGoingToHuddle(false);
               }}
             >
               Leave
@@ -80,8 +86,7 @@ function HuddleCarouselItem({
               className="justify-center orange-button"
               onClick={(e) => {
                 setGoing(!going);
-                setUpdate(!update);
-                postUserGoingToHuddle(id, huddle.id);
+                toggleGoingToHuddle(true);
               }}
             >
               Join
