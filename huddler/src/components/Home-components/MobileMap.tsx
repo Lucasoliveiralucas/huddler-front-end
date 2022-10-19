@@ -17,10 +17,10 @@ type Props = {
     huddles?: Huddle[];
     currentPage: string;
     updateList: Function;
-    // setLocation: React.Dispatch<React.SetStateAction<any>>;
+    setLocation?: React.Dispatch<React.SetStateAction<{ name: string, lat: number, lng: number }>>;
     user: User;
 };
-export default function MobileMap({ huddles, currentPage, user, updateList }: Props) {
+export default function MobileMap({ huddles, currentPage, user, setLocation, updateList }: Props) {
     const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
     const [locationName, setLocationName] = useState("");
     const [selected, setSelected] = useState(false);
@@ -64,6 +64,7 @@ export default function MobileMap({ huddles, currentPage, user, updateList }: Pr
     useEffect(() => {
         if (center.lat !== 41.39) setSelected(true);
         if (currentPage)
+                 //@ts-ignore
             setLocation({
                 name: locationName,
                 lat: center.lat,
@@ -136,6 +137,7 @@ export default function MobileMap({ huddles, currentPage, user, updateList }: Pr
                             lat: "" + center.lat,
                             lng: "" + center.lng,
                         }}
+                        id={user!.aws_id}
                     />
                 </div>
             </div>
@@ -182,8 +184,10 @@ export default function MobileMap({ huddles, currentPage, user, updateList }: Pr
                         <></>
                     )}
                     <MapInfoWindow
+                        id={user.aws_id}
                         showHuddle={showHuddle}
                         setShowHuddle={setShowHuddle}
+                        updateList={updateList}
                     />
                 </GoogleMap>
             </div>

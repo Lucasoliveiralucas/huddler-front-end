@@ -12,7 +12,7 @@ import { dateFormatter } from "../../utils/helperFunctions";
 type Props = {
   showHuddle: Huddle | undefined;
   id: string;
-  updateList: Function;
+  updateList?: Function;
   setShowHuddle: React.Dispatch<React.SetStateAction<Huddle | undefined>>;
 };
 
@@ -73,11 +73,11 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, id , updateList}: Pro
               <button
                 className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
-                  const val = goingToHuddle - 1;
+                  const val = (goingToHuddle ? (goingToHuddle - 1):0);
                   setGoingToHuddle(val);
                   setCheckedIn(false);
                   removeUserGoingToHuddle(id, showHuddle.id as number);
-                  updateList();
+                  { updateList && updateList() };
 
                 }}
               >
@@ -87,11 +87,11 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, id , updateList}: Pro
               <button
                 className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
                 onClick={() => {
-                  const val = goingToHuddle + 1;
+                  const val = (goingToHuddle ? (goingToHuddle - 1) : 0);
                   setGoingToHuddle(val);
                   setCheckedIn(true);
                   postUserGoingToHuddle(id, showHuddle.id as number);
-                  updateList();
+                  { updateList && updateList() };
                 }}
               >
                 Check in

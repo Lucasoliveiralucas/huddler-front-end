@@ -23,7 +23,7 @@ type Props = {
   currentPage?: string;
   setLocation?: React.Dispatch<React.SetStateAction<{name: string, lat: number, lng: number}>>;
   updateList?: Function;
-  user?: User;
+  user: User;
 };
 export default function Map({
   huddles,
