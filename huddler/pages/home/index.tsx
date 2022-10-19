@@ -27,7 +27,8 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
   const [filterChoice, setFilterChoice] = useState<Huddle[]>(huddles); //by default recommended
   const [mobileShowMap, setMobileShowMap] = useState(false);
   const [revertCatBtn, setRevertCatBtn] = useState(false);
-  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>(goingTo);
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] =
+    useState<Huddle[]>(goingTo);
 
   useEffect(() => {
     setHuddlesUserIsGoing(goingTo);
@@ -53,89 +54,88 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
 
   return (
     <>
-    <div className="sm:block md:flex xl:gap-10 mt-20 relative h-full lg:px-0 2xl:px-10">
-<<<<<<< HEAD
-      <div className="flex flex-col w-screen" id="0">
-        <div
-          className="flex py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start"
-          id="1"
-        >
-          <button
-            className="mr-4"
-            onClick={() => {
-              setRevertCatBtn(!revertCatBtn);
-              setFilterChoice(recommended);
-            }}
+      <div className="sm:block md:flex xl:gap-10 mt-20 relative h-full lg:px-0 2xl:px-10">
+        <div className="flex flex-col w-screen" id="0">
+          <div
+            className="flex py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start"
+            id="1"
           >
-=======
-      {/* <div className="flex flex-col w-screen" id="0">
-        <div className="flex w-screen py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start" id="1">
-          <button className="mr-4"
-            onClick={() => setFilterChoice(recommended)}>
->>>>>>> landing_page_slider
-            Recommended
-          </button>
-          <button
-            className="mr-4"
-            onClick={() => {
-              setRevertCatBtn(!revertCatBtn);
-              setToAllHuddles();
-            }}
-          >
-            All Huddles
-          </button>
-          <DropdownMenu
-            setFilterChoice={setFilterChoice}
-            revert={revertCatBtn}
-          />
-          <button
-            onClick={() => setMobileShowMap(!mobileShowMap)}
-            className="lg:hidden"
-          >
-            {mobileShowMap ? (
-              <AiOutlineArrowUp />
-            ) : (
-              <AiOutlineArrowUp className=" rotate-180" />
-            )}{" "}
-          </button>
-        </div> */}
+            <button
+              className="mr-4"
+              onClick={() => {
+                setRevertCatBtn(!revertCatBtn);
+                setFilterChoice(recommended);
+              }}
+            >
+              Recommended
+            </button>
+            <button
+              className="mr-4"
+              onClick={() => {
+                setRevertCatBtn(!revertCatBtn);
+                setToAllHuddles();
+              }}
+            >
+              All Huddles
+            </button>
+            <DropdownMenu
+              setFilterChoice={setFilterChoice}
+              revert={revertCatBtn}
+            />
+            <button
+              onClick={() => setMobileShowMap(!mobileShowMap)}
+              className="lg:hidden"
+            >
+              {mobileShowMap ? (
+                <AiOutlineArrowUp />
+              ) : (
+                <AiOutlineArrowUp className=" rotate-180" />
+              )}{" "}
+            </button>
 
-<<<<<<< HEAD
-        <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2">
-          {/* <Huddles huddles={filterChoice} /> */}
-          {mobileShowMap && (
-            <div className="absolute lg:hidden block h-full w-full z-30">
-              <MobileMap
+            <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2">
+              {/* <Huddles huddles={filterChoice} /> */}
+              {mobileShowMap && (
+                <div className="absolute lg:hidden block h-full w-full z-30">
+                  <MobileMap
+                    huddles={filterChoice}
+                    user={user}
+                    updateList={updateList}
+                  />
+                </div>
+              )}
+
+              <HuddlesNew
                 huddles={filterChoice}
-                user={user}
-                updateList={updateList} />
+                updateList={updateList}
+                huddlesUserIsGoing={huddlesUserIsGoing}
+                id={user.aws_id}
+              />
+
+              <div className="hidden sticky lg:flex ">
+                <Map
+                  huddles={filterChoice}
+                  user={user}
+                  updateList={updateList}
+                />
+              </div>
             </div>
-          )}
-
-          <HuddlesNew
-            huddles={filterChoice}
-            updateList={updateList}
-            huddlesUserIsGoing={huddlesUserIsGoing}
-            id={user.aws_id}
-          />
-
-          <div className="hidden sticky lg:flex ">
-            <Map huddles={filterChoice} user={user} updateList={updateList} />
           </div>
         </div>
-      </div>
-    </div>
-=======
-      {/* <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2"> */}
+        {/* <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2"> */}
         {/* <Huddles huddles={filterChoice} /> */}
         {/* {mobileShowMap && (
           <div className="absolute lg:hidden block h-full w-full z-30">
             <MobileMap huddles={filterChoice} /> */}
-      <div className="flex flex-col w-screen h-full" id="0">
-        
-          <div className="flex py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start" id="1">
-            <button className="mr-4"
-              onClick={() => setFilterChoice(recommended)}>
+        <div className="flex flex-col w-screen h-full" id="0">
+          <div
+            className="flex py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start"
+            id="1"
+          >
+            <button
+              className="mr-4"
+              onClick={() => setFilterChoice(recommended)}
+            >
               Recommended
             </button>
             <button onClick={() => setToAllHuddles()}>All Huddles</button>
@@ -151,34 +151,30 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
             </button>
           </div>
 
-
           <div className="flex max-h-[80vh] py-6 px-10 " id="carousel 2">
             {/* <Huddles huddles={filterChoice} /> */}
             {mobileShowMap && (
               <div className="absolute lg:hidden block h-full  w-full z-30">
                 <MobileMap huddles={filterChoice} />
-              </div>)}
+              </div>
+            )}
 
-              <div className="shrink-0 grow-1">
-                  <HuddlesNew
-                    
-                    huddles={filterChoice}
-                    update={update}
-                    huddlesUserIsGoing={huddlesUserIsGoing}
-                    id={user.aws_id}
-                  />
-              </div>
-             
-      
-              <div className="hidden sticky shrink-1 grow-2 ml-20 lg:flex ">
-                <Map huddles={filterChoice} update={update} id={user.aws_id} />
-              </div>
+            <div className="shrink-0 grow-1">
+              <HuddlesNew
+                huddles={filterChoice}
+                updateList={updateList}
+                huddlesUserIsGoing={huddlesUserIsGoing}
+                id={user.aws_id}
+              />
+            </div>
+
+            <div className="hidden sticky shrink-1 grow-2 ml-20 lg:flex ">
+              <Map huddles={filterChoice} updateList={updateList} />
+            </div>
           </div>
-      
+        </div>
       </div>
-    </div>
     </>
->>>>>>> landing_page_slider
   );
 }
 
