@@ -32,7 +32,7 @@ const SettingsPage = () => {
   }, [currentUser]);
 
   return isAuth && currentUser ? (
-    <main className='flex h-screen justify-center items-center'>
+    <main className='flex flex-col md:flex-row md:mt-10 lg:mt-10 justify-center items-center md:items-start lg:items-center'>
       <OptionsMenu setOption={setOption} />
 
       {option === 'information' && userData && (
