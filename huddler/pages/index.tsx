@@ -32,10 +32,6 @@ const LandingPage: NextPage = () => {
 
   return (
     <div className="w-full h-screen justify-center relative">
-      <script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`}
-      ></script>
-
       <Slider></Slider>
       <button
         className="orange-button absolute transform top-10 right-10 z-10"
