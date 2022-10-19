@@ -60,7 +60,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
           </Link>
           {going ? (
             <button
-              className="justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
+              className="justify-center orange-button"
               onClick={(e) => {
                 setGoing(!going);
                 removeUserGoingToHuddle(id, huddle.id);
