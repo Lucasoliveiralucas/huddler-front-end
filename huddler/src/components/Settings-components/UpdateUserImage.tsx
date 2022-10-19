@@ -43,8 +43,8 @@ const UserImage = ({
   console.log(userPersonalInfo);
 
   return (
-    <div className='flex flex-col items-center mb-10'>
-      Click on the image to change it
+    <div className='flex flex-col items-center mb-10 xl:mr-36 lg:mr-9 text-[#721D25]'>
+      
       <input
         type='file'
         ref={imageRef}
@@ -52,7 +52,7 @@ const UserImage = ({
         accept='.jpg, jpeg, .png, .gif'
         onChange={changeUserImage}
       />
-      <div className="relative h-[15rem] w-[15rem]">
+      <div className="relative h-[8rem] w-[8rem] mt-10 md:mt-32 lg:mt-0 lg:h-[15rem] lg:w-[15rem]">
         <Image
         src={userImage || userPersonalInfo.image || DefaultUserImage}
         className='rounded-full hover:cursor-pointer'
@@ -63,8 +63,9 @@ const UserImage = ({
                        400px'
         onClick={() => imageRef.current!.click()}
         />
+        
       </div>
-      
+      Click on the image to change it
     </div>
   );
 };
