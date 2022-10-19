@@ -33,6 +33,7 @@ export interface Huddle {
   id?: number;
   image: string;
   link: string;
+  fk_huddle_id?: number;
 }
 
 

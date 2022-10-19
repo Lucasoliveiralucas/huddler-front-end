@@ -81,7 +81,7 @@ const PlacesAutocomplete = ({ hook, setSelected, setLocationName }: Props) => {
   return (
     <div ref={ref}>
       <input
-        className="py-1 pw-5 outline-none border-palette-orange border-b-2 placeholder: pl-2 w-[100%] shadow-md rounded-sm"
+        className="py-1 pw-5 h-[40px] outline-none border-palette-orange border-b-2 placeholder: pl-2 w-[100%] shadow-md rounded-sm"
         value={value}
         onChange={handleInput}
         disabled={!ready}

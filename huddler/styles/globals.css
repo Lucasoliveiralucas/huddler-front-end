@@ -82,3 +82,19 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.gm-fullscreen-control {
+  display: none !important;
+}
+
+.gm-svpc {
+  display: none !important;
+}
+
+/* .gmnoprint {
+  right: 0 !important;
+} */
+
+/* .gm-style-mtc {
+ float: right !important;
+} */
