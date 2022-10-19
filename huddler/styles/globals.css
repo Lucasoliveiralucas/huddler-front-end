@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-        @apply bg-palette-light h-full w-full;
-    }  
+  body {
+    @apply bg-palette-light h-full w-full;
+  }
 }
 
 #carousel::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .react-slideshow-wrapper.slide {
@@ -43,4 +43,38 @@
 .orange-button:hover {
   transform: scale(0.95);
   font-weight: bold;
+}
+.leave-button {
+  color: white;
+  background-color: #a3560994;
+  border-radius: 24px;
+  padding: 8px;
+  padding-right: 24px;
+  padding-left: 24px;
+  cursor: pointer;
+  transition: transform 0.1;
+}
+
+.leave-button:hover {
+  transform: scale(0.95);
+  font-weight: bold;
+}
+
+.category-icon {
+  text-align: center;
+  font-weight: 700;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  padding-left: 0.125rem;
+  padding-right: 0.125rem;
+  width: 90%;
+  border-radius: 1rem;
+  border-color: #a35709;
+  border-width: 1px;
+  background-color: transparent;
+  color: #a35709;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

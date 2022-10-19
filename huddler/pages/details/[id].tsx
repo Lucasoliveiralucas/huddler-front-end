@@ -114,10 +114,10 @@ const Details = ({ aws_id, user, huddle }: Props) => {
     e.target[0].value = "";
   };
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <div
         id="huddle-details"
-        className=" w-[25rem] px-8 py-6 pb-0 bg-white bg-opacity-20 shadow-xl"
+        className=" w-[25rem] mt-[4rem] px-8 py-6 pb-0 bg-white bg-opacity-20 shadow-xl"
       >
         <p className="text-4xl font-extrabold text-palette-orange">
           {huddle.name}
@@ -137,14 +137,11 @@ const Details = ({ aws_id, user, huddle }: Props) => {
         <p className="text-2xl mb-2">{huddle.description}</p>
         <p className="my-2 text-4xl">Where:</p>
         <p className="text-2xl">{huddle.address}</p>
-        <div className="grid grid-cols-3 gap-x-4 gap-y-2 mr-3 mt-2 mb-2 w-full">
+        <div className="grid grid-cols-3 gap-x-1 gap-y-2 mr-3 mt-2 mb-2 w-full">
           {categories ? (
             categories.map((category, i) => {
               return (
-                <p
-                  key={i}
-                  className="text-center py-1 bg-palette-dark rounded-md text-white"
-                >
+                <p key={i} className="category-icon">
                   {category.name}
                 </p>
               );
@@ -170,7 +167,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
         {users ? (
           users.map((user: any, i: number) => {
             return (
-              <div key={i} className="flex mb-4">
+              <div key={i} className="flex mb-4 overflow-auto">
                 <div className="relative h-12 w-12">
                   <Image
                     className="flex rounded-full"
@@ -189,7 +186,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
           <></>
         )}
       </div>
-      <div id="huddle-chat" className="grid grid-cols-1 w-full mb-24">
+      <div id="huddle-chat" className="grid grid-cols-1 w-full mb-28 ">
         <button
           onClick={async (e) => {
             if (going === "Join") {
@@ -200,11 +197,13 @@ const Details = ({ aws_id, user, huddle }: Props) => {
               setGoing("Join");
             }
           }}
-          className="mr-14 ml-auto mb-4 justify-center w-14 bg-palette-orange bg-opacity-40 text-lg border-solid border-[0.5px] border-palette-orange shadow-md rounded-lg hover:bg-opacity-60"
+          className={`mr-14 ml-auto mt-24 h-12 justify-center ${
+            going === "Leave" ? "leave-button" : "orange-button"
+          }`}
         >
           {going}
         </button>
-        <div className="border border-palette-orange  mx-14  p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 relative">
+        <div className="border border-palette-orange mx-14  p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 relative">
           <div className="table-cell align-bottom h-[55rem] w-screen">
             <div className="max-h-[55rem] overflow-auto ">
               {chatMsg ? (

@@ -6,7 +6,7 @@ import bg_img2 from "../public/bg_images/Park_img.jpg";
 import bg_img3 from "../public/bg_images/Motorcycle_img.jpeg";
 import bg_img4 from "../public/bg_images/terrace_img.jpeg";
 import Slider from "../src/components/Slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../src/contexts/AuthContext";
 
 const LandingPage: NextPage = () => {
@@ -14,7 +14,10 @@ const LandingPage: NextPage = () => {
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState("Log in");
-
+  const { logOut } = useAuth();
+  useEffect(() => {
+    logOut();
+  }, []);
   const toggle = () => {
     if (click) {
       setButton("Log in");

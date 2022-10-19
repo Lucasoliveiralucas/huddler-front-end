@@ -61,7 +61,9 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
           <button className="mr-4" onClick={() => setFilterChoice(recommended)}>
             Recommended
           </button>
-          <button onClick={() => setToAllHuddles()}>All Huddles</button>
+          <button className="mr-4" onClick={() => setToAllHuddles()}>
+            All Huddles
+          </button>
           <DropdownMenu setFilterChoice={setFilterChoice} />
           <button
             onClick={() => setMobileShowMap(!mobileShowMap)}
