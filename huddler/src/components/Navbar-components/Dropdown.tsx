@@ -5,8 +5,8 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { AiOutlineCompass } from 'react-icons/ai';
 import { useAuth } from '../../contexts/AuthContext';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import useOnclickOutside from 'react-cool-onclickoutside';
+// import { useRouter } from 'next/router';
+// import useOnclickOutside from 'react-cool-onclickoutside';
 
 const serviceDropdown = [
   { name: 'Explore', path: '/home', icon: <AiOutlineCompass /> },
@@ -26,16 +26,17 @@ type Props = {
 
 const Dropdown = ({ setShowDropDown }: Props) => {
   //@ts-ignore
-  const { currentUser, logOut } = useAuth();
+  const { logOut } = useAuth();
 
-  const dropDownref = useOnclickOutside(() => {
-    setShowDropDown(false);
-  });
+  // const dropDownref = useOnclickOutside(() => {
+  //   setShowDropDown(false);
+  // });
 
   return (
     <div>
       <div
-        ref={dropDownref}
+        // ref={dropDownref}
+        onMouseLeave={() => setShowDropDown(false)}
         className='hidden md:block mt-24 w-full rounded-[5px] shadow-md'
       >
         <ul className=' w-64 absolute bg-palette-dark -right-[50%] rounded-[10px] mr-[5px] mt-[5px] pt-0'>
@@ -80,7 +81,8 @@ const Dropdown = ({ setShowDropDown }: Props) => {
       </div>
       {/* Mobile */}
       <div
-        ref={dropDownref}
+        // ref={dropDownref}
+        // onMouseLeave={() => setShowDropDown(false)}
         className='mt-20 w-full rounded-[5px] shadow-md md:hidden'
       >
         <ul className=' w-screen absolute bg-palette-dark -right-[75%] rounded-[10px] mt-[5px]'>
@@ -129,4 +131,5 @@ const Dropdown = ({ setShowDropDown }: Props) => {
 };
 
 export default Dropdown;
+
 

@@ -20,8 +20,7 @@ type Props = {
   huddlesUserIsGoing: Huddle[];
   setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
   update: boolean;
-  aws_id: string;
-  user: User;
+  id: string;
 };
 
 function HuddleCarouselItem({
@@ -29,8 +28,7 @@ function HuddleCarouselItem({
   huddlesUserIsGoing,
   setUpdate,
   update,
-  aws_id,
-  user,
+  id,
 }: Props) {
   const [going, setGoing] = useState(false);
   //getting additional huddle data
@@ -58,8 +56,8 @@ function HuddleCarouselItem({
   }, []);
   const toggleGoingToHuddle = async (isGoing: boolean) => {
     isGoing
-      ? await postUserGoingToHuddle(aws_id, huddle.id)
-      : await removeUserGoingToHuddle(aws_id, huddle.id);
+      ? await postUserGoingToHuddle(id, huddle.id)
+      : await removeUserGoingToHuddle(id, huddle.id);
 
     setUpdate(!update);
   };

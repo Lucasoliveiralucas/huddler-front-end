@@ -104,29 +104,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       addedCategories.forEach((el) => {
         postHuddleCategory(huddleId[0].id, el.id as number);
       });
-      const form = document.getElementById("huddle-form");
-      form?.classList.remove("animate-fade-in");
-      form?.classList.add("animate-fade-out");
-      setTimeout(() => {
-        form?.classList.remove("flex");
-        form?.classList.add("hidden");
-      }, 500);
+      closeHuddleForm();
 
       //the user that creates the huddle goes by default
       await postUserGoingToHuddle(currentUser.aws_id, huddleId);
-      // redirect to user home page
-      router.replace("/home");
-
-      // Clean form
-      // titleRef.current!.value = '';
-      // whenRef.current!.value = '';
-      // //@ts-ignore
-      // e.target[1].value = '';
-      // //@ts-ignore
-      // e.target[2].__reactProps$vl00rzm2uui.defaultValue = '';
-      // //@ts-ignore
-      // e.target[2].value = '';
-      // descriptionRef.current!.value = '';
     } catch {
       setError("We could not create the huddle");
     }
@@ -141,11 +122,15 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
     setUploadImg(img);
   };
   const closeHuddleForm = () => {
+    const body = document.body;
     const form = document.getElementById("huddle-form");
+    body?.classList.remove("overflow-hidden");
     form?.classList.remove("animate-fade-in");
     form?.classList.add("animate-fade-out");
     setTimeout(() => {
-      form?.classList.remove("flex");
+      // window.scrollTo(0, 0);
+      // body?.classList.add("overflow-hidden");
+      form?.classList.remove("absolute");
       form?.classList.add("hidden");
     }, 500);
   };

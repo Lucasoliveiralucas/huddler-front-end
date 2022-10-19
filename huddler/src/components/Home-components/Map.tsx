@@ -92,7 +92,7 @@ export default function Map({
   }, []);
   return (
     <div className="mt-0">
-      <div className="absolute pl-3 z-10 mt-24">
+      <div className="absolute top-0 right-0 px-3 z-10">
         <div className="z-10 mt-3 w-60">
           <PlacesAutocomplete
             hook={setCenter}
@@ -104,7 +104,7 @@ export default function Map({
           id="huddle-form"
           className="hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark"
         >
-          <NewHuddleForm
+          {/* <NewHuddleForm
             center={center}
             setCenter={setCenter}
             data={{
@@ -112,7 +112,8 @@ export default function Map({
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
-          />
+            id={user!.aws_id}
+          /> */}
         </div>
       </div>
       <div className="shadow-xl rounded-md ">
