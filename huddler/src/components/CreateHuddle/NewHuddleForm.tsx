@@ -167,8 +167,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   return (
     // <main className="w-[100%]"
     <main
-      id="huddle-form"
-      className="
+      id='huddle-form'
+      className='
       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
       absolute
       flex-col
@@ -180,33 +180,46 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       rounded-md
       border-solid
       border-[0.5px]
-      border-palette-dark"
+      border-palette-dark'
     >
-      <h1 className="text-center text-lg font-medium text-palette-orange mt-0">
+      <h1 className='text-center text-lg font-medium text-palette-orange mt-0'>
         {"Let's make a new huddle"}
       </h1>
-      {error && <div className="bg-red-600">{error}</div>}
+      {error && (
+        <>
+          <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>
+            {error}
+          </div>
+          <br />
+        </>
+      )}
 
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label htmlFor="title">Title</label>
+      <form
+        className='flex flex-col'
+        onSubmit={handleSubmit}
+      >
+        <label htmlFor='title'>Title</label>
         <input
-          className="outline-palette-orange outline-1 shadow-sm rounded-md"
+          className='outline-palette-orange outline-1 shadow-sm rounded-md'
           ref={titleRef}
-          type="text"
-          id="title"
-          autoComplete="on"
+          type='text'
+          id='title'
+          autoComplete='on'
           required
         />
-        <label htmlFor="categories" className="mt-6">
+        <label
+          htmlFor='categories'
+          className='mt-6'
+        >
           Pick the tags of your huddle
         </label>
         {allCategories[0] ? (
-          <div className="absolute ml-[95%] mt-[22%] w-[22rem] bg-palette-light p-2 rounded-sm shadow-sm">
-            <ul className="grid grid-cols-3 gap-2">
+          <div className='absolute ml-[95%] mt-[22%] w-[22rem] bg-palette-light p-2 rounded-sm shadow-sm'>
+            <ul className='grid grid-cols-3 gap-2'>
               {allCategories.map((category, i) => (
                 <li
                   key={i}
-                  className="text-lg font-medium bg-palette-dark py-2 px-2 rounded text-white hover:bg-opacity-60 cursor-pointer"
+                  className='text-lg font-medium bg-palette-dark py-2 px-2 rounded text-white hover:bg-opacity-60 cursor-pointer'
                   onClick={() => addCategory(category)}
                 >
                   {category.name}
@@ -218,13 +231,13 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           <></>
         )}
         {
-          <div className="my-3 mt-2">
-            <ul className="grid grid-cols-3 gap-2">
+          <div className='my-3 mt-2'>
+            <ul className='grid grid-cols-3 gap-2'>
               {addedCategories.map((category, i) => {
                 return (
                   <li
                     key={i}
-                    className="cursor-pointer bg-white bg-opacity-60 rounded-md text-center"
+                    className='cursor-pointer bg-white bg-opacity-60 rounded-md text-center'
                     onClick={() =>
                       setAddedCategories(
                         addedCategories.filter((word) => word != category)
@@ -239,7 +252,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           </div>
         }
         <TagList setAllCategories={setAllCategories} />
-        <label className="mt-2" htmlFor="where">
+        <label
+          className='mt-2'
+          htmlFor='where'
+        >
           Where?
         </label>
         <AutocompleteHuddleForm
@@ -247,57 +263,69 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           locationData={locationData}
           setLocationData={setLocationData}
         />
-        <label className="mt-2" htmlFor="when">
+        <label
+          className='mt-2'
+          htmlFor='when'
+        >
           When?
         </label>
         <input
-          className="outline-palette-orange outline-1 shadow-sm rounded-md"
+          className='outline-palette-orange outline-1 shadow-sm rounded-md'
           ref={whenRef}
-          type="datetime-local"
-          id="dateTime"
-          autoComplete="on"
+          type='datetime-local'
+          id='dateTime'
+          autoComplete='on'
           min={nowFormatted()}
           required
         />
-        <label className="mt-2" htmlFor="description">
+        <label
+          className='mt-2'
+          htmlFor='description'
+        >
           What is your huddle?
         </label>
         <textarea
-          className="outline-palette-orange outline-1 shadow-sm rounded-md"
+          className='outline-palette-orange outline-1 shadow-sm rounded-md'
           ref={descriptionRef}
-          id="description"
-          autoComplete="on"
-          placeholder="Add a description"
+          id='description'
+          autoComplete='on'
+          placeholder='Add a description'
           required
         />
-        <div className="flex">
-          <div className="flex flex-col mt-2">
-            <label htmlFor="images" className="mb-4">
+        <div className='flex'>
+          <div className='flex flex-col mt-2'>
+            <label
+              htmlFor='images'
+              className='mb-4'
+            >
               Add images to your huddle:
             </label>
             <input
-              className="border-none"
+              className='border-none'
               ref={imagesRef}
-              type="file"
-              accept=".jpg, jpeg, .png, .gif"
+              type='file'
+              accept='.jpg, jpeg, .png, .gif'
               onChange={onSelectFile}
-              id="images"
+              id='images'
             />
           </div>
           {imageSelected && (
             <figure>
               <Image
-                className="ml-10"
+                className='ml-10'
                 width={100}
                 height={100}
-                id="image-preview"
-                alt="image-preview"
+                id='image-preview'
+                alt='image-preview'
                 src={imagePreview}
               />
             </figure>
           )}
         </div>
-        <button className="orange-button mt-6" type="submit">
+        <button
+          className='orange-button mt-6'
+          type='submit'
+        >
           Submit
         </button>
         {/* <button
@@ -312,3 +340,4 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 };
 
 export default NewHuddleForm;
+
