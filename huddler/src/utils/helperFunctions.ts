@@ -2,7 +2,7 @@ import { Auth } from 'aws-amplify';
 import dayjs from 'dayjs';
 import { Category, Huddle } from '../types';
 import { getHuddlesInCategory } from './APIServices/categoryServices';
-import { getUserCategories } from './APIServices/userServices';
+import { getUserCategories, getUserCreatedHuddles } from './APIServices/userServices';
 
 // 1. Fetcher
 // 2. Recommended Huddles
@@ -30,11 +30,26 @@ export const recommendedForUser = async (aws_id: string) => {
     getHuddlesInCategory(category.id as number)
   );
   const huddlesInCategories = await Promise.all(promises);
-  const huddlesInCategoriesArr = huddlesInCategories.reduce(
-    (previousValue, currentValue) => [...previousValue, ...currentValue],
-    []
-  );
-  return huddlesInCategoriesArr;
+  console.log('huddles in categories', huddlesInCategories)
+  // const huddlesInCategoriesArr = huddlesInCategories.reduce(
+  //   (previousValue, currentValue) => [...previousValue, ...currentValue],
+  //   []
+  // );
+  const userCreated = await getUserCreatedHuddles(aws_id)
+  console.log('userCreated', userCreated)
+  //To not recommend the user's created huddles
+  const recommendNotCreated: Huddle[] = [];
+  huddlesInCategories.forEach((huddle: Huddle) => {
+    if (!userCreated!.some((hud: Huddle)=> hud.name === huddle.name)) recommendNotCreated.push(huddle)
+  })
+
+    // userCreated.forEach((huddle: Huddle) => {
+    //   if (
+    //     !huddlesInCategories!.some((hud: Huddle) => hud.name === huddle.name)
+    //   )
+    //     recommendNotCreated.push(huddle);
+    // });
+  return recommendNotCreated;
 };
 
 // 3. Dates handler
@@ -72,4 +87,7 @@ export const sortHuddlesByDate = (huddlesToSort: Huddle[]) => {
 export const getActiveHuddles = (huddlesToFileter: Huddle[]) => {
   //@ts-ignore
   return huddlesToFileter.filter((huddle) => new Date(huddle.day_time) > Date.now())
+
+
+
 }
