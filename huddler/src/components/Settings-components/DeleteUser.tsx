@@ -4,7 +4,7 @@ import {
   deleteAllUserCategories,
   deleteUser,
 } from '../../utils/APIServices/userServices';
-import {useAuth} from '../../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext';
 type Props = {
   userData: any;
 };
@@ -13,20 +13,27 @@ const DeleteUser = ({ userData }: Props) => {
   const router = useRouter();
   const [error, setError] = useState('');
   //@ts-ignore
-  const {deleteCognitoUser} = useAuth()
+  const { deleteCognitoUser } = useAuth();
   const handleDelete = async () => {
     try {
       await deleteUser(userData.aws_id);
       await deleteAllUserCategories(userData.aws_id);
-      await deleteCognitoUser()
+      await deleteCognitoUser();
       router.replace('/');
     } catch {
       setError("We weren't able to delete your account. Please try again");
     }
   };
   return (
-    <>
-      {error && <div className='bg-red-600'>{error}</div>}
+    <div className='flex flex-col items-center'>
+      {error && (
+        <>
+          <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>
+            {error}
+          </div>
+          <br />
+        </>
+      )}
       <div className='flex flex-col gap-10 items-center'>
         <h1 className='text-2xl font-bold'>
           You are about to delete you account
@@ -40,7 +47,7 @@ const DeleteUser = ({ userData }: Props) => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

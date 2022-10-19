@@ -12,6 +12,8 @@ type Props = {
 };
 const UpdateInterests = ({ userData }: Props) => {
   let [userCategories, setUserCategories] = useState<Category[]>();
+  let [disabledButton, setDisabledButton] = useState(true);
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     loadUserCategories();
@@ -49,7 +51,7 @@ const UpdateInterests = ({ userData }: Props) => {
     toDelete.forEach((category) => {
       deleteOneUserCategory(userData.aws_id, category.id as number);
     });
-
+    setSuccess('Success! You updated your interests');
     return;
   };
 
@@ -62,17 +64,28 @@ const UpdateInterests = ({ userData }: Props) => {
           <CategoriesContainer
             userCategories={userCategories}
             setUserCategories={setUserCategories}
+            setDisabledButton={setDisabledButton}
           />
           ;
         </div>
         <div className='flex justify-center'>
-          <button
-            className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
-            type='submit'
-            onClick={onClickUpdateUserInterests}
-          >
-            Submit
-          </button>
+          {success ? (
+            <>
+              <div className='text-[#145725] bg-[#D5EDDB] p-5 rounded-md'>
+                {success}
+              </div>
+              <br />
+            </>
+          ) : (
+            <button
+              className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
+              type='submit'
+              disabled={disabledButton}
+              onClick={onClickUpdateUserInterests}
+            >
+              Submit
+            </button>
+          )}
         </div>
       </div>
     </>

@@ -21,7 +21,9 @@ const libraries: (
 type Props = {
   huddles?: Huddle[];
   currentPage?: string;
-  setLocation?: React.Dispatch<React.SetStateAction<{name: string, lat: number, lng: number}>>;
+  setLocation?: React.Dispatch<
+    React.SetStateAction<{ name: string; lat: number; lng: number }>
+  >;
   updateList?: Function;
   user: User;
 };
@@ -106,8 +108,8 @@ export default function Map({
   return isLoaded ? (
     <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
-        {/* <div className="flex">
-          {containerSize.width == "40vw" ? (
+        <div className="flex">
+          {/* {containerSize.width == "40vw" ? (
             <button
               className="p-2 bg-white  shadow-md rounded-sm"
               onClick={() => setContainerSize(mapSize)}
@@ -116,7 +118,7 @@ export default function Map({
             </button>
           ) : (
             <button
-              className="p-2  bg-white shadow-md "
+              className="p-2"
               onClick={() =>
                 setContainerSize({
                   width: "40vw",
@@ -126,8 +128,8 @@ export default function Map({
             >
               &#x2771;
             </button>
-          )}
-          {currentPage === "newuser" ? (
+          )} */}
+          {/* {currentPage === "newuser" ? (
             <></>
           ) : (
             <button
@@ -136,8 +138,8 @@ export default function Map({
             >
               Create
             </button>
-          )}
-        </div> */}
+          )} */}
+        </div>
         <div className="z-10 mt-3 w-60">
           <PlacesAutocomplete
             hook={setCenter}
@@ -188,7 +190,7 @@ export default function Map({
             huddles.map((huddle: Huddle) => {
               return (
                 <MarkerF
-                  key={huddle.id + ''}
+                  key={huddle.id + ""}
                   position={{
                     lat: Number(huddle.latitude),
                     lng: Number(huddle.longitude),
@@ -220,8 +222,8 @@ export default function Map({
 type Context = {
   req: NextApiRequest;
   res: NextApiResponse;
-}
-export const getServerSideProps = async ({ req, res }:Context) => {
+};
+export const getServerSideProps = async ({ req, res }: Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {
@@ -240,4 +242,3 @@ export const getServerSideProps = async ({ req, res }:Context) => {
     };
   }
 };
-

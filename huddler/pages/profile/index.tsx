@@ -1,19 +1,22 @@
-import { useEffect, useState } from 'react';
-import Avatar from '../../src/components/Profile components/Avatar';
-import UserInfo from '../../src/components/Profile components/UserInfo';
-import useSWR from 'swr';
-import HuddleCarousel from '../../src/components/Profile components/HuddleCarousel';
-import { fetcher, recommendedForUser } from '../../src/utils/helperFunctions';
-import { Category, Huddle, User } from '../../src/types';
-import MobileAvatar from '../../src/components/Profile components/MobileAvatar';
+import React, { useEffect, useRef, useState } from "react";
+import Avatar from "../../src/components/Profile components/Avatar";
+import UserInfo from "../../src/components/Profile components/UserInfo";
+import useSWR from "swr";
+import HuddleCarousel from "../../src/components/Profile components/HuddleCarousel";
+import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
+import { Category, Huddle, User } from "../../src/types";
+import MobileAvatar from "../../src/components/Profile components/MobileAvatar";
 import {
   getUserById,
   getUserGoingHuddles,
-} from '../../src/utils/APIServices/userServices';
-import { getHuddlesInCategory } from '../../src/utils/APIServices/categoryServices';
-import HuddleCarouselItem from '../../src/components/Profile components/HuddleCarouselItem';
-import { withSSRContext } from 'aws-amplify';
-import { NextApiResponse, NextApiRequest } from "next/types";
+} from "../../src/utils/APIServices/userServices";
+import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
+import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
+import { withSSRContext } from "aws-amplify";
+import { GetServerSideProps } from "next/types";
+import { NextRequest, NextResponse } from "next/server";
+import { NextApiResponse } from "next/types";
+import { NextApiRequest } from "next/types";
 
 type Props = {
   aws_id: string;
@@ -23,16 +26,11 @@ type Props = {
   huddles: Huddle[];
 };
 
-function Profile({
-  aws_id,
-  user,
-  goingTo,
-  recommended,
-  huddles, }: Props) {
-
+function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
   //This is for updating the huddles i'm going to row
   const [update, setUpdate] = useState(false);
-  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>(goingTo);
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] =
+    useState<Huddle[]>(goingTo);
   const [lastRow, setLastRow] = useState({
     name: "Recommended",
     huddles: recommended,
@@ -52,11 +50,13 @@ function Profile({
     if (goingTo.length) {
       try {
         const sorted: Huddle[] = goingTo.sort((a: Huddle, b: Huddle) => {
-          return new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf();
+          return (
+            new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf()
+          );
         });
         setHuddlesUserIsGoing(sorted);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     }
   };
@@ -80,11 +80,10 @@ function Profile({
   };
 
   if (tagsError) return <div>failed to load</div>;
-  if (!tags)
-    return <div>loading...</div>;
+  if (!tags) return <div>loading...</div>;
 
   return (
-    <main className="flex flex-col lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
+    <main className="flex flex-col mt-20 lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
       <div className="hidden lg:block w-full">
         <div className="fixed min-w-[20%] h-full">
           <div
@@ -92,20 +91,26 @@ function Profile({
           border-x-[0.2px] shadow-md w-full"
           >
             <Avatar user={user} />
-            <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
-              huddlesUserIsGoing={huddlesUserIsGoing.length} />
+            <UserInfo
+              numOfCreatedHuddles={
+                userCreatedHuddles ? userCreatedHuddles.length : 0
+              }
+              huddlesUserIsGoing={huddlesUserIsGoing.length}
+            />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
               <h1 className="text-3xl self-center mt-10 font-bold">
                 Upcoming Huddle
               </h1>
               <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
-                {huddlesUserIsGoing.length && <HuddleCarouselItem
-                  setUpdate={setUpdate}
-                  update={update}
-                  huddle={huddlesUserIsGoing[0]}
-                  huddlesUserIsGoing={huddlesUserIsGoing}
-                  id={aws_id}
-                />}
+                {huddlesUserIsGoing.length && (
+                  <HuddleCarouselItem
+                    setUpdate={setUpdate}
+                    update={update}
+                    huddle={huddlesUserIsGoing[0]}
+                    huddlesUserIsGoing={huddlesUserIsGoing}
+                    id={aws_id}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -115,13 +120,19 @@ function Profile({
       {/* Mobile */}
       <div className=" lg:hidden w-full pt-4 h-auto flex-col">
         <MobileAvatar user={user} />
-        <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
-          huddlesUserIsGoing={huddlesUserIsGoing.length} />
+        <UserInfo
+          numOfCreatedHuddles={
+            userCreatedHuddles ? userCreatedHuddles.length : 0
+          }
+          huddlesUserIsGoing={huddlesUserIsGoing.length}
+        />
       </div>
 
       <div className="h-full w-full col-span-2 3xl:col-span-3 overflow-auto ml-0 lg:ml-48 2xl:ml-0">
-        <h1 className="pt-8 px-4 text-3xl font-bold md:pl-10 lg:pl-0">Interests:</h1>
-        {Array.isArray(tags) &&
+        <h1 className="pt-8 px-4 text-3xl font-bold md:pl-10 lg:pl-0">
+          Interests:
+        </h1>
+        {Array.isArray(tags) && (
           <div className="flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0">
             {tags.map((tag: Category, i: number) => (
               <h1
@@ -133,40 +144,59 @@ function Profile({
                 {tag.name}
               </h1>
             ))}
-          </div>}
+          </div>
+        )}
 
-        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
-          Created huddles:
-        </h1>
-        <HuddleCarousel
-          setUpdate={setUpdate}
-          update={update}
-          huddles={userCreatedHuddles}
-          huddlesUserIsGoing={huddlesUserIsGoing}
-          id={aws_id}
-        />
+        {Array.isArray(userCreatedHuddles) && userCreatedHuddles.length ? (
+          <>
+            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+              Created huddles:
+            </h1>
+            <HuddleCarousel
+              setUpdate={setUpdate}
+              update={update}
+              huddles={userCreatedHuddles}
+              huddlesUserIsGoing={huddlesUserIsGoing}
+              id={aws_id}
+            />
+          </>
+        ) : <></>}
 
-        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
-          Huddles I&lsquo;m going to:
-        </h1>
-        <HuddleCarousel
-          setUpdate={setUpdate}
-          update={update}
-          huddles={huddlesUserIsGoing}
-          huddlesUserIsGoing={huddlesUserIsGoing}
-          id={aws_id}
-        />
+        {Array.isArray(huddlesUserIsGoing) && huddlesUserIsGoing.length ? (
+          <>
+            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+              Huddles I&lsquo;m going to:
+            </h1>
+            <HuddleCarousel
+              setUpdate={setUpdate}
+              update={update}
+              huddles={huddlesUserIsGoing}
+              huddlesUserIsGoing={huddlesUserIsGoing}
+              id={aws_id}
+            />
+          </>
+        ) : <></>}
 
-        <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
-          {lastRow.name} huddles:
-        </h1>
-        <HuddleCarousel
-          setUpdate={setUpdate}
-          update={update}
-          huddles={lastRow.huddles}
-          huddlesUserIsGoing={huddlesUserIsGoing}
-          id={aws_id}
-        />
+        {Array.isArray(lastRow.huddles) && lastRow.huddles.length ? (
+          <>
+            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+              {lastRow.name} huddles:
+            </h1>
+            <HuddleCarousel
+              setUpdate={setUpdate}
+              update={update}
+              huddles={lastRow.huddles}
+              huddlesUserIsGoing={huddlesUserIsGoing}
+              id={aws_id}
+            />
+          </>
+        ) : (
+          <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+            {
+              " We don't have huddles to recommend you yet. Try adding more interests to your profile."
+            }
+          </h1>
+        )}
       </div>
     </main>
   );
@@ -175,22 +205,26 @@ function Profile({
 export default Profile;
 
 type Context = {
-  req: NextApiRequest,
-  res: NextApiResponse,
-}
+  req: NextApiRequest;
+  res: NextApiResponse;
+};
 
-export const getServerSideProps = async ({ req, res }:Context) => {
-
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+}: Context) => {
   const { Auth } = withSSRContext({ req });
-  
+
   try {
-    const huddles: Huddle[] = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted");
+    const huddles: Huddle[] = await fetcher(
+      "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted"
+    );
     const { username } = await Auth.currentUserInfo();
     const recommended: Huddle[] = await recommendedForUser(username);
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
     const user: User[] = await getUserById(username);
     if (!user.length) {
-      res.writeHead(302, { Location: '/' });
+      res.writeHead(302, { Location: "/" });
       res.end();
       return {
         props: {},
@@ -206,11 +240,10 @@ export const getServerSideProps = async ({ req, res }:Context) => {
       },
     };
   } catch (err) {
-    res.writeHead(302, { Location: '/' });
+    res.writeHead(302, { Location: "/" });
     res.end();
     return {
       props: {},
     };
   }
 };
-

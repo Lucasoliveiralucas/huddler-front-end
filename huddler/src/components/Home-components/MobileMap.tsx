@@ -6,11 +6,11 @@ import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { MapInfoWindow } from "./MapInfoWindow";
 const image = require("../../../public/location-pin-svgrepo-com.svg");
 const libraries: (
-    | "places"
-    | "drawing"
-    | "geometry"
-    | "localContext"
-    | "visualization"
+  | "places"
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "visualization"
 )[] = ["places"];
 
 type Props = {
@@ -106,8 +106,8 @@ export default function MobileMap({ huddles, currentPage, user, setLocation, upd
                         >
                             &#x2771;
                         </button>
-                    )}
-                    {currentPage === "newuser" ? (
+                    )} */}
+          {/* {currentPage === "newuser" ? (
                         <></>
                     ) : (
                         <button

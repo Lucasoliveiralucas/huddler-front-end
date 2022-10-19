@@ -27,6 +27,8 @@ function MainForm() {
   const [location, setLocation] = useState({ name: '', lat: 0, lng: 0 });
   const [chosenCategories, setChosenCategories] = useState<Category[]>([]);
   const [userData, setUserData] = useState<any>(currentUser);
+  let [disabledButton, setDisabledButton] = useState(true);
+
   console.log('this is userData', userData);
 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -76,6 +78,7 @@ function MainForm() {
           <Interests
             chosenCategories={chosenCategories}
             setChosenCategories={setChosenCategories}
+            setDisabledButton={setDisabledButton}
           />
         )}
         {page === 2 && (
@@ -113,6 +116,14 @@ function MainForm() {
             className='px-6 py-2 bg-palette-dark text-white'
           >
             Submit
+          </button>
+        ) : page === 1 ? (
+          <button
+            disabled={disabledButton}
+            onClick={(e) => nextPage(e)}
+            className='px-6 py-2 bg-palette-dark text-white'
+          >
+            Next
           </button>
         ) : (
           <button

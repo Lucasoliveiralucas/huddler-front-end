@@ -5,9 +5,14 @@ import CategoriesContainer from '../CategoriesContainer';
 type Props = {
   chosenCategories: Category[];
   setChosenCategories: React.Dispatch<React.SetStateAction<Category[]>>;
+  setDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function Interests({ chosenCategories, setChosenCategories }: Props) {
+function Interests({
+  chosenCategories,
+  setChosenCategories,
+  setDisabledButton,
+}: Props) {
   console.log(chosenCategories);
   return (
     <>
@@ -20,6 +25,7 @@ function Interests({ chosenCategories, setChosenCategories }: Props) {
           <h1 className='self-center text-2xl'>Choose your interests:</h1>
           {/* @ts-ignore */}
           <CategoriesContainer
+            setDisabledButton={setDisabledButton}
             chosenCategories={chosenCategories}
             setChosenCategories={setChosenCategories}
           />

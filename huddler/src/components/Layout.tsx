@@ -1,18 +1,21 @@
-import Navbar from './Navbar-components/Navbar';
-import Footer from './Footer';
-import { useAuth } from '../contexts/AuthContext';
+import Navbar from "./Navbar-components/Navbar";
+import { useRouter } from "next/router";
 
 type Props = {
   children: JSX.Element;
 };
 
 function Layout({ children }: Props) {
-  
+  const router = useRouter().pathname.slice(1);
+
   return (
     <>
-      <div className='w-full h-screen flex flex-col justify-center' id="carousel">
-        <Navbar />
-        <div className='self-center h-full w-full mt-24 grid' id="carousel">
+      <div
+        className="w-full h-screen flex flex-col justify-center"
+        id="carousel"
+      >
+        {router && <Navbar />}
+        <div className="self-center h-full w-full grid" id="carousel">
           <main>{children}</main>
         </div>
       </div>
@@ -21,4 +24,3 @@ function Layout({ children }: Props) {
   );
 }
 export default Layout;
-

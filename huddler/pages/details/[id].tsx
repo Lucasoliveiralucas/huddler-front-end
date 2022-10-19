@@ -25,7 +25,6 @@ type Props = {
 };
 
 const Details = ({ aws_id, user, huddle }: Props) => {
-
   const [chatMsg, setChatMsg] = useState<any[]>();
   const [updateMsg, setUpdateMsg] = useState<{
     huddle_id: number;
@@ -40,7 +39,6 @@ const Details = ({ aws_id, user, huddle }: Props) => {
   // const huddle: Huddle = useRouter().query;
 
   const dateTime = dateFormatter(huddle.day_time);
-
   const scroll = () => {
     if (chatMsg) {
       const scrollTo = document.getElementById(chatMsg.length - 1 + "");
@@ -214,7 +212,9 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                   let time;
                   msg.timezone
                     ? (time = msg.timezone.slice(11, 16))
-                    : (time = dateFormatter(Date.now().toString()).time.substring(0, 5));
+                    : (time = dateFormatter(
+                        Date.now().toString()
+                      ).time.substring(0, 5));
                   return isMessageFromUser(msg.username) ? (
                     <div
                       key={i}
@@ -271,10 +271,14 @@ const Details = ({ aws_id, user, huddle }: Props) => {
 
 export default Details;
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  query,
+}) => {
   const { Auth } = withSSRContext({ req });
   try {
-    const id  = parseInt(query.id as string);
+    const id = parseInt(query.id as string);
     const huddle = await getHuddleById(id);
     const { username } = await Auth.currentUserInfo();
     const user: User[] = await getUserById(username);
