@@ -77,6 +77,7 @@ function HuddleCarouselItem({
 
         <div className="basis-3/4 flex flex-col mt-4 ml-4">
           <div id="title" className="flex flex-row justify-between">
+            {/* @ts-ignore */}
             <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
               <h1 className="font-extrabold text-palette-dark text-2xl cursor-pointer">
                 {huddle.name}
@@ -106,6 +107,7 @@ function HuddleCarouselItem({
               )}
             </div>
           </div>
+          {/* @ts-ignore */}
           <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
             <div id="details" className="flex flex-col cursor-pointer">
               <p>{huddle.description}</p>

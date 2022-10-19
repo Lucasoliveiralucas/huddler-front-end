@@ -161,6 +161,7 @@ export default function Map({
             showHuddle={showHuddle}
             setShowHuddle={setShowHuddle}
             updateList={updateList}
+            id={user.aws_id}
           />
         </GoogleMap>
       </div>

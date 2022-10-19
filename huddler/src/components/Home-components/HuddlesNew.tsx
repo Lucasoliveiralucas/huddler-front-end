@@ -40,7 +40,6 @@ function Huddles({ huddles, updateList, id, huddlesUserIsGoing }: Props) {
               huddle={huddle}
               huddlesUserIsGoing={huddlesUserIsGoing}
               id={id}
-              updateList={updateList}
             />
           </div>
         ))}
