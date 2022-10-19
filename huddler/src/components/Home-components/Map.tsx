@@ -9,19 +9,13 @@ import { withSSRContext } from "aws-amplify";
 
 import { NextApiResponse, NextApiRequest } from "next/types";
 
-const libraries: (
-  | "places"
-  | "drawing"
-  | "geometry"
-  | "localContext"
-  | "visualization"
-)[] = ["places"];
-
 type Props = {
   huddles?: Huddle[];
   currentPage?: string;
   updateList?: Function;
-  setLocation?: React.Dispatch<React.SetStateAction<{ name: string; lat: number; lng: number }>>;
+  setLocation?: React.Dispatch<
+    React.SetStateAction<{ name: string; lat: number; lng: number }>
+  >;
   user: User;
 };
 export default function Map({
@@ -47,12 +41,6 @@ export default function Map({
     lng: 2.154,
   });
 
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
-    version: "weekly",
-    libraries,
-  });
   const toggleCreate = () => {
     const form = document.getElementById("huddle-form");
     if (createBox) {
@@ -85,9 +73,9 @@ export default function Map({
     const getter = async () => {
       user!.default_latitude !== 1
         ? setCenter({
-          lat: Number(user!.default_latitude),
-          lng: Number(user!.default_longitude),
-        })
+            lat: Number(user!.default_latitude),
+            lng: Number(user!.default_longitude),
+          })
         : setCenter({ lat: 41.39, lng: 2.15 });
     };
     getter();
@@ -102,7 +90,7 @@ export default function Map({
       });
     }
   }, []);
-  return isLoaded ? (
+  return (
     <div className="mt-0">
       <div className="absolute pl-3 z-10 mt-24">
         <div className="z-10 mt-3 w-60">
@@ -178,8 +166,6 @@ export default function Map({
         </GoogleMap>
       </div>
     </div>
-  ) : (
-    <p>Loading...</p>
   );
 }
 type Context = {

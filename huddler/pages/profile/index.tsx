@@ -48,7 +48,6 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
   const getter = async () => {
     const huddlesUserIsGoing = await getUserGoingHuddles(aws_id);
-    console.log(huddlesUserIsGoing);
 
     try {
       const sorted: Huddle[] = huddlesUserIsGoing.sort(

@@ -4,6 +4,15 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
+import { useJsApiLoader } from "@react-google-maps/api";
+
+const libraries: (
+  | "places"
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "visualization"
+)[] = ["places"];
 
 type Description = {
   description: string;
@@ -93,6 +102,7 @@ const AutocompleteHuddleForm = ({
       <input
         className="outline-palette-orange outline-1 shadow-sm rounded-md w-[100%]"
         value={value}
+        disabled={!ready}
         onChange={handleInput}
         placeholder="Look for a Place . . ."
       />
