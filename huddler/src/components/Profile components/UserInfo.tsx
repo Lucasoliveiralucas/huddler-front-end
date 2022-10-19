@@ -1,6 +1,4 @@
 import React from "react";
-import { User } from "../../../src/types";
-import avatar from "../../../public/placeholder.jpg";
 
 type Props = {
   numOfCreatedHuddles: number;
