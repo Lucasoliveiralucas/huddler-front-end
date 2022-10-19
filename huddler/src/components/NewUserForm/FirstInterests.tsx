@@ -13,7 +13,6 @@ function Interests({
   setChosenCategories,
   setDisabledButton,
 }: Props) {
-  console.log(chosenCategories);
   return (
     <>
       <div className='flex flex-col'>
@@ -21,7 +20,7 @@ function Interests({
           <h1>Welcome new Huddler!</h1>
         </div>
 
-        <div className='flex flex-col py-8'>
+        <div className='flex flex-col py-8 md:px-8'>
           <h1 className='self-center text-2xl'>Choose your interests:</h1>
           {/* @ts-ignore */}
           <CategoriesContainer

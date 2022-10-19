@@ -81,12 +81,12 @@ export default function Map({
     getter();
     if (currentPage === "newuser") {
       setMapSize({
-        width: "46.5vw",
-        height: "28vw",
+        width: "",
+        height: "",
       });
       setContainerSize({
-        width: "46.5vw",
-        height: "28vw",
+        width: "45vw",
+        height: "50vh",
       });
     }
   }, []);

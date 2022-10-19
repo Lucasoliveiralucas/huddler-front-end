@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { User } from "../../types";
 import Map from "../Home-components/Map";
+import MobileMap from "../Home-components/MobileMap";
 
 // Contains a form for the categories
 
@@ -21,11 +22,17 @@ function Location({ location, setLocation, userData, setUserData }: Props) {
   }, [location]);
   // some logic where the user chooses its location and updates with setLocation()
   return (
-    <div>
+    <div className="">
       <div className="flex text-2xl font-bold flex-col py-4 text-center">
         <h1>{"What's your location?"}</h1>
       </div>
-      <Map currentPage={"newuser"} user={userData} setLocation={setLocation} />
+      <div className="h-full w-full py-5 xl:hidden">
+        <MobileMap currentPage={"newuser"} user={userData} setLocation={setLocation} />
+      </div>
+      <div className="h-full py-5 hidden xl:flex relative">
+        <Map currentPage={"newuser"} user={userData} setLocation={setLocation} />
+      </div>
+
     </div>
   );
 }

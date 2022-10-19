@@ -19,7 +19,7 @@ const libraries: (
 type Props = {
     huddles?: Huddle[];
     currentPage?: string;
-    updateList: Function;
+    updateList?: Function;
     setLocation?: React.Dispatch<React.SetStateAction<{ name: string, lat: number, lng: number }>>;
     user: User;
 };
@@ -77,26 +77,26 @@ export default function MobileMap({ huddles, currentPage, user, setLocation, upd
     useEffect(() => {
         if (currentPage === "newuser") {
             setMapSize({
-                width: "46.5vw",
-                height: "28vw",
+                width: "85.5vw",
+                height: "50vh",
             });
             setContainerSize({
-                width: "46.5vw",
-                height: "28vw",
+                width: "85.5vw",
+                height: "50vh",
             });
         }
     }, []);
     return isLoaded ? (
         <div className="mt-0">
-            <div className="absolute pl-3 z-10 mt-24">
-                <div className="z-10 mt-3 w-60">
+            <div className="absolute pl-3 z-10 mt-20">
+                <div className="z-10 w-60">
                     <PlacesAutocomplete
                         hook={setCenter}
                         setSelected={setSelected}
                         setLocationName={setLocationName}
                     />
                 </div>
-                <div
+                {/* <div
                     id="huddle-form"
                     className="hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark"
                 >
@@ -110,7 +110,7 @@ export default function MobileMap({ huddles, currentPage, user, setLocation, upd
                         }}
                         id={user!.aws_id}
                     />
-                </div>
+                </div> */}
             </div>
             <div className="shadow-xl rounded-md ">
                 <GoogleMap
