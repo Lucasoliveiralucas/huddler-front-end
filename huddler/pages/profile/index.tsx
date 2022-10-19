@@ -209,7 +209,7 @@ type Context = {
   res: NextApiResponse;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
+export const getServerSideProps = async ({
   req,
   res,
 }: Context) => {

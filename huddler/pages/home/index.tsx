@@ -83,7 +83,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
                 huddles={filterChoice}
                 user={user}
                 updateList={updateList}
-              />
+                currentPage={"/home"} />
             </div>
           )}
 

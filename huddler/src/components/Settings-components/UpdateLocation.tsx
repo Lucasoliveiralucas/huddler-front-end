@@ -24,17 +24,10 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
         default_latitude: location.lat,
         default_longitude: location.lng,
       };
-<<<<<<< HEAD
-      setUserData(updatedUser)
-      updatedUser && await postUpdatedUserInfo(updatedUser, userData.aws_id as string);
-      // router.push('/profile');
-    
-=======
       setUserData(updatedUser);
       updatedUser &&
         (await postUpdatedUserInfo(updatedUser, userData.aws_id as string));
       setSuccess('Success, you updated yout location');
->>>>>>> workingBranch
     } catch {
       setError("We weren't able to update your location. Please try again");
     }
@@ -42,20 +35,6 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
 
   return (
     <>
-<<<<<<< HEAD
-      {error && <div className="bg-red-600">{error}</div>}
-      <h1>
-        This is your current location:{/* In here we put the user location */}
-      </h1>
-      <button
-        className="border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5"
-        onClick={changeLocation}
-      >
-        Update Location
-      </button>
-      {/* @ts-ignore */}
-      <Map currentPage="settings" setLocation={setLocation} user={userData} />
-=======
       {error && <div className='bg-red-600'>{error}</div>}
       <div className='mr-5 flex flex-col items-center'>
         {success ? (
@@ -77,10 +56,10 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
 
       <Map
         currentPage='settings'
+        //@ts-ignore
         setLocation={setLocation}
         user={userData}
       />
->>>>>>> workingBranch
     </>
   );
 };

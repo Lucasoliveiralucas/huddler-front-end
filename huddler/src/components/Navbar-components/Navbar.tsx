@@ -10,9 +10,11 @@ import { withSSRContext } from "aws-amplify";
 import { fetcher } from "../../utils/helperFunctions";
 import { getUserById } from "../../utils/APIServices/userServices";
 import { User } from "../../types";
+import { userAgent } from "next/server";
 
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
+  //@ts-ignore
   const { currentUser } = useAuth();
 
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -61,6 +63,7 @@ function Navbar() {
   //       window.removeEventListener('scroll', controlNavbar);
   //     };
   // }, [controlNavbar]);
+  console.log(currentUser)
 
   const handleClickOnImg = () => {
     setShowDropDown(!showDropDown);
@@ -133,6 +136,7 @@ function Navbar() {
             lat: "" + center.lat,
             lng: "" + center.lng,
           }}
+          id={currentUser ? currentUser.aws_id : null}
         />
       </div>
     </>
