@@ -7,6 +7,8 @@ import { fetcher } from "../../utils/helperFunctions";
 import useSWR from "swr";
 import HuddlesNewItem from "./HuddlesNewItem";
 import NewHuddleCard from "./NewHuddleCard";
+import NewHuddleCard2 from "./NewHuddleCard2"
+
 
 type Props = {
     huddles: Huddle[];
@@ -34,15 +36,15 @@ function Huddles({ huddles, update, setUpdate, id }: Props) {
     };
 
     return (
-        <div className="flex flex-col justify-start pr-10 h-full overflow-y-auto" id="carousel" >
-            <div className="gap-4 grid 2xl:grid-cols-2">
+        <div className="flex flex-col justify-start pr-10 h-full overflow-auto" id="carousel" >
+            <div className="flex flex-col">
             {huddles.map((huddle) => (
                 <div
-                    className="h-64 md:h-72 lg:h-80 p-2 flex-grow-1 flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
+                    className="h-48 md:h-48 lg:h-56 flex-grow-1 flex-shrink-1 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border m-4 relative rounded-lg"
                     key={huddle.id}
                 >
                     {/* <HuddleCarouselItem */}
-                    <NewHuddleCard
+                    <NewHuddleCard2
                         huddle={huddle}
                         huddlesUserIsGoing={huddlesUserIsGoing}
                         id={id}
