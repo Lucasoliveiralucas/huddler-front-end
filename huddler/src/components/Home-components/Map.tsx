@@ -160,7 +160,9 @@ export default function Map({
           <MapInfoWindow
             showHuddle={showHuddle}
             setShowHuddle={setShowHuddle}
-            updateList={updateList} id={""}          />
+            updateList={updateList}
+            id={user.aws_id}
+          />
         </GoogleMap>
       </div>
     </div>
