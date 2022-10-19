@@ -4,6 +4,7 @@ import UserImage from './UpdateUserImage';
 import { postUpdatedUserInfo } from '../../utils/APIServices/userServices';
 import { useRouter } from 'next/router';
 import {
+  deleteOldImg,
   getUploadUrl,
   uploadImgToS3,
 } from '../../utils/APIServices/imageServices';
@@ -72,6 +73,15 @@ const PersonalInfo = ({ userData }: Props) => {
 
       //Check if a new image has been added
       if (addedImg) {
+
+        // Delete old Image
+        console.log('imageurl BEFORE editing : '+ userPersonalInfo.image);
+        const oldImageInfoPath: any = userPersonalInfo.image
+        const oldImageInfo = /[^/]*$/.exec(oldImageInfoPath);
+        const oldImage = oldImageInfo[0];
+        deleteOldImg(oldImage);
+
+        // Upload new image to S3
         const data = await getUploadUrl();
         const uploadUrl = data.uploadURL;
         const filename = data.filename;
@@ -80,6 +90,7 @@ const PersonalInfo = ({ userData }: Props) => {
           filename;
 
         userPersonalInfo.image = fileURL;
+        console.log('imageurl AFTER editing : '+ userPersonalInfo.image);
         await uploadImgToS3(uploadUrl, newImg);
       }
 
