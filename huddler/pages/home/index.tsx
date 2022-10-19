@@ -48,16 +48,16 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
     try {
       const data = await getAllHuddles();
       setFilterChoice(data);
-    } catch (err) {}
+    } catch (err) { }
     return;
   };
 
   return (
     <>
-      <div className="sm:block md:flex xl:gap-10 mt-20 relative h-full lg:px-0 2xl:px-10">
-        <div className="flex flex-col w-screen" id="0">
+      <div className="sm:block md:flex xl:gap-10 mt-20 h-full lg:px-0 2xl:px-10">
+        <div className="flex flex-col w-full" id="0">
           <div
-            className="flex py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start"
+            className="flex py-3 lg:px-10 text-orange-900 shadow-md justify-start gap-5 w-full px-2"
             id="1"
           >
             <button
@@ -78,23 +78,27 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
             >
               All Huddles
             </button>
-            <DropdownMenu
-              setFilterChoice={setFilterChoice}
-              revert={revertCatBtn}
-            />
             <button
               onClick={() => setMobileShowMap(!mobileShowMap)}
               className="lg:hidden"
             >
               {mobileShowMap ? (
-                <AiOutlineArrowUp />
+                <div className="flex items-center justify-center ">
+                  <p>Map</p><AiOutlineArrowUp />
+                </div>
               ) : (
-                <AiOutlineArrowUp className=" rotate-180" />
+                <div className="flex"><p>Map</p><AiOutlineArrowUp className=" rotate-180" /></div>
               )}{" "}
             </button>
+            <div className="relative mr-4 flex">
+              <DropdownMenu
+                setFilterChoice={setFilterChoice}
+                revert={revertCatBtn}
+              />
+            </div>
           </div>
 
-          <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2">
+          <div className="flex md:max-h-[87vh] md:py-6 md:px-10" id="carousel 2">
             {/* <Huddles huddles={filterChoice} /> */}
             {mobileShowMap && (
               <div className="absolute lg:hidden block h-full w-full z-30">

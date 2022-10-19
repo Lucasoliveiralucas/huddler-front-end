@@ -1,6 +1,6 @@
 import { InfoWindowF } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
-import { Huddle} from "../../types";
+import { Huddle } from "../../types";
 import Image from "next/future/image";
 import {
   getUsersGoingToHuddle,
@@ -16,7 +16,12 @@ type Props = {
   setShowHuddle: React.Dispatch<React.SetStateAction<Huddle | undefined>>;
 };
 
-export const MapInfoWindow = ({ showHuddle, setShowHuddle, id , updateList}: Props) => {
+export const MapInfoWindow = ({
+  showHuddle,
+  setShowHuddle,
+  id,
+  updateList,
+}: Props) => {
   const [checkedIn, setCheckedIn] = useState(false);
   const [dateTime, setDateTime] = useState<any>();
   const [goingToHuddle, setGoingToHuddle] = useState<number>();
@@ -71,30 +76,33 @@ export const MapInfoWindow = ({ showHuddle, setShowHuddle, id , updateList}: Pro
             </h3>
             {checkedIn ? (
               <button
-                className="float-right flex mt-3 italic font-medium bg-slate-300 p-1 rounded-md w-[4.5rem]"
+                className="float-right flex mt-3 leave-button"
                 onClick={() => {
-                  const val = (goingToHuddle ? (goingToHuddle - 1):0);
+                  const val = goingToHuddle ? goingToHuddle - 1 : 0;
                   setGoingToHuddle(val);
                   setCheckedIn(false);
                   removeUserGoingToHuddle(id, showHuddle.id as number);
-                  { updateList && updateList() };
-
+                  {
+                    updateList && updateList();
+                  }
                 }}
               >
-                Check out
+                Leave
               </button>
             ) : (
               <button
-                className="float-right flex mt-3 italic font-medium bg-orange-300 p-1 rounded-md w-[4.5rem]"
+                className="float-right flex mt-3 orange-button"
                 onClick={() => {
-                  const val = (goingToHuddle ? (goingToHuddle - 1) : 0);
+                  const val = goingToHuddle ? goingToHuddle - 1 : 0;
                   setGoingToHuddle(val);
                   setCheckedIn(true);
                   postUserGoingToHuddle(id, showHuddle.id as number);
-                  { updateList && updateList() };
+                  {
+                    updateList && updateList();
+                  }
                 }}
               >
-                Check in
+                Join
               </button>
             )}
           </div>

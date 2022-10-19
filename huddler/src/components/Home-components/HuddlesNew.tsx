@@ -26,13 +26,13 @@ function Huddles({ huddles, updateList, id, huddlesUserIsGoing }: Props) {
 
   return (
     <div
-      className="flex flex-col justify-start pr-10 h-full overflow-auto"
+      className="flex flex-col justify-start pr-8 h-full overflow-auto w-full md:mr-8"
       id="carousel"
     >
       <div className="flex flex-col">
         {huddles.map((huddle) => (
           <div
-            className="h-48 md:h-48 lg:h-56 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border m-4 relative rounded-lg"
+            className="h-56 w-full md:h-48 lg:h-56 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border m-4 relative rounded-lg"
             key={huddle.id}
           >
             {/* <HuddleCarouselItem */}

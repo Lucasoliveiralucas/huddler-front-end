@@ -3,7 +3,8 @@ import Image from "next/future/image";
 import DefaultUserImage from "../../../public/defaultUserImage.png";
 import Dropdown from "./Dropdown";
 import Link from "next/link";
-import huddler_logo from "../../../public/Huddler_green.png";
+// import huddler_logo from "../../../public/huddler-orange.png";
+import huddler_logo from "../../../public/huddler-orange-w-logo.png";
 import { useAuth } from "../../contexts/AuthContext";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
 import { withSSRContext } from "aws-amplify";
@@ -75,7 +76,7 @@ function Navbar() {
   };
   return (
     <>
-      <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-40">
+      <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-1 md:px-12 z-40">
         <Link href={"/home"} rel="prefetch" as="image">
           <a className="w-48 mr-10">
             <Image src={huddler_logo} alt="logo" priority={true} />
@@ -84,7 +85,7 @@ function Navbar() {
         <div className="flex items-center justify-end">
           <button
             className="
-        w-14 md:w-40 relative text-center font-bold
+        w-20 h-full md:w-40 relative text-center font-bold
         py-2 text-sm md:text-lg rounded-3xl border-palette-dark border-[1px]
         bg-tansparent hover:bg-[#7c2d12] text-palette-dark
         hover:text-white"

@@ -48,7 +48,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, id }: Props) {
     // <div id="card-container">
     <div className="flex flex-col">
       <div className="flex flex-row">
-        <div className="basis-1/4 relative">
+        <div className="basis-1/4 relative ">
           <picture className="">
             <img
               src={huddle.image}
@@ -62,14 +62,14 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, id }: Props) {
           <div id="title" className="flex flex-row justify-between">
             {/* @ts-ignore */}
             <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
-              <h1 className="font-extrabold text-palette-dark text-2xl cursor-pointer">
+              <h1 className="font-extrabold text-palette-dark text-lg md:text-2xl cursor-pointer">
                 {huddle.name}
               </h1>
             </Link>
             <div className="">
               {going ? (
                 <button
-                  className="justify-center leave-button mr-6"
+                  className="justify-center leave-button mr-2 md:mr-6"
                   onClick={(e) => {
                     setGoing(!going);
                     removeUserGoingToHuddle(id, huddle.id);
@@ -79,7 +79,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, id }: Props) {
                 </button>
               ) : (
                 <button
-                  className="justify-center orange-button mr-6"
+                  className="justify-center orange-button mr-2 md:mr-6"
                   onClick={(e) => {
                     setGoing(!going);
                     postUserGoingToHuddle(id, huddle.id);
@@ -106,7 +106,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, id }: Props) {
           </Link>
         </div>
       </div>
-      <div id="tags" className="grid grid-cols-5 gap-2 mx-4 mt-2">
+      <div id="tags" className="hidden md:grid grid-cols-5 gap-2 mx-4 mt-2">
         {data.categories.map((category, i) => {
           return (
             <p
