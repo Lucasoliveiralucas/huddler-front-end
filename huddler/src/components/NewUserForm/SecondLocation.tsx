@@ -26,13 +26,12 @@ function Location({ location, setLocation, userData, setUserData }: Props) {
       <div className="flex text-2xl font-bold flex-col py-4 text-center">
         <h1>{"What's your location?"}</h1>
       </div>
-      <div className="h-full w-full py-5 xl:hidden">
+      <div className="w-full py-5 xl:hidden">
         <MobileMap currentPage={"newuser"} user={userData} setLocation={setLocation} />
       </div>
-      <div className="h-full py-5 hidden xl:flex relative">
+      <div className="py-5 hidden xl:flex relative">
         <Map currentPage={"newuser"} user={userData} setLocation={setLocation} />
       </div>
-
     </div>
   );
 }

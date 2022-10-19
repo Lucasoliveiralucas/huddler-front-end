@@ -33,6 +33,7 @@ function MainForm() {
 
   const nextPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    console.log('click')
     if (page < 3) {
       setPage(page + 1);
     } else {
