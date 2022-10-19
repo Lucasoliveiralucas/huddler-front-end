@@ -4,6 +4,7 @@ import Image from "next/future/image";
 import { Category, Huddle, User } from "../../src/types";
 import { dateFormatter } from "../../src/utils/helperFunctions";
 import {
+  getHuddleById,
   getHuddleCategories,
   getUsersGoingToHuddle,
   postUserGoingToHuddle,
@@ -14,14 +15,17 @@ import io, { Socket } from "socket.io-client";
 import { getMsgsFromHuddle } from "../../src/utils/APIServices/chatService";
 import { withSSRContext } from "aws-amplify";
 import { GetServerSideProps } from "next";
+import { Router } from "@aws-amplify/ui-react/dist/types/components/Authenticator/Router";
 let socket: Socket;
 
 type Props = {
   aws_id: string;
   user: User;
+  huddle: Huddle;
 };
 
-const Details = ({ aws_id, user }: Props) => {
+const Details = ({ aws_id, user, huddle }: Props) => {
+
   const [chatMsg, setChatMsg] = useState<any[]>();
   const [updateMsg, setUpdateMsg] = useState<{
     huddle_id: number;
@@ -33,40 +37,10 @@ const Details = ({ aws_id, user }: Props) => {
   const [categories, setCategories] = useState<Category[]>();
   const [going, setGoing] = useState<string>();
   // @ts-ignore
-  const huddle: Huddle = useRouter().query;
+  // const huddle: Huddle = useRouter().query;
 
   const dateTime = dateFormatter(huddle.day_time);
-  const getter = async () => {
-    const usersGoingTo = await getUsersGoingToHuddle(huddle.id);
-    setUsers(usersGoingTo);
 
-    usersGoingTo.find((users: User) => {
-      console.log(users);
-      return users.aws_id == aws_id;
-    })
-      ? setGoing("Leave")
-      : setGoing("Join");
-    const createdBy = await getUserById(huddle.fk_author_id);
-    setCreator(createdBy[0]);
-    const allMsgs = await getMsgsFromHuddle(huddle.id);
-    setChatMsg(allMsgs);
-    const categories = await getHuddleCategories(huddle.id);
-    setCategories(categories);
-  };
-  const socketInitializer = async () => {
-    await fetch(`/api/chat/chat`);
-    socket = io();
-
-    socket.on("connect", () => {
-      console.log("connected");
-    });
-    //join user the huddle room
-    socket.emit("join-room", huddle.id);
-    //gets the messaage
-    socket.on("update-input", (msg) => {
-      setUpdateMsg(msg);
-    });
-  };
   const scroll = () => {
     if (chatMsg) {
       const scrollTo = document.getElementById(chatMsg.length - 1 + "");
@@ -78,13 +52,43 @@ const Details = ({ aws_id, user }: Props) => {
   };
 
   useEffect(() => {
+    const socketInitializer = async () => {
+      await fetch(`/api/chat/chat`);
+      socket = io();
+
+      socket.on("connect", () => {
+        console.log("connected");
+      });
+      //join user the huddle room
+      socket.emit("join-room", huddle.id);
+      //gets the messaage
+      socket.on("update-input", (msg) => {
+        setUpdateMsg(msg);
+      });
+    };
     socketInitializer();
-    getter();
   }, []);
 
   useEffect(() => {
+    const getter = async () => {
+      const usersGoingTo = await getUsersGoingToHuddle(huddle.id);
+      setUsers(usersGoingTo);
+
+      usersGoingTo.find((users: User) => {
+        return users.aws_id == aws_id;
+      })
+        ? setGoing("Leave")
+        : setGoing("Join");
+      const createdBy = await getUserById(huddle.fk_author_id);
+      setCreator(createdBy[0]);
+      const allMsgs = await getMsgsFromHuddle(huddle.id);
+      setChatMsg(allMsgs);
+      const categories = await getHuddleCategories(huddle.id);
+      setCategories(categories);
+    };
     getter();
   }, [going]);
+
   useEffect(() => {
     if (chatMsg && updateMsg && chatMsg[0]) {
       if (chatMsg[chatMsg.length - 1].message == updateMsg.message) return;
@@ -210,7 +214,7 @@ const Details = ({ aws_id, user }: Props) => {
                   let time;
                   msg.timezone
                     ? (time = msg.timezone.slice(11, 16))
-                    : (time = dateFormatter(Date.now()).time.substring(0, 5));
+                    : (time = dateFormatter(Date.now().toString()).time.substring(0, 5));
                   return isMessageFromUser(msg.username) ? (
                     <div
                       key={i}
@@ -267,14 +271,16 @@ const Details = ({ aws_id, user }: Props) => {
 
 export default Details;
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
   const { Auth } = withSSRContext({ req });
-
   try {
+    const id  = parseInt(query.id as string);
+    const huddle = await getHuddleById(id);
     const { username } = await Auth.currentUserInfo();
     const user: User[] = await getUserById(username);
     return {
       props: {
+        huddle: huddle.pop(),
         aws_id: username,
         user: user.pop(),
       },

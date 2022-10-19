@@ -1,11 +1,5 @@
-import HuddleCard from "./HuddleCard";
-import { useState } from "react";
-import { Huddle } from "../../types";
-import HuddleCarouselItem from "../Profile components/HuddleCarouselItem";
 
-import { fetcher } from "../../utils/helperFunctions";
-import useSWR from "swr";
-import HuddlesNewItem from "./HuddlesNewItem";
+import { Huddle } from "../../types";
 import NewHuddleCard from "./NewHuddleCard";
 
 type Props = {

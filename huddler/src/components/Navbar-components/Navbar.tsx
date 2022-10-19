@@ -8,6 +8,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
+    // @ts-ignore
   const { currentUser } = useAuth()
   
  
@@ -48,7 +49,7 @@ function Navbar() {
       <div className="w-20 h-20 relative">
            
         <Image
-          src={currentUser && currentUser.image ? currentUser.image : DefaultUserImage}
+          src={currentUser && currentUser[0].image ? currentUser[0].image : DefaultUserImage}
           alt='user-image'
           fill
           className=' rounded-full p-1 cursor-pointer'

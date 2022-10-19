@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Avatar from '../../src/components/Profile components/Avatar';
 import UserInfo from '../../src/components/Profile components/UserInfo';
 import useSWR from 'swr';
@@ -13,10 +13,7 @@ import {
 import { getHuddlesInCategory } from '../../src/utils/APIServices/categoryServices';
 import HuddleCarouselItem from '../../src/components/Profile components/HuddleCarouselItem';
 import { withSSRContext } from 'aws-amplify';
-import { GetServerSideProps } from 'next/types';
-import { NextRequest, NextResponse } from 'next/server';
-import { NextApiResponse } from 'next/types';
-import { NextApiRequest } from 'next/types';
+import { NextApiResponse, NextApiRequest } from "next/types";
 
 type Props = {
   aws_id: string;
@@ -26,23 +23,28 @@ type Props = {
   huddles: Huddle[];
 };
 
-function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
+function Profile({
+  aws_id,
+  user,
+  goingTo,
+  recommended,
+  huddles, }: Props) {
+
   //This is for updating the huddles i'm going to row
   const [update, setUpdate] = useState(false);
-  const [huddlesUserIsGoing, setHuddlesUserIsGoing] =
-    useState<Huddle[]>(goingTo);
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>(goingTo);
   const [lastRow, setLastRow] = useState({
-    name: 'Recommended',
+    name: "Recommended",
     huddles: recommended,
   });
   //Get user id from auth for the tag hook
   const { data: tags, error: tagsError } = useSWR(
-    `${process.env.NEXT_PUBLIC_AWS_URL}users_categories?user-id=${aws_id}`,
+    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${aws_id}`,
     fetcher
   );
   const { data: userCreatedHuddles, error: userHuddleError } =
     useSWR(
-      `${process.env.NEXT_PUBLIC_AWS_URL}huddles_user_created?user-id=${aws_id}`,
+      `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${aws_id}`,
       fetcher
     ) || [];
 
@@ -50,13 +52,11 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
     if (goingTo.length) {
       try {
         const sorted: Huddle[] = goingTo.sort((a: Huddle, b: Huddle) => {
-          return (
-            new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf()
-          );
+          return new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf();
         });
         setHuddlesUserIsGoing(sorted);
       } catch (err) {
-        console.log('Error trying to get the huddles a user is goig to ', err);
+        console.log(err)
       }
     }
   };
@@ -68,49 +68,44 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
   const changeDisplayedCategory = async (category: Category) => {
     const data = await getHuddlesInCategory(category.id);
     if (lastRow.name == category.name) {
-      document.getElementById(category.name)?.classList.remove('opacity-60');
+      document.getElementById(category.name)?.classList.remove("opacity-60");
       setLastRow({
-        name: 'Recommended',
+        name: "Recommended",
         huddles: recommended,
       });
     } else {
-      document.getElementById(category.name)?.classList.add('opacity-60');
+      document.getElementById(category.name)?.classList.add("opacity-60");
       setLastRow({ name: category.name, huddles: data });
     }
   };
 
   if (tagsError) return <div>failed to load</div>;
-  if (!tags) return <div>loading...</div>;
+  if (!tags)
+    return <div>loading...</div>;
 
   return (
-    <main className='flex flex-col lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]'>
-      <div className='hidden lg:block w-full'>
-        <div className='fixed min-w-[20%] h-full'>
+    <main className="flex flex-col lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
+      <div className="hidden lg:block w-full">
+        <div className="fixed min-w-[20%] h-full">
           <div
-            className='flex flex-col h-full items-center
-          border-x-[0.2px] shadow-md w-full'
+            className="flex flex-col h-full items-center
+          border-x-[0.2px] shadow-md w-full"
           >
             <Avatar user={user} />
-            <UserInfo
-              numOfCreatedHuddles={
-                userCreatedHuddles ? userCreatedHuddles.length : 0
-              }
-              huddlesUserIsGoing={huddlesUserIsGoing.length}
-            />
-            <div className='h-1/9 w-full flex flex-col justify-center mt-8 border gap-6'>
-              <h1 className='text-3xl self-center mt-10 font-bold'>
+            <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
+              huddlesUserIsGoing={huddlesUserIsGoing.length} />
+            <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
+              <h1 className="text-3xl self-center mt-10 font-bold">
                 Upcoming Huddle
               </h1>
-              <div className='self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg'>
-                {huddlesUserIsGoing.length && (
-                  <HuddleCarouselItem
-                    setUpdate={setUpdate}
-                    update={update}
-                    huddle={huddlesUserIsGoing[0]}
-                    huddlesUserIsGoing={huddlesUserIsGoing}
-                    id={aws_id}
-                  />
-                )}
+              <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
+                {huddlesUserIsGoing.length && <HuddleCarouselItem
+                  setUpdate={setUpdate}
+                  update={update}
+                  huddle={huddlesUserIsGoing[0]}
+                  huddlesUserIsGoing={huddlesUserIsGoing}
+                  id={aws_id}
+                />}
               </div>
             </div>
           </div>
@@ -118,34 +113,27 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
       </div>
 
       {/* Mobile */}
-      <div className=' lg:hidden w-full pt-4 h-auto flex-col'>
+      <div className=" lg:hidden w-full pt-4 h-auto flex-col">
         <MobileAvatar user={user} />
-        <UserInfo
-          numOfCreatedHuddles={
-            userCreatedHuddles ? userCreatedHuddles.length : 0
-          }
-          huddlesUserIsGoing={huddlesUserIsGoing.length}
-        />
+        <UserInfo numOfCreatedHuddles={userCreatedHuddles ? userCreatedHuddles.length : 0}
+          huddlesUserIsGoing={huddlesUserIsGoing.length} />
       </div>
 
-      <div className='h-full w-full col-span-2 3xl:col-span-3 overflow-auto ml-0 lg:ml-48 2xl:ml-0'>
-        <h1 className='pt-8 px-4 text-3xl font-bold md:pl-10 lg:pl-0'>
-          Interests:
-        </h1>
-        {Array.isArray(tags) && (
-          <div className='flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0'>
+      <div className="h-full w-full col-span-2 3xl:col-span-3 overflow-auto ml-0 lg:ml-48 2xl:ml-0">
+        <h1 className="pt-8 px-4 text-3xl font-bold md:pl-10 lg:pl-0">Interests:</h1>
+        {Array.isArray(tags) &&
+          <div className="flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0">
             {tags.map((tag: Category, i: number) => (
               <h1
                 id={tag.name}
                 onClick={(e) => changeDisplayedCategory(tag)}
-                className='text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer'
+                className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer"
                 key={i}
               >
                 {tag.name}
               </h1>
             ))}
-          </div>
-        )}
+          </div>}
 
         {Array.isArray(userCreatedHuddles) && userCreatedHuddles.length && (
           <>
@@ -205,20 +193,16 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 export default Profile;
 
 type Context = {
-  req: NextApiRequest;
-  res: NextApiResponse;
-};
+  req: NextApiRequest,
+  res: NextApiResponse,
+}
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  res,
-}: Context) => {
+export const getServerSideProps = async ({ req, res }:Context) => {
+
   const { Auth } = withSSRContext({ req });
-
+  
   try {
-    const huddles: Huddle[] = await fetcher(
-      'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted'
-    );
+    const huddles: Huddle[] = await fetcher("https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted");
     const { username } = await Auth.currentUserInfo();
     const recommended: Huddle[] = await recommendedForUser(username);
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
