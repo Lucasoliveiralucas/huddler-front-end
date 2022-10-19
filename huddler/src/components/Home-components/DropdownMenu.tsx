@@ -49,15 +49,17 @@ const DropdownMenu = ({ setFilterChoice, revert }: Props) => {
   };
 
   return (
-    <div className="dropdown-div overflow-x-auto scrollbar-hide flex items-center justify-center">
+    <div className="dropdown-div overflow-x-auto scrollbar-hide flex flex-wrap items-center">
+
+      {/*perfect on mobile: add new for desktop? */}
       <button
         className={`${showDropdown ? "active" : "noActive"}`}
         onClick={(): void => toggleDropdown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
         }
-      >
-        {showDropdown ? (
+      > {selectCategory ? selectCategory : "Categories"}
+        {showDropdown && (
           <DropdownItems
             setFilterChoice={setFilterChoice}
             categories={categories}
@@ -65,10 +67,8 @@ const DropdownMenu = ({ setFilterChoice, revert }: Props) => {
             toggleDropdown={(): void => toggleDropdown()}
             categorySelection={categorySelection}
           />
-        ) : (
-          <div className="px-2">{selectCategory ? selectCategory : "Categories"}</div>
-        )}
-      </button>
+        )}  </button>
+     
     </div>
   );
 };

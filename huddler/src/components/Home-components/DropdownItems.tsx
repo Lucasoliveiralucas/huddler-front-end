@@ -34,10 +34,10 @@ const DropdownItems: React.FC<DropdownProps> = ({
 
   return (
     // <div className={`${showDropdown ? "dropdown" : "dropdown active"} flex flex-col md:flex-row z-20 relative`}>
-    <div className="flex flex-col md:flex-row w-fit absolute px-3 z-40 gap-1 mt-6 md:mt-0 bg-white">
+    <div className="flex flex-col md:flex-row md:w-fit absolute px-36 md:px-2 z-40 md:gap-3 w-screen bg-white md:bg-inherit md:ml-20 md:top-auto top-32 md:left-auto left-[0%] text-center">
       {categories.map((category: Category, index: number): JSX.Element => {
         return (
-          <div className="h-full w-full py-2" key={category.id}>
+          <div className="h-full w-full py-3 md:text-sm text-xl md:border-none border-b" key={category.id}>
           <p 
             
             onClick={(): void => {
