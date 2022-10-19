@@ -8,6 +8,7 @@ import { NextPage } from "next";
 import { Amplify, Auth } from "aws-amplify";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import Head from "next/head";
+import Script from 'next/script'
 
 import awsconfig from "../src/aws-exports";
 Amplify.configure({ awsconfig, ssr: true });
@@ -56,11 +57,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         />
 
         <title>Huddler</title>
-        <script
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`}
-        ></script>
         <link rel="manifest" href="/manifest.json" />
       </Head>
+      <Script
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`}
+      ></Script>
       <AuthProvider>
         <Layout>
           <Component {...pageProps} />
