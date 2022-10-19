@@ -50,19 +50,17 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
     const huddlesUserIsGoing = await getUserGoingHuddles(aws_id);
     console.log(huddlesUserIsGoing);
 
-    if (huddlesUserIsGoing.length) {
-      try {
-        const sorted: Huddle[] = huddlesUserIsGoing.sort(
-          (a: Huddle, b: Huddle) => {
-            return (
-              new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf()
-            );
-          }
-        );
-        setHuddlesUserIsGoing(sorted);
-      } catch (err) {
-        console.log(err);
-      }
+    try {
+      const sorted: Huddle[] = huddlesUserIsGoing.sort(
+        (a: Huddle, b: Huddle) => {
+          return (
+            new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf()
+          );
+        }
+      );
+      setHuddlesUserIsGoing(sorted);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -218,10 +216,7 @@ type Context = {
   res: NextApiResponse;
 };
 
-export const getServerSideProps = async ({
-  req,
-  res,
-}: Context) => {
+export const getServerSideProps = async ({ req, res }: Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {
