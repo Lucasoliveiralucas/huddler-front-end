@@ -147,7 +147,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
           </div>
         )}
 
-        {(userCreatedHuddles.length) ? (
+        {Array.isArray(userCreatedHuddles) && userCreatedHuddles.length && (
           <>
             <h1 className='pt-6 sm:py-6 p-4 text-3xl font-bold'>
               Created huddles:
@@ -160,9 +160,9 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               id={aws_id}
             />
           </>
-        ) : null}
+        )}
 
-        {(huddlesUserIsGoing.length) ? (
+        {Array.isArray(huddlesUserIsGoing) && huddlesUserIsGoing.length && (
           <>
             <h1 className='pt-6 sm:py-6 p-4 text-3xl font-bold'>
               Huddles I&lsquo;m going to:
@@ -175,11 +175,9 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               id={aws_id}
             />
           </>
-        ) : (
-          false
         )}
 
-        {(lastRow.huddles.length) ? (
+        {Array.isArray(lastRow.huddles) && lastRow.huddles.length ? (
           <>
             <h1 className='pt-6 sm:py-6 p-4 text-3xl font-bold'>
               {lastRow.name} huddles:

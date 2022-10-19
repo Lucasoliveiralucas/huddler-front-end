@@ -10,6 +10,7 @@ type Props = {
 
 const PersonalInfo = ({ userData }: Props) => {
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [disabledButton, setDisabledButton] = useState(true);
 
   const router = useRouter();
@@ -25,12 +26,24 @@ const PersonalInfo = ({ userData }: Props) => {
     e.preventDefault();
     try {
       setError('');
-      if (nameRef.current && nameRef.current!.value !== userData.username) {
+      if (
+        descriptionRef.current &&
+        descriptionRef.current!.value !== '' &&
+        descriptionRef.current!.value !== userPersonalInfo.description
+      ) {
+        userPersonalInfo.description = descriptionRef.current.value;
+      }
+      if (
+        nameRef.current &&
+        nameRef.current!.value !== '' &&
+        nameRef.current!.value !== userData.username
+      ) {
         userPersonalInfo.username = nameRef.current.value;
       }
 
       if (
         emailRef.current &&
+        emailRef.current!.value !== '' &&
         emailRef.current!.value !== userPersonalInfo.email
       ) {
         userPersonalInfo.email = emailRef.current.value;
@@ -38,6 +51,7 @@ const PersonalInfo = ({ userData }: Props) => {
 
       if (
         firstNameRef.current &&
+        firstNameRef.current!.value !== '' &&
         firstNameRef.current!.value !== userPersonalInfo.first_name
       ) {
         userPersonalInfo.first_name = firstNameRef.current.value;
@@ -45,21 +59,30 @@ const PersonalInfo = ({ userData }: Props) => {
 
       if (
         lastNameRef.current &&
+        lastNameRef.current!.value !== '' &&
         lastNameRef.current!.value !== userPersonalInfo.last_name
       ) {
         userPersonalInfo.last_name = lastNameRef.current.value;
       }
 
       postUpdatedUserInfo(userPersonalInfo, userData.aws_id as string);
-      router.push('/profile');
+      setSuccess('Success! Your personal information was updated');
     } catch {
       setError("We weren't able to update your profile. Please try again");
     }
   };
 
   return (
-    <>
-      {error && <div className='bg-red-600'>{error}</div>}
+    <div className='flex flex-col'>
+      {error && (
+        <>
+          <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>
+            {error}
+          </div>
+          <br />
+        </>
+      )}
+
       <div className='flex items-center gap-10 h-screen'>
         <div className='flex flex-col'>
           <UserImage
@@ -114,17 +137,26 @@ const PersonalInfo = ({ userData }: Props) => {
           />
           <br />
           <div className='flex justify-center'>
-            <button
-              className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
-              type='submit'
-              disabled={disabledButton}
-            >
-              Submit
-            </button>
+            {success ? (
+              <>
+                <div className='text-[#145725] bg-[#D5EDDB] p-5 rounded-md'>
+                  {success}
+                </div>
+                <br />
+              </>
+            ) : (
+              <button
+                className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
+                type='submit'
+                disabled={disabledButton}
+              >
+                Submit
+              </button>
+            )}
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

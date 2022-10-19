@@ -12,7 +12,10 @@ type Props = {
   chosenCategories?: Category[];
   setChosenCategories?: React.Dispatch<React.SetStateAction<Category[]>>;
   userCategories?: Category[];
-  setUserCategories?: React.Dispatch<React.SetStateAction<Category[] | undefined>>;
+  setUserCategories?: React.Dispatch<
+    React.SetStateAction<Category[] | undefined>
+  >;
+  setDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CategoriesContainer = ({
@@ -20,10 +23,11 @@ const CategoriesContainer = ({
   setChosenCategories,
   userCategories,
   setUserCategories,
+  setDisabledButton,
 }: Props) => {
   const [displayCategories, setDisplayCategories] = useState<Category[]>([]);
 
-  // Depending if the user is choosing categories for the first time or wants to update categories
+  // Depending if the user choose categories for the first time or wants to update categories
   const interests = chosenCategories || userCategories || [];
 
   useEffect(() => {
@@ -40,6 +44,7 @@ const CategoriesContainer = ({
     e: React.MouseEvent<HTMLElement>,
     category: Category
   ) => {
+    setDisabledButton(false);
     if (e.currentTarget.dataset.selected === 'false') {
       e.currentTarget.className = selectedClass;
       interests.push(category);
@@ -54,7 +59,7 @@ const CategoriesContainer = ({
       //@ts-ignore (it thinks it's undefined because of the question mark in props. We may or may not pass it depending of where it comes )
       setChosenCategories(interests);
       console.log('these are CategoriesPicked', chosenCategories);
-    } else {
+    } else if (userCategories) {
       //@ts-ignore
       setUserCategories(interests);
       console.log('these are userCategories', userCategories);

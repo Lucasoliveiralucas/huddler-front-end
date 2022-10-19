@@ -34,9 +34,23 @@ const ChangePassword = () => {
   };
 
   return (
-    <>
-      {error && <div className='bg-red-600'>{error}</div>}
-      {success && <div className='bg-green-600'>{success}</div>}
+    <div className='flex flex-col items-center'>
+      {error && (
+        <>
+          <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>
+            {error}
+          </div>
+          <br />
+        </>
+      )}
+      {success && (
+        <>
+          <div className='text-[#145725] bg-[#D5EDDB] p-5 rounded-md'>
+            {success}
+          </div>
+          <br />
+        </>
+      )}
       <form onSubmit={handleSubmit}>
         <label htmlFor='old-password'>Old password</label>
         <input
@@ -76,7 +90,7 @@ const ChangePassword = () => {
           Submit
         </button>
       </form>
-    </>
+    </div>
   );
 };
 
