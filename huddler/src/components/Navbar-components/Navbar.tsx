@@ -33,13 +33,15 @@ function Navbar() {
       form?.classList.remove("animate-fade-in");
       form?.classList.add("animate-fade-out");
       setTimeout(() => {
-        body?.classList.remove("overflow-hidden");
+        // window.scrollTo(0, 0);
+        // body?.classList.add("overflow-hidden");
         form?.classList.remove("absolute");
         form?.classList.add("hidden");
       }, 500);
       setCreateBox(false);
       return;
     }
+    window.scrollTo(0, 0);
     body?.classList.add("overflow-hidden");
     form?.classList.remove("hidden");
     form?.classList.add("absolute");
