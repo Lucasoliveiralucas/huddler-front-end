@@ -6,7 +6,7 @@ import { AiOutlineCompass } from 'react-icons/ai';
 import { useAuth } from '../../contexts/AuthContext';
 import Link from 'next/link';
 // import { useRouter } from 'next/router';
-// import useOnclickOutside from 'react-cool-onclickoutside';
+import useOnclickOutside from 'react-cool-onclickoutside';
 
 const serviceDropdown = [
   { name: 'Explore', path: '/home', icon: <AiOutlineCompass /> },
@@ -28,14 +28,14 @@ const Dropdown = ({ setShowDropDown }: Props) => {
   //@ts-ignore
   const { logOut } = useAuth();
 
-  // const dropDownref = useOnclickOutside(() => {
-  //   setShowDropDown(false);
-  // });
+  const dropDownref = useOnclickOutside(() => {
+    setShowDropDown(false);
+  });
 
   return (
     <div>
       <div
-        // ref={dropDownref}
+        ref={dropDownref}
         onMouseLeave={() => setShowDropDown(false)}
         className='hidden md:block mt-24 w-full rounded-[5px] shadow-md'
       >
