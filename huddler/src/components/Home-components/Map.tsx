@@ -112,7 +112,6 @@ export default function Map({
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
-            id={user!.aws_id}
           />
         </div>
       </div>
@@ -158,7 +157,6 @@ export default function Map({
             <></>
           )}
           <MapInfoWindow
-            id={user.aws_id}
             showHuddle={showHuddle}
             setShowHuddle={setShowHuddle}
             updateList={updateList}
