@@ -1,20 +1,21 @@
-import { useEffect, useRef, useState } from "react";
-import { Category, Huddle } from "../../types";
-import { nowFormatted } from "../../utils/helperFunctions";
-import Image from "next/future/image";
-import { useRouter } from "next/router";
-import TagList from "../TagList";
-import AutocompleteHuddleForm from "./AutocompleteNewHuddleForm";
+import { useEffect, useRef, useState } from 'react';
+import { Category, Huddle } from '../../types';
+import { nowFormatted } from '../../utils/helperFunctions';
+import Image from 'next/future/image';
+import { useRouter } from 'next/router';
+import TagList from '../TagList';
+import AutocompleteHuddleForm from './AutocompleteNewHuddleForm';
 import {
   getIdOfHuddleByDateOfCreation,
   postHuddle,
   postHuddleCategory,
-} from "../../utils/APIServices/huddleServices";
+  postUserGoingToHuddle,
+} from '../../utils/APIServices/huddleServices';
 import {
   getUploadUrl,
   uploadImgToS3,
-} from "../../utils/APIServices/imageServices";
-import { useAuth } from "../../contexts/AuthContext";
+} from '../../utils/APIServices/imageServices';
+import { useAuth } from '../../contexts/AuthContext';
 
 type Props = {
   id: string;
@@ -45,16 +46,16 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const [imgUrl, setImageUrl] = useState({});
   const [uploadImg, setUploadImg] = useState({});
   const [imageSelected, setImageSelected] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string>("");
+  const [imagePreview, setImagePreview] = useState<string>('');
   const [addedCategories, setAddedCategories] = useState<Category[]>([
-    { id: 0, name: "" },
+    { id: 0, name: '' },
   ]);
-  const [allCategories, setAllCategories] = useState([{ id: 0, name: "" }]);
-  const [error, setError] = useState("");
+  const [allCategories, setAllCategories] = useState([{ id: 0, name: '' }]);
+  const [error, setError] = useState('');
   const [locationData, setLocationData] = useState({
-    name: "",
-    lat: "1.39",
-    lng: "2.154",
+    name: '',
+    lat: '1.39',
+    lng: '2.154',
   });
   const [finalLocation, setFinalLocation] = useState(locationData);
 
@@ -74,7 +75,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
       //
 
-      setError("");
+      setError('');
       const date = Date.now();
       const newHuddle: Huddle = {
         name: titleRef.current!.value,
@@ -84,15 +85,15 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         address: finalLocation.name,
         description: descriptionRef.current!.value,
         image:
-          "https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/" +
+          'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/' +
           filename,
         date_of_creation: date,
-        link: "",
+        link: '',
         fk_author_id: currentUser.aws_id, //here we'll require the uid from the authentication
       };
       // Post huddle in DB
-      console.log("new huddle", newHuddle);
-      console.log("user", currentUser.aws_id);
+      console.log('new huddle', newHuddle);
+      console.log('user', currentUser.aws_id);
       const huddleDateOfCreation = await postHuddle(newHuddle);
 
       // getting id of huddle
@@ -102,15 +103,18 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       addedCategories.forEach((el) => {
         postHuddleCategory(huddleId[0].id, el.id as number);
       });
-      const form = document.getElementById("huddle-form");
-      form?.classList.remove("animate-fade-in");
-      form?.classList.add("animate-fade-out");
+      const form = document.getElementById('huddle-form');
+      form?.classList.remove('animate-fade-in');
+      form?.classList.add('animate-fade-out');
       setTimeout(() => {
-        form?.classList.remove("flex");
-        form?.classList.add("hidden");
+        form?.classList.remove('flex');
+        form?.classList.add('hidden');
       }, 500);
+
+      //the user that creates the huddle goes by default
+      await postUserGoingToHuddle(currentUser.aws_id, huddleId);
       // redirect to user home page
-      router.replace("/home");
+      router.replace('/home');
 
       // Clean form
       // titleRef.current!.value = '';
@@ -123,7 +127,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       // e.target[2].value = '';
       // descriptionRef.current!.value = '';
     } catch {
-      setError("We could not create the huddle");
+      setError('We could not create the huddle');
     }
   };
 
@@ -140,14 +144,14 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
   const addCategory = (category: Category) => {
     if (addedCategories.includes(category)) return;
-    addedCategories[0].name == ""
+    addedCategories[0].name == ''
       ? setAddedCategories([category])
       : setAddedCategories([...addedCategories, category]);
-    console.log("These are the selected categories,", addedCategories);
+    console.log('These are the selected categories,', addedCategories);
   };
 
   useEffect(() => {
-    if (locationData.lat !== "1.39")
+    if (locationData.lat !== '1.39')
       setCenter({
         lat: Number(locationData.lat),
         lng: Number(locationData.lng),
@@ -159,8 +163,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
     if (center)
       setFinalLocation({
         ...finalLocation,
-        lat: "" + center.lat,
-        lng: "" + center.lng,
+        lat: '' + center.lat,
+        lng: '' + center.lng,
       });
   }, [center]);
 

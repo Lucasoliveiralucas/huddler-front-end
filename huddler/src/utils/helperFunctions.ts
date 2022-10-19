@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
 import dayjs from 'dayjs';
-import { Category } from '../types';
+import { Category, Huddle } from '../types';
 import { getHuddlesInCategory } from './APIServices/categoryServices';
 import { getUserCategories } from './APIServices/userServices';
 
@@ -64,3 +64,12 @@ export const getSession = async () => {
   return res.CognitoUser.username;
 };
 
+export const sortHuddlesByDate = (huddlesToSort: Huddle[]) => {
+  //@ts-ignore
+  return huddlesToSort.sort((a, b) => {return new Date(a.day_time) - new Date(b.day_time)})
+}
+
+export const getActiveHuddles = (huddlesToFileter: Huddle[]) => {
+  //@ts-ignore
+  return huddlesToFileter.filter((huddle) => new Date(huddle.day_time) > Date.now())
+}
