@@ -6,10 +6,15 @@ import Link from "next/link";
 import huddler_logo from "../../../public/Huddler_green.png";
 import { useAuth } from "../../contexts/AuthContext";
 import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
+import { withSSRContext } from "aws-amplify";
+import { fetcher } from "../../utils/helperFunctions";
+import { getUserById } from "../../utils/APIServices/userServices";
+import { User } from "../../types";
 
 function Navbar() {
   const [showDropDown, setShowDropDown] = useState(false);
   const { currentUser } = useAuth();
+
   const [lastScrollY, setLastScrollY] = useState(0);
   const [createBox, setCreateBox] = useState(false);
   const [center, setCenter] = useState({
@@ -60,7 +65,6 @@ function Navbar() {
   const handleClickOnImg = () => {
     setShowDropDown(!showDropDown);
   };
-
   return (
     <>
       <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-10">
@@ -82,15 +86,15 @@ function Navbar() {
           </button>
 
           <div className="w-20 h-20 relative">
-            {currentUser && (
+            {
               <Image
-                src={currentUser ? currentUser[0].image : DefaultUserImage}
+                src={currentUser ? currentUser.image : DefaultUserImage}
                 alt="user-image"
                 fill
-                className=" rounded-full p-1 cursor-pointer p-3"
+                className=" rounded-full cursor-pointer p-3"
                 onClick={() => handleClickOnImg()}
               />
-            )}
+            }
             {showDropDown && <Dropdown setShowDropDown={setShowDropDown} />}
           </div>
         </div>

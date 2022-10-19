@@ -39,9 +39,7 @@ const Details = ({ aws_id, user }: Props) => {
   const getter = async () => {
     const usersGoingTo = await getUsersGoingToHuddle(huddle.id);
     setUsers(usersGoingTo);
-
     usersGoingTo.find((users: User) => {
-      console.log(users);
       return users.aws_id == aws_id;
     })
       ? setGoing("Leave")
