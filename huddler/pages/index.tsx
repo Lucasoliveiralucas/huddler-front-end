@@ -14,6 +14,7 @@ const LandingPage: NextPage = () => {
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState("Log in");
+       //@ts-ignore
   const { logOut } = useAuth();
   useEffect(() => {
     logOut();
