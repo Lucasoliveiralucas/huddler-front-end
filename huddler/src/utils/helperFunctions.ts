@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 import { Auth } from 'aws-amplify';
 import dayjs from 'dayjs';
 import { Category, Huddle } from '../types';
 import { getHuddlesInCategory } from './APIServices/categoryServices';
 import { getUserCategories, getUserCreatedHuddles } from './APIServices/userServices';
-=======
-import { Auth } from "aws-amplify";
-import dayjs from "dayjs";
-import { Category, Huddle } from "../types";
-import { getHuddlesInCategory } from "./APIServices/categoryServices";
-import { getUserCategories } from "./APIServices/userServices";
->>>>>>> 611bf8dcbb1945d4d4c6ad34be7c18c632f69338
 
 // 1. Fetcher
 // 2. Recommended Huddles
@@ -48,15 +40,19 @@ export const recommendedForUser = async (aws_id: string) => {
   //To not recommend the user's created huddles
   const recommendNotCreated: Huddle[] = [];
   huddlesInCategories.forEach((huddle: Huddle) => {
-    if (!userCreated!.some((hud: Huddle)=> hud.name === huddle.name)) recommendNotCreated.push(huddle)
+    console.log('huddleName0', huddle.name)
+    if (userCreated!.some((hud: Huddle) => hud.name !== huddle.name)) {
+      recommendNotCreated.push(huddle)}
   })
 
     // userCreated.forEach((huddle: Huddle) => {
     //   if (
     //     !huddlesInCategories!.some((hud: Huddle) => hud.name === huddle.name)
     //   )
+
     //     recommendNotCreated.push(huddle);
     // });
+    console.log('recommendNotCreated', recommendNotCreated)
   return recommendNotCreated;
 };
 
