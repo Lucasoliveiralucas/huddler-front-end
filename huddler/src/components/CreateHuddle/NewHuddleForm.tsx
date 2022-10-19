@@ -22,13 +22,9 @@ type Props = {
     name: string;
     lat: string;
     lng: string;
-<<<<<<< HEAD
     id?: string;
   };
   update?: boolean;
-=======
-  };
->>>>>>> workingBranch
   setCenter: React.Dispatch<
     React.SetStateAction<{
       lat: number;
@@ -69,11 +65,6 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-<<<<<<< HEAD
-    console.log(e);
-=======
-    console.log(id);
->>>>>>> workingBranch
     try {
       const data = await getUploadUrl();
       const uploadUrl = data.uploadURL;
@@ -190,7 +181,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       border-solid
       border-[0.5px]
       border-palette-dark"
-      >
+    >
       <h1 className="text-center text-lg font-medium text-palette-orange mt-0">
         {"Let's make a new huddle"}
       </h1>
@@ -306,7 +297,9 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             </figure>
           )}
         </div>
-        <button className="orange-button mt-6" type="submit">Submit</button>
+        <button className="orange-button mt-6" type="submit">
+          Submit
+        </button>
         {/* <button
           className="border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white font-medium mt-2"
           type="submit"

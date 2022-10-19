@@ -7,7 +7,7 @@ import HuddlesNew from "../../src/components/Home-components/HuddlesNew";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import MobileMap from "../../src/components/Home-components/MobileMap";
 import { withSSRContext } from "aws-amplify";
-import { NextApiResponse, NextApiRequest } from 'next';
+import { NextApiResponse, NextApiRequest } from "next";
 import {
   getUserById,
   getUserGoingHuddles,
@@ -51,18 +51,13 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
   };
 
   return (
-<<<<<<< HEAD
     <div className="sm:block md:flex xl:gap-10 mt-20 relative h-full lg:px-0 2xl:px-10">
       <div className="flex flex-col w-screen" id="0">
-        <div className="flex w-screen py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start" id="1">
-          <button className="mr-4"
-            onClick={() => setFilterChoice(recommended)}>
-=======
-    <div className="sm:block md:flex xl:gap-10 mt-6 relative h-full md:px-24 lg:px-1 2xl:px-5">
-      <div className="max-h-[87vh] overflow-y-auto w-full" id="carousel">
-        <div className="flex p-5 mb-2 shadow-md justify-around md:justify-start">
+        <div
+          className="flex w-screen py-3 px-10 text-orange-900 shadow-md justify-around md:justify-start"
+          id="1"
+        >
           <button className="mr-4" onClick={() => setFilterChoice(recommended)}>
->>>>>>> workingBranch
             Recommended
           </button>
           <button onClick={() => setToAllHuddles()}>All Huddles</button>
@@ -78,35 +73,31 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
           </button>
         </div>
 
-      <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2">
-        {/* <Huddles huddles={filterChoice} /> */}
-        {mobileShowMap && (
-          <div className="absolute lg:hidden block h-full w-full z-30">
-            <MobileMap huddles={filterChoice} user={user} updateList={updateList} />
+        <div className="flex max-h-[87vh] py-6 px-10" id="carousel 2">
+          {/* <Huddles huddles={filterChoice} /> */}
+          {mobileShowMap && (
+            <div className="absolute lg:hidden block h-full w-full z-30">
+              <MobileMap
+                huddles={filterChoice}
+                user={user}
+                updateList={updateList}
+              />
+            </div>
+          )}
+
+          <HuddlesNew
+            huddles={filterChoice}
+            updateList={updateList}
+            huddlesUserIsGoing={huddlesUserIsGoing}
+            id={user.aws_id}
+          />
+
+          <div className="hidden sticky lg:flex ">
+            <Map huddles={filterChoice} user={user} updateList={updateList} />
           </div>
-        )}
-
-        <HuddlesNew
-          huddles={filterChoice}
-          updateList={updateList}
-          huddlesUserIsGoing={huddlesUserIsGoing}
-          id={user.aws_id}
-        />
-      
-
-<<<<<<< HEAD
-      <div className="hidden sticky lg:flex ">
-        <Map huddles={filterChoice} update={update} id={user.aws_id} />
-=======
-      <div className="mt-16 hidden lg:flex ">
-        <Map huddles={filterChoice} user={user} updateList={updateList} />
->>>>>>> workingBranch
-      </div>
-      </div>
-      
+        </div>
       </div>
     </div>
-
   );
 }
 
@@ -115,9 +106,9 @@ export default Home;
 type Context = {
   req: NextApiRequest;
   res: NextApiResponse;
-}
+};
 
-export const getServerSideProps = async ({ req, res }:Context) => {
+export const getServerSideProps = async ({ req, res }: Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {
@@ -133,7 +124,7 @@ export const getServerSideProps = async ({ req, res }:Context) => {
       res.end();
       return {
         props: {},
-      };    
+      };
     }
     return {
       props: {

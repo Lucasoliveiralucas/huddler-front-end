@@ -8,8 +8,6 @@ import {
   postUserGoingToHuddle,
   removeUserGoingToHuddle,
 } from "../../utils/APIServices/huddleServices";
-import { useAuth } from "../../contexts/AuthContext";
-import { AiOutlineConsoleSql } from "react-icons/ai";
 import Link from "next/link";
 
 type Props = {
@@ -108,7 +106,6 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
                 return (
                   i <= 3 && (
                     <p
-<<<<<<< HEAD
                       className="text-center font-bold py-0.5 w-3/4 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark"
                       key={category.id + (i - i)}
                     >
@@ -125,9 +122,6 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
                   i <= 1 && (
                     <p
                       className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-=======
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white "
->>>>>>> workingBranch
                       key={category.id + (i - i)}
                     >
                       {category.name}
