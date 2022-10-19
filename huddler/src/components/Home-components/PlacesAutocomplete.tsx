@@ -81,11 +81,11 @@ const PlacesAutocomplete = ({ hook, setSelected, setLocationName }: Props) => {
   return (
     <div ref={ref}>
       <input
-        className="py-1 outline-none border-palette-orange border-b-2 placeholder: pl-2 w-[100%] shadow-md rounded-sm"
+        className="py-1 pw-5 outline-none border-palette-orange border-b-2 placeholder: pl-2 w-[100%] shadow-md rounded-sm"
         value={value}
         onChange={handleInput}
         disabled={!ready}
-        placeholder="Enter a Place . . ."
+        placeholder="Search"
       />
       {/* We can use the "status" to decide whether we should display the dropdown or not */}
       {status === "OK" && (

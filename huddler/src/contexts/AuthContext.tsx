@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Auth, Hub } from 'aws-amplify';
-import { useRouter } from 'next/router';
-import { getUserById } from '../utils/APIServices/userServices';
-import { User } from '../types';
+import React, { useContext, useState, useEffect } from "react";
+import { Auth, Hub } from "aws-amplify";
+import { useRouter } from "next/router";
+import { getUserById } from "../utils/APIServices/userServices";
+import { User } from "../types";
 
 //@ts-ignore
 export const AuthContext = React.createContext();
@@ -22,15 +22,19 @@ export const AuthProvider = ({ children }: Props) => {
   const [cognitoUser, setCognitoUser] = useState<any>();
   const router = useRouter();
 
+  
   useEffect(() => {
-    Hub.listen('auth', (data) => {
+    const sessionJSON = sessionStorage.getItem('user')
+    const sessionUser = JSON.parse(sessionJSON!)
+    sessionUser && setCurrentUser(sessionUser)
+    Hub.listen("auth", (data) => {
       const { payload } = data;
-      if (payload.event === 'signOut') console.log('User Signed Out');
-      if (payload.event === 'signIn') loadUser();
+      if (payload.event === "signOut") console.log("User Signed Out");
+      if (payload.event === "signIn") loadUser();
     });
     return () => {
       //@ts-ignore
-      Hub.remove('auth');
+      Hub.remove("auth");
     };
   }, []);
 
@@ -48,7 +52,7 @@ export const AuthProvider = ({ children }: Props) => {
       setTimeout(signEventDetector, 10, user, username, attributes.email);
     } catch (error) {
       console.error(
-        'Error trying to signin or signup. Check contexts/AuthContext'
+        "Error trying to signin or signup. Check contexts/AuthContext"
       );
     }
     setIsLoading(false);
@@ -56,30 +60,36 @@ export const AuthProvider = ({ children }: Props) => {
 
   const signEventDetector = (user: User, username: string, email: string) => {
     if (user.username !== undefined) {
-      console.log('User already logged in');
+      console.log("User already logged in");
       setIsAuthenticated(true);
       setCurrentUser(user);
-      router.replace('/home');
+      // console.log('user to storeeee ', user)
+      router.replace("/home");
+      sessionStorage.setItem('user', JSON.stringify(user));
+      
       return;
     }
     // if first time
-    console.log('First time user');
+    console.log("First time user");
     setIsAuthenticated(true);
-    setCurrentUser({ email: email, aws_id: username });
-    router.replace('/newuser');
+    const newUser = { email: email, aws_id: username };
+    setCurrentUser(newUser);
+    sessionStorage.setItem('user', JSON.stringify(newUser));
+    router.replace("/newuser");
     return;
   };
 
   const logOut = async () => {
     await Auth.signOut();
+    sessionStorage.removeItem('user')
     setIsAuthenticated(false);
     setCurrentUser(null);
-    router.replace('/');
+    router.replace("/");
     return;
   };
 
   const changePassword = async (user: any, oldPsw: any, newPsw: any) => {
-    console.log('Password is being changed');
+    console.log("Password is being changed");
     return await Auth.changePassword(user, oldPsw, newPsw);
   };
 
@@ -105,4 +115,6 @@ export const AuthProvider = ({ children }: Props) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+
 

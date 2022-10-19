@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply bg-palette-light w-full;
+        @apply bg-palette-light h-full w-full;
     }  
 }
 
@@ -12,3 +12,35 @@
     display: none;
 }
 
+.react-slideshow-wrapper.slide {
+  height: 100vh;
+}
+
+.images-wrap {
+  height: 100vh;
+  color: #1a0d05;
+}
+
+.each-fade {
+  height: 100vh;
+}
+
+.default-nav {
+  display: none !important;
+}
+
+.orange-button {
+  color: white;
+  background-color: #ff8303;
+  border-radius: 24px;
+  padding: 8px;
+  padding-right: 24px;
+  padding-left: 24px;
+  cursor: pointer;
+  transition: transform 0.1;
+}
+
+.orange-button:hover {
+  transform: scale(0.95);
+  font-weight: bold;
+}
