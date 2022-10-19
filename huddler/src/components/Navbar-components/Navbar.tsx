@@ -127,7 +127,7 @@ function Navbar() {
         className="w-screen
           mt-24
           h-full
-          absolute
+          hidden
           overflow-y-hidden
           z-10
           justify-center 
