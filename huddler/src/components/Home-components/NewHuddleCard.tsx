@@ -60,7 +60,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
           </Link>
           {going ? (
             <button
-              className="justify-center orange-button"
+              className="justify-center leave-button"
               onClick={(e) => {
                 setGoing(!going);
                 removeUserGoingToHuddle(id, huddle.id);
@@ -105,10 +105,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
               {data.categories.map((category, i) => {
                 return (
                   i <= 3 && (
-                    <p
-                      className="text-center font-bold py-0.5 w-3/4 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark"
-                      key={category.id + (i - i)}
-                    >
+                    <p className="category-icon" key={category.id + (i - i)}>
                       {category.name}
                     </p>
                   )
@@ -120,10 +117,7 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, updateList, id }: Props) {
               {data.categories.map((category, i) => {
                 return (
                   i <= 1 && (
-                    <p
-                      className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                      key={category.id + (i - i)}
-                    >
+                    <p className="category-icon" key={category.id + (i - i)}>
                       {category.name}
                     </p>
                   )
