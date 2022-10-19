@@ -38,22 +38,20 @@ export const recommendedForUser = async (aws_id: string) => {
     (previousValue, currentValue) => [...previousValue, ...currentValue],
     []
   );
-  console.log('huddles in categories', huddlesInCategoriesArr);
   const userCreated = await getUserCreatedHuddles(aws_id);
 
-  console.log('userCreated', userCreated);
-
   //To not recommend the user's created huddles
-  const recommendNotCreated: Huddle[] = [];
+  const recommendNotCreated = [];
 
   huddlesInCategoriesArr.forEach((huddle: Huddle) => {
-  
-    if (!userCreated!.some((hud: Huddle) => hud.name === huddle.name)) {
-      recommendNotCreated.push(huddle);
+    if (!userCreated!.some((hud: Huddle) => hud.fk_author_id === huddle.fk_author_id) {
+      recommendNotCreated.pushgit (huddle);
     }
   });
+  
 
-  // console.log('recommendNotCreated', recommendNotCreated)
+
+  console.log('recommendNotCreated', recommendNotCreated);
   return recommendNotCreated;
 };
 
@@ -97,4 +95,6 @@ export const getActiveHuddles = (huddlesToFileter: Huddle[]) => {
     (huddle) => new Date(huddle.day_time) > Date.now()
   );
 };
+
+
 
