@@ -58,6 +58,9 @@ const UserImage = ({
         className='rounded-full hover:cursor-pointer'
         fill
         alt='user-image'
+        sizes='(max-width: 768px) 0px,
+                       (max-width: 1200px) 300px,
+                       400px'
         onClick={() => imageRef.current!.click()}
         />
       </div>

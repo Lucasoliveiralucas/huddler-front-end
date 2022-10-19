@@ -26,17 +26,21 @@ function Navbar() {
   const [locationName, setLocationName] = useState("");
 
   const toggleCreate = () => {
+    const body = document.body;
     const form = document.getElementById("huddle-form");
     if (createBox) {
+      body?.classList.remove("overflow-hidden");
       form?.classList.remove("animate-fade-in");
       form?.classList.add("animate-fade-out");
       setTimeout(() => {
+        body?.classList.remove("overflow-hidden");
         form?.classList.remove("absolute");
         form?.classList.add("hidden");
       }, 500);
       setCreateBox(false);
       return;
     }
+    body?.classList.add("overflow-hidden");
     form?.classList.remove("hidden");
     form?.classList.add("absolute");
     form?.classList.remove("animate-fade-out");
@@ -121,7 +125,8 @@ function Navbar() {
         className="w-screen
           mt-24
           h-full
-          hidden
+          absolute
+          overflow-y-hidden
           z-10
           justify-center 
           backdrop-blur-sm

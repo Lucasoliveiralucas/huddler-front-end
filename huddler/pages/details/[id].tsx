@@ -116,13 +116,13 @@ const Details = ({ aws_id, user, huddle }: Props) => {
   return (
     <div className="flex h-screen w-screen" id="0">
       <div
-        id="huddle-details"
-        className=" w-[25rem] mt-[4rem] px-8 py-6 pb-0 bg-white bg-opacity-20 shadow-xl"
+        id="huddle-details 1-left"
+        className="overflow-y-auto flex flex-col w-[40vw] h-screen pt-24 px-8 bg-white bg-opacity-20 shadow-xl"
       >
-        <p className="text-4xl font-extrabold text-palette-orange">
+        <p className="text-3xl font-extrabold text-palette-orange">
           {huddle.name}
         </p>
-        <p className="pt-2">
+        <p className="pt-2 text-neutral-700">
           {" "}
           {dateTime.monthDayYear} at {dateTime.time}
         </p>
@@ -133,10 +133,10 @@ const Details = ({ aws_id, user, huddle }: Props) => {
           className="rounded-lg h-[13rem] w-[18rem] my-4"
           alt={huddle.name}
         />{" "}
-        <p className="my-2 text-4xl">Description:</p>
-        <p className="text-2xl mb-2">{huddle.description}</p>
-        <p className="my-2 text-4xl">Where:</p>
-        <p className="text-2xl">{huddle.address}</p>
+        <p className="mt-2 text-xl font-bold text-palette-dark">Description</p>
+        <p className="text-lg mb-2">{huddle.description}</p>
+        <p className="mt-2 text-xl font-bold text-palette-dark">Location</p>
+        <p className="text-lg mb-2">{huddle.address}</p>
         <div className="grid grid-cols-3 gap-x-1 gap-y-2 mr-3 mt-2 mb-2 w-full">
           {categories ? (
             categories.map((category, i) => {
@@ -150,33 +150,39 @@ const Details = ({ aws_id, user, huddle }: Props) => {
             <></>
           )}
         </div>
-        <p className="mt-4 text-4xl">Created By: </p>
-        <div className="flex mb-4">
+        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">Created By: </p>
+        <div className="flex mb-2">
           <div className="relative h-12 w-12">
             <Image
               className="flex rounded-full "
               fill
               alt="user image"
+              sizes='(max-width: 768px) 0px,
+                       (max-width: 1200px) 300px,
+                       400px'
               // @ts-ignore
               src={creator?.image}
             />
           </div>
-          <p className="self-center ml-2 text-2xl">{creator?.username}</p>
+          <p className="self-center ml-3 font-medium text-xl">{creator?.username}</p>
         </div>
-        <p className="my-2 text-4xl">Who&apos;s going:</p>
+        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">Who&apos;s going:</p>
         {users ? (
           users.map((user: any, i: number) => {
             return (
-              <div key={i} className="flex mb-4 overflow-auto">
+              <div key={i} className="flex mb-4">
                 <div className="relative h-12 w-12">
                   <Image
                     className="flex rounded-full"
                     fill
                     alt="user image"
                     src={user.image}
+                    sizes='(max-width: 768px) 0px,
+                       (max-width: 1200px) 300px,
+                       400px'
                   />
                 </div>
-                <p key={i} className="self-center ml-2 text-2xl">
+                <p key={i} className="self-center ml-3 font-medium text-xl">
                   {user.username}
                 </p>
               </div>
@@ -186,7 +192,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
           <></>
         )}
       </div>
-      <div id="huddle-chat" className="grid grid-cols-1 w-full mb-28 ">
+      <div id="huddle-chat 1-right" className="flex flex-col w-full">
         <button
           onClick={async (e) => {
             if (going === "Join") {
@@ -203,8 +209,8 @@ const Details = ({ aws_id, user, huddle }: Props) => {
         >
           {going}
         </button>
-        <div className="border border-palette-orange mx-14 h-[80%] mt-20 p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 object-contain">
-          <div className="flex flex-col-reverse align-bottom h-[70vh] mt-[20vh]">
+        <div className="border border-palette-orange mx-12 h-[75%] mt-2 px-4 rounded-2xl shadow-lg bg-white bg-opacity-20 object-contain">
+          <div className="flex flex-col h-[95%]">
             <div className="overflow-auto ">
               {chatMsg ? (
                 chatMsg.map((msg, i) => {
@@ -247,21 +253,21 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                 <></>
               )}
             </div>
-          </div>
-          <div className="inset-x-0 bottom-0 mb-6 rounded-xl h-12 bg-palette-dark bg-opacity-20 grid  content-center">
-            <form onSubmit={(e) => submitHandler(e)}>
+          <div className="relative h-24 mt-2 rounded-xl bg-palette-dark bg-opacity-20">
+            <form className="flex p-2 h-full w-full items-center" onSubmit={(e) => submitHandler(e)}>
               <input
                 type="text"
-                className="ml-2 rounded-lg w-[90%] h-[80%] placeholder:pl-2"
-                placeholder="Send a message . . ."
+                className="ml-2 rounded-lg w-[85%] h-[80%] placeholder:pl-2"
+                placeholder="Send a message"
               ></input>
               <button
-                className="bg-palette-dark bg-opacity-40 px-4 py-2 rounded-lg ml-4"
+                className="bg-palette-dark h-[80%] w-[12%] bg-opacity-40 px-6 py-2 rounded-lg ml-4 text-orange-100 font-bold self-center"
                 type="submit"
               >
-                Enter
+                Send
               </button>
             </form>
+          </div>
           </div>
         </div>
       </div>
