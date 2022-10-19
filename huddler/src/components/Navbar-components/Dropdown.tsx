@@ -5,8 +5,8 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { AiOutlineCompass } from 'react-icons/ai';
 import { useAuth } from '../../contexts/AuthContext';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import useOnclickOutside from 'react-cool-onclickoutside';
+// import { useRouter } from 'next/router';
+// import useOnclickOutside from 'react-cool-onclickoutside';
 
 const serviceDropdown = [
   { name: 'Explore', path: '/home', icon: <AiOutlineCompass /> },
