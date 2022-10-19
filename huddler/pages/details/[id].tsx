@@ -114,7 +114,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
     e.target[0].value = "";
   };
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-screen" id="0">
       <div
         id="huddle-details"
         className=" w-[25rem] mt-[4rem] px-8 py-6 pb-0 bg-white bg-opacity-20 shadow-xl"
@@ -203,16 +203,16 @@ const Details = ({ aws_id, user, huddle }: Props) => {
         >
           {going}
         </button>
-        <div className="border border-palette-orange mx-14  p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 relative">
-          <div className="table-cell align-bottom h-[55rem] w-screen">
-            <div className="max-h-[55rem] overflow-auto ">
+        <div className="border border-palette-orange mx-14 h-[80%] mt-20 p-4 rounded-2xl shadow-lg bg-white bg-opacity-20 object-contain">
+          <div className="flex flex-col-reverse align-bottom h-[70vh] mt-[20vh]">
+            <div className="overflow-auto ">
               {chatMsg ? (
                 chatMsg.map((msg, i) => {
                   let time;
                   msg.timezone
                     ? (time = msg.timezone.slice(11, 16))
                     : (time = dateFormatter(
-                        Date.now().toString()
+                        Date.now() // Don't turn this into a string!!!
                       ).time.substring(0, 5));
                   return isMessageFromUser(msg.username) ? (
                     <div

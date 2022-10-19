@@ -17,8 +17,6 @@ export const uploadImgToS3 = async (uploadUrlForS3: string, file: File | {}) => 
     mode: 'cors',
     body: file,
   })
-    .then((res) => res.json())
+    .then((res) => res.text())
     .catch((err) => console.log(err));
 };
-
-
