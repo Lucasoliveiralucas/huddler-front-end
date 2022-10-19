@@ -39,6 +39,13 @@ module.exports = {
       screens: {
         "3xl": "1800px",
       },
+      fontFamily : {
+        "nanum" : ['Nanum Gothic', 'sans-serif'],
+        "karla" : ['Karla',  'sans-serif'],
+        "publicSans" : ['Public Sans',  'sans-serif'],
+        "didact" : ['Didact Gothic',  'sans-serif'],
+        "yantra" : ['Yantramanav',  'sans-serif']
+      }
     },
   },
   plugins: [],

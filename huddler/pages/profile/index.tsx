@@ -101,7 +101,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               }
             />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
-              <h1 className="text-3xl self-center mt-10 font-bold">
+              <h1 className="text-3xl font-yantra text-palette-dark font-medium self-center mt-10 ">
                 Upcoming Huddle
               </h1>
               <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
@@ -138,8 +138,8 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
       </div>
 
       <div className="h-full w-full col-span-2 3xl:col-span-3 overflow-auto ml-0 lg:ml-48 2xl:ml-0">
-        <h1 className="pt-8 px-4 text-3xl font-bold md:pl-10 lg:pl-0">
-          Interests:
+        <h1 className="pt-8 px-4 text-3xl font-yantra text-palette-dark font-bold md:pl-10 lg:pl-0">
+          INTERESTS:
         </h1>
         {Array.isArray(tags) && (
           <div className="flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0">
@@ -175,7 +175,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(huddlesUserIsGoing) && huddlesUserIsGoing.length ? (
           <>
-            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-yantra text-palette-dark font-medium">
               Huddles I&lsquo;m going to:
             </h1>
             <HuddleCarousel
@@ -204,7 +204,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             />
           </>
         ) : (
-          <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+          <h1 className="pt-6 sm:py-6 p-4 text-3xl font-yantra font-extralight">
             {
               " We don't have huddles to recommend you yet. Try adding more interests to your profile."
             }
