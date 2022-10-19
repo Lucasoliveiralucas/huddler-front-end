@@ -105,7 +105,7 @@ const PersonalInfo = ({ userData }: Props) => {
   };
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col lg:mt-24'>
       {error && (
         <>
           <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>
@@ -115,7 +115,7 @@ const PersonalInfo = ({ userData }: Props) => {
         </>
       )}
 
-      <div className='flex items-center gap-10 h-screen'>
+      <div className='flex flex-col lg:flex-row items-center gap-2 h-screen'>
         <div className='flex flex-col'>
           <UserImage
             setDisabledButton={setDisabledButton}
@@ -124,49 +124,49 @@ const PersonalInfo = ({ userData }: Props) => {
             setNewImg={setNewImg}
             setAddedImg={setAddedImg}
           />
-          <label htmlFor='description'>Description</label>
-          <textarea
-            ref={descriptionRef}
-            id='description'
-            className='block'
-            placeholder={userPersonalInfo.description}
-            onChange={() => setDisabledButton(false)}
-          />
         </div>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='name'>User name</label>
+          <label htmlFor='name' className='lg:text-lg text-[#721D25]'>User name</label>
           <input
             ref={nameRef}
-            className='block'
+            className='block w-80 h-10 rounded-md mb-3'
             type='text'
-            placeholder={userPersonalInfo.username}
+            placeholder={`  ${userPersonalInfo.username}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='email'>Email</label>
+          <label htmlFor='email' className='text-lg text-[#721D25]'>Email</label>
           <input
             ref={emailRef}
             id='email'
-            className='block'
+            className='block w-80 h-10 rounded-md mb-3'
             type='email'
-            placeholder={userPersonalInfo.email || ''}
+            placeholder={`  ${userPersonalInfo.email || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='first-name'>First name</label>
+          <label htmlFor='first-name' className='lg:text-lg text-[#721D25]'>First name</label>
           <input
             ref={firstNameRef}
             id='first-name'
-            className='block'
+            className='block w-80 h-10 rounded-md mb-3'
             type='text'
-            placeholder={userPersonalInfo.first_name || ''}
+            placeholder={`  ${userPersonalInfo.first_name || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='last-name'>Last name</label>
+          <label htmlFor='last-name' className='lg:text-lg text-[#721D25]'>Last name</label>
           <input
             ref={lastNameRef}
             id='last-name'
-            className='block'
+            className='block w-80 h-10 rounded-md mb-3'
             type='text'
-            placeholder={userPersonalInfo.last_name || ''}
+            placeholder={`  ${userPersonalInfo.last_name || ''}`}
+            onChange={() => setDisabledButton(false)}
+          />
+          <label htmlFor='description' className='lg:text-lg text-[#721D25]'>Description</label>
+          <textarea
+            ref={descriptionRef}
+            id='description'
+            className='block w-80 h-24 rounded-md'
+            placeholder={`  ${userPersonalInfo.description}`}
             onChange={() => setDisabledButton(false)}
           />
           <br />
@@ -180,7 +180,7 @@ const PersonalInfo = ({ userData }: Props) => {
               </>
             ) : (
               <button
-                className={`mr-14 ml-auto mt-24 h-12 justify-center ${
+                className={` ${
                   disabledButton === true ? 'leave-button' : 'orange-button'
                 }`}
                 type='submit'

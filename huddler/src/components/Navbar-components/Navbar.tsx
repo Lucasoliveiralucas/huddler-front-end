@@ -77,15 +77,15 @@ function Navbar() {
     <>
       <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-12 z-40">
         <Link href={"/home"} rel="prefetch" as="image">
-          <a className="w-48">
+          <a className="w-48 mr-10">
             <Image src={huddler_logo} alt="logo" priority={true} />
           </a>
         </Link>
         <div className="flex items-center justify-end">
           <button
             className="
-        w-40 relative text-center font-bold
-        py-2 rounded-3xl border-palette-dark border-[1px]
+        w-14 md:w-40 relative text-center font-bold
+        py-2 text-sm md:text-lg rounded-3xl border-palette-dark border-[1px]
         bg-tansparent hover:bg-[#7c2d12] text-palette-dark
         hover:text-white"
             onClick={() => toggleCreate()}

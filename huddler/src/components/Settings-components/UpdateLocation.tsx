@@ -37,7 +37,7 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
   return (
     <>
       {error && <div className='bg-red-600'>{error}</div>}
-      <div className='mr-5 flex flex-col items-center'>
+      <div className='mr-5 flex flex-col items-center mt-10 md:mt-32 lg:mt-0'>
         {success ? (
           <>
             <div className='text-[#145725] bg-[#D5EDDB] p-5 rounded-md'>

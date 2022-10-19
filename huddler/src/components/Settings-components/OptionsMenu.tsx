@@ -13,7 +13,7 @@ const arrowImage = (
 
 //Css classes
 const defaultClass =
-  'flex justify-between h-full border-b-[0.2px] border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-palette-orange focus:bg-gray-300';
+  'flex justify-between lg:text-lg items-center lg:py-8 h-full border-b-[0.2px] border-solid border-gray-300 hover:cursor-pointer whitespace-nowrap p-3 gap-20 hover:bg-palette-orange focus:bg-gray-300';
 const defaultClassTop = defaultClass + '  rounded-t-[15px]';
 const defaultClassBottom = defaultClass + '  rounded-b-[15px]';
 
@@ -42,11 +42,11 @@ const OptionsMenu = ({ setOption }: Props) => {
   };
 
   return (
-    <ul className='flex flex-col justify-center mr-[100px] shadow-md border-solid border-[0.2px] rounded-[15px] border-gray-300'>
+    <ul className='flex flex-col justify-center mt-24 md:mr-10 xl:mr-48 lg:mr-10 shadow-md border-solid border-[0.2px] rounded-[15px] border-gray-300'>
       <li
         className={
           selected.information
-            ? defaultClassTop + ' bg-palette-orange'
+            ? defaultClassTop + ' bg-palette-orange text-white'
             : defaultClassTop
         }
         onClick={handleOption}
@@ -57,7 +57,7 @@ const OptionsMenu = ({ setOption }: Props) => {
       </li>
       <li
         className={
-          selected.password ? defaultClass + ' bg-palette-orange' : defaultClass
+          selected.password ? defaultClass + ' bg-palette-orange text-white' : defaultClass
         }
         onClick={handleOption}
         id='password'
@@ -67,7 +67,7 @@ const OptionsMenu = ({ setOption }: Props) => {
       </li>
       <li
         className={
-          selected.location ? defaultClass + ' bg-palette-orange' : defaultClass
+          selected.location ? defaultClass + ' bg-palette-orange text-white' : defaultClass
         }
         onClick={handleOption}
         id='location'
@@ -78,7 +78,7 @@ const OptionsMenu = ({ setOption }: Props) => {
       <li
         className={
           selected.interests
-            ? defaultClass + ' bg-palette-orange'
+            ? defaultClass + ' bg-palette-orange text-white'
             : defaultClass
         }
         onClick={handleOption}
@@ -90,7 +90,7 @@ const OptionsMenu = ({ setOption }: Props) => {
       <li
         className={
           selected.delete
-            ? defaultClassBottom + ' bg-palette-orange'
+            ? defaultClassBottom + ' bg-palette-orange text-white'
             : defaultClassBottom
         }
         onClick={handleOption}

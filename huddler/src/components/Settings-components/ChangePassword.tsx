@@ -34,7 +34,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center mt-10 md:mt-32'>
       {error && (
         <>
           <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>

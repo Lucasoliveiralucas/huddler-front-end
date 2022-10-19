@@ -230,8 +230,8 @@ export const getServerSideProps = async ({ req, res }: Context) => {
       "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted"
     );
     const { username } = await Auth.currentUserInfo();
-    const recommended: Huddle[] = await recommendedForUser(username);
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
+    const recommended: Huddle[] = await recommendedForUser(username, goingTo);
     const user: User[] = await getUserById(username);
     if (!user.length) {
       res.writeHead(302, { Location: "/" });
