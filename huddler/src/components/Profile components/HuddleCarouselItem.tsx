@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/future/image";
-import { Huddle } from "../../types";
-import { dateFormatter } from "../../utils/helperFunctions";
+import { Huddle, User } from "../../types";
+import { dateFormatter, fetcher } from "../../utils/helperFunctions";
 import {
   getHuddleCategories,
   getUsersGoingToHuddle,
@@ -9,13 +9,19 @@ import {
   removeUserGoingToHuddle,
 } from "../../utils/APIServices/huddleServices";
 import Link from "next/link";
+import { useAuth } from "../../contexts/AuthContext";
+import { GrGroup } from "react-icons/gr";
+import { getUserById } from "../../utils/APIServices/userServices";
+import { withSSRContext } from "aws-amplify";
+import { NextApiRequest, NextApiResponse } from "next";
 
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
   setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
   update: boolean;
-  id: string;
+  aws_id: string;
+  user: User;
 };
 
 function HuddleCarouselItem({
@@ -23,7 +29,8 @@ function HuddleCarouselItem({
   huddlesUserIsGoing,
   setUpdate,
   update,
-  id,
+  aws_id,
+  user,
 }: Props) {
   const [going, setGoing] = useState(false);
   //getting additional huddle data
@@ -51,103 +58,120 @@ function HuddleCarouselItem({
   }, []);
   const toggleGoingToHuddle = async (isGoing: boolean) => {
     isGoing
-      ? await postUserGoingToHuddle(id, huddle.id)
-      : await removeUserGoingToHuddle(id, huddle.id);
+      ? await postUserGoingToHuddle(aws_id, huddle.id)
+      : await removeUserGoingToHuddle(aws_id, huddle.id);
 
     setUpdate(!update);
   };
   return (
-    <div className="ml-3 mr-3 mt-3">
-      <div className="flex mb-1">
-        <h1 className="font-extrabold text-palette-orange text-2xl">
-          {huddle.name}
-        </h1>
-        <div className="ml-auto mr-3 flex gap-4 py-2">
-          <Link
-            href={{
-              pathname: `/details/${huddle.id}`,
-              query: huddle.id?.toString(),
-            }}
-          >
-            <a className=" underline">Event Details</a>
+    <div className="flex flex-col">
+      <div className="flex flex-row">
+        <div className="basis-1/4 relative">
+          <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
+            <picture>
+              <img
+                src={huddle.image}
+                alt={huddle.name}
+                className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
+              />
+            </picture>
           </Link>
-          {going ? (
-            <button
-              className="justify-center leave-button"
-              onClick={(e) => {
-                setGoing(!going);
-                toggleGoingToHuddle(false);
-              }}
-            >
-              Leave
-            </button>
-          ) : (
-            <button
-              className="justify-center orange-button"
-              onClick={(e) => {
-                setGoing(!going);
-                toggleGoingToHuddle(true);
-              }}
-            >
-              Join
-            </button>
-          )}
+        </div>
+
+        <div className="basis-3/4 flex flex-col mt-4 ml-4">
+          <div id="title" className="flex flex-row justify-between">
+            <h1 className="font-extrabold text-palette-dark text-2xl">
+              {huddle.name}
+            </h1>
+
+            <div className="">
+              {going ? (
+                <button
+                  className="justify-center orange-button mr-6"
+                  onClick={(e) => {
+                    setGoing(!going);
+                    toggleGoingToHuddle(false);
+                  }}
+                >
+                  Leave
+                </button>
+              ) : (
+                <button
+                  className="justify-center orange-button mr-6"
+                  onClick={(e) => {
+                    setGoing(!going);
+                    toggleGoingToHuddle(true);
+                  }}
+                >
+                  Join
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div id="details" className="flex flex-col">
+            <p>{huddle.description}</p>
+            <p className="text-sm italic pt-2">
+              {huddle.address}
+              {dateTime.monthDayYear} at {dateTime.time}
+            </p>
+
+            <div className="flex flex-row mt-2">
+              <GrGroup />
+              <p className="ml-2 -mt-1">{data.attending}</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="flex">
-        <div className="w-[24rem] mr-3">
-          <div className="rounded-lg h-32 lg:h-36 relative">
-            <Image
-              fill
-              src={huddle.image}
-              alt={huddle.name}
-              sizes="(max-width: 768px) 100px,
-                       (max-width: 1200px) 250px,
-                       300px"
-              placeholder="empty"
-              className="rounded-lg object-contain"
-            />
-          </div>
-          <p>attending: {data.attending}</p>
-          <div className="hidden md:grid grid-cols-2 gap-2">
-            {data.categories.map((category, i) => {
-              return (
-                i <= 3 && (
-                  <p className="category-icon" key={category.id + (i - i)}>
-                    {category.name}
-                  </p>
-                )
-              );
-            })}
-          </div>
-          {/* mobile */}
-          <div className="md:hidden grid grid-cols-2 gap-2">
-            {data.categories.map((category, i) => {
-              return (
-                i <= 1 && (
-                  <p
-                    className="text-center py-0.5 bg-palette-dark rounded-md text-white"
-                    key={category.id + (i - i)}
-                  >
-                    {category.name}
-                  </p>
-                )
-              );
-            })}
-          </div>
-        </div>
-        <div className="grid max-w-[300px] md:h-56 w-full space-x-0 ">
-          <p>{huddle.description}</p>
-          <p className="text-sm self-end">
-            At {huddle.address}
-            <br></br>
-            {/* {dateTime.monthDayYear} at {dateTime.time} */}
-          </p>
-        </div>
+      <div id="tags" className="grid grid-cols-5 gap-2 mx-4 mt-2">
+        {data.categories.map((category, i) => {
+          return (
+            <p
+              className="text-center font-bold py-0.5 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark"
+              key={category.id + (i - i)}
+            >
+              {category.name}
+            </p>
+          );
+        })}
       </div>
     </div>
   );
 }
 
 export default HuddleCarouselItem;
+
+type Context = {
+  req: NextApiRequest;
+  res: NextApiResponse;
+};
+
+export const getServerSideProps = async ({ req, res }: Context) => {
+  const { Auth } = withSSRContext({ req });
+
+  try {
+    const { username } = await Auth.currentUserInfo();
+
+    const user: User[] = await getUserById(username);
+    if (!user.length) {
+      res.writeHead(302, { Location: "/" });
+      res.end();
+      return {
+        props: {},
+      };
+    }
+    return {
+      props: {
+        aws_id: username,
+        user: user.pop(),
+      },
+    };
+  } catch (err) {
+    res.writeHead(302, { Location: "/" });
+    res.end();
+    return {
+      props: {},
+    };
+  }
+};
