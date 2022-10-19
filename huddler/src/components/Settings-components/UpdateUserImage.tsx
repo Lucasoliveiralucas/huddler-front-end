@@ -9,14 +9,16 @@ type Props = {
   image?: string;
   userPersonalInfo: any;
   // userData: User;
-  setNewImg: React.Dispatch<React.SetStateAction<object>>
+  setNewImg: React.Dispatch<React.SetStateAction<Object>>;
+  setAddedImg: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const UserImage = ({
   setDisabledButton,
   setError,
   userPersonalInfo,
-  setNewImg
+  setNewImg,
+  setAddedImg,
 }: Props) => {
   const [userImage, setUserImage] = useState<StaticImageData | string>(
     userPersonalInfo.image
@@ -28,11 +30,12 @@ const UserImage = ({
     if (!e.target.files) return;
     try {
       //Update image in DB
-      setDisabledButton(false);
       // userPersonalInfo.image = e.target.files[0];
       setUserImage(URL.createObjectURL(e.target.files[0]));
       // image = URL.createObjectURL(e.target.files[0]);
       setNewImg(e.target.files[0])
+      setAddedImg(true)
+      setDisabledButton(false);
     } catch {
       setError('Failed to upload the new user image. Please try again');
     }
@@ -64,4 +67,5 @@ const UserImage = ({
 };
 
 export default UserImage;
+
 
