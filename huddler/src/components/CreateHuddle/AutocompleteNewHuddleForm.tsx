@@ -94,7 +94,6 @@ const AutocompleteHuddleForm = ({
         className="outline-palette-orange outline-1 shadow-sm rounded-md w-[100%]"
         value={value}
         onChange={handleInput}
-        disabled={!ready}
         placeholder="Look for a Place . . ."
       />
       {/* We can use the "status" to decide whether we should display the dropdown or not */}
