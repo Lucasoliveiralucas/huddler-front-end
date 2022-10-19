@@ -25,7 +25,6 @@ function HuddleCarouselItem({
   update,
   id,
 }: Props) {
-  let dateTime: any = "";
   const [going, setGoing] = useState(false);
   //getting additional huddle data
   const [data, setData] = useState({
@@ -33,6 +32,7 @@ function HuddleCarouselItem({
     categories: [{ name: "", id: 0 }],
   });
   useEffect(() => {
+    let dateTime: any = "";
     try {
       dateTime = dateFormatter(huddle.day_time);
     } catch (err) {}

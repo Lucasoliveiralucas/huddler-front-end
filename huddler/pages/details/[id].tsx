@@ -212,6 +212,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                   msg.timezone
                     ? (time = msg.timezone.slice(11, 16))
                     : (time = dateFormatter(
+                       // @ts-ignore
                         Date.now() // Don't turn this into a string!!!
                       ).time.substring(0, 5));
                   return isMessageFromUser(msg.username) ? (

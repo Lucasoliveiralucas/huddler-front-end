@@ -27,8 +27,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
   const [filterChoice, setFilterChoice] = useState<Huddle[]>(huddles); //by default recommended
   const [mobileShowMap, setMobileShowMap] = useState(false);
   const [revertCatBtn, setRevertCatBtn] = useState(false);
-  const [huddlesUserIsGoing, setHuddlesUserIsGoing] =
-    useState<Huddle[]>(goingTo);
+  const [huddlesUserIsGoing, setHuddlesUserIsGoing] = useState<Huddle[]>(goingTo);
 
   useEffect(() => {
     setHuddlesUserIsGoing(goingTo);

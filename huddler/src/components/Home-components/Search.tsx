@@ -6,13 +6,9 @@ type Props = {
 };
 
 function Search({ categories }: Props) {
-  const [tags, setTags] = useState<Category[]>();
+  const [tags] = useState<Category[]>(categories);
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState('');
-
-  useEffect(() => {
-    setTags(categories);
-  }, []);
 
   useEffect(() => {
     if (tags) handleSearch();
