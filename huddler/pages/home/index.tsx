@@ -57,7 +57,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
       <div className="sm:block md:flex xl:gap-10 mt-20 h-full lg:px-0 2xl:px-10">
         <div className="flex flex-col w-full" id="0">
           <div
-            className="flex py-3 lg:px-10 text-orange-900 shadow-md justify-start gap-5 w-full px-2"
+            className="flex h-[50px] lg:px-10 text-orange-900 shadow-md justify-start gap-4 w-full px-2"
             id="1"
           >
             <button
@@ -90,12 +90,12 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
                 <div className="flex"><p>Map</p><AiOutlineArrowUp className=" rotate-180" /></div>
               )}{" "}
             </button>
-            <div className="relative mr-4 flex">
+
               <DropdownMenu
                 setFilterChoice={setFilterChoice}
                 revert={revertCatBtn}
               />
-            </div>
+
           </div>
 
           <div className="flex md:max-h-[87vh] md:py-6 md:px-10" id="carousel 2">

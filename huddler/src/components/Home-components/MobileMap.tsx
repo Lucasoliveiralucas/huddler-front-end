@@ -89,7 +89,7 @@ export default function MobileMap({ huddles, currentPage, user, setLocation, upd
     return isLoaded ? (
         <div className="mt-0">
             <div className="absolute top-0 right-0 px-3 z-10">
-                <div className="z-10 mt-3 w-60">
+                <div className="z-10 mt-3 w-45">
                     <PlacesAutocomplete
                         hook={setCenter}
                         setSelected={setSelected}

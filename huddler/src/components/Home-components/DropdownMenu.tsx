@@ -66,7 +66,7 @@ const DropdownMenu = ({ setFilterChoice, revert }: Props) => {
             categorySelection={categorySelection}
           />
         ) : (
-          <div>{selectCategory ? selectCategory : "Categories"}</div>
+          <div className="px-2">{selectCategory ? selectCategory : "Categories"}</div>
         )}
       </button>
     </div>
