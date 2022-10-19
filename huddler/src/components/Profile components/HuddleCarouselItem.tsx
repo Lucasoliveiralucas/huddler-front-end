@@ -36,10 +36,11 @@ function HuddleCarouselItem({
     attending: 0,
     categories: [{ name: "", id: 0 }],
   });
+  const [dateTime, setDateTime] = useState<any>();
   useEffect(() => {
-    let dateTime: any = "";
     try {
-      dateTime = dateFormatter(huddle.day_time);
+      const date = dateFormatter(huddle.day_time);
+      setDateTime(date);
     } catch (err) {}
     if (huddlesUserIsGoing) {
       huddlesUserIsGoing.find((h) => h.id === huddle.id)
@@ -65,28 +66,26 @@ function HuddleCarouselItem({
     <div className="flex flex-col">
       <div className="flex flex-row">
         <div className="basis-1/4 relative">
-                {/* @ts-ignore */}
-          <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
-            <picture>
-              <img
-                src={huddle.image}
-                alt={huddle.name}
-                className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
-              />
-            </picture>
-          </Link>
+          <picture>
+            <img
+              src={huddle.image}
+              alt={huddle.name}
+              className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
+            />
+          </picture>
         </div>
 
         <div className="basis-3/4 flex flex-col mt-4 ml-4">
           <div id="title" className="flex flex-row justify-between">
-            <h1 className="font-extrabold text-palette-dark text-2xl">
-              {huddle.name}
-            </h1>
-
+            <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
+              <h1 className="font-extrabold text-palette-dark text-2xl cursor-pointer">
+                {huddle.name}
+              </h1>
+            </Link>
             <div className="">
               {going ? (
                 <button
-                  className="justify-center orange-button mr-6"
+                  className="justify-center leave-button mr-6"
                   onClick={(e) => {
                     setGoing(!going);
                     toggleGoingToHuddle(false);
@@ -107,20 +106,23 @@ function HuddleCarouselItem({
               )}
             </div>
           </div>
+          <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
+            <div id="details" className="flex flex-col cursor-pointer">
+              <p>{huddle.description}</p>
+              {dateTime ? (
+                <p className="text-sm italic pt-2">
+                  {huddle.address} {dateTime.monthDayYear} at {dateTime.time}
+                </p>
+              ) : (
+                <p> {huddle.address}</p>
+              )}
 
-          <div id="details" className="flex flex-col">
-            <p>{huddle.description}</p>
-            <p className="text-sm italic pt-2">
-              {huddle.address}
-                    {/* @ts-ignore */}
-              {dateTime.monthDayYear} at {dateTime.time}
-            </p>
-
-            <div className="flex flex-row mt-2">
-              <GrGroup />
-              <p className="ml-2 -mt-1">{data.attending}</p>
+              <div className="flex flex-row mt-2">
+                <GrGroup />
+                <p className="ml-2 -mt-1">{data.attending}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
 

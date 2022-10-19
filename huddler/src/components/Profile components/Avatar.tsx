@@ -11,7 +11,7 @@ function Avatar({ user }: Props) {
   const image = typeof user.image == 'string' ? user.image : DefaultUserImage;
   return (
     <div className='w-full flex flex-col py-8 justify-center'>
-      <h1 className='text-[2rem] self-center'>Welcome back, {user.username}</h1>
+      <h1 className='text-[2rem] font-yantra font-bold text-palette-dark self-center'>Welcome back, {user.username}</h1>
       <br />
       <div className='rounded-full self-center shadow-md w-72 h-72 2xl:w-96 2xl:h-96 relative'>
         <Image

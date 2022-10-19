@@ -100,8 +100,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       const huddleId = await getIdOfHuddleByDateOfCreation(date);
 
       //posting the categories to new huddle
-      addedCategories.forEach((el) => {
-        postHuddleCategory(huddleId[0].id, el.id as number);
+      addedCategories.forEach(async (el) => {
+        await postHuddleCategory(huddleId[0].id, el.id as number);
       });
       closeHuddleForm();
 
