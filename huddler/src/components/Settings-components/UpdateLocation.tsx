@@ -48,7 +48,7 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
         ) : (
           <button
             // className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
-            className='leave-button text-2xl mt-2 py-2 px-5'
+            className='orange-button font-yantra text-2xl mt-2 py-2 px-5'
             onClick={changeLocation}
           >
             Update Location

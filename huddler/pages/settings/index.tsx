@@ -32,7 +32,7 @@ const SettingsPage = () => {
   }, [currentUser]);
 
   return isAuth && currentUser ? (
-    <main className='flex flex-col md:flex-row justify-center items-center md:items-start lg:items-center'>
+    <main className='flex font-yantra text-palette-dark flex-col md:flex-row justify-center items-center md:items-start lg:items-center'>
       <OptionsMenu setOption={setOption} />
 
       {option === 'information' && userData && (

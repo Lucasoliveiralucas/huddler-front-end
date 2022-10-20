@@ -119,10 +119,10 @@ const Details = ({ aws_id, user, huddle }: Props) => {
         id="huddle-details 1-left"
         className="overflow-y-auto flex flex-col w-[40vw] h-screen pt-24 px-8 bg-white bg-opacity-20 shadow-xl"
       >
-        <p className="text-3xl font-extrabold text-palette-orange">
+        <p className="text-3xl font-yantra font-extrabold text-palette-orange">
           {huddle.name}
         </p>
-        <p className="pt-2 text-neutral-700">
+        <p className="pt-2 text-palette-dark font-karla">
           {" "}
           {dateTime.monthDayYear} at {dateTime.time}
         </p>
@@ -133,10 +133,10 @@ const Details = ({ aws_id, user, huddle }: Props) => {
           className="rounded-lg h-[13rem] w-[18rem] my-4"
           alt={huddle.name}
         />{" "}
-        <p className="mt-2 text-xl font-bold text-palette-dark">Description</p>
-        <p className="text-lg mb-2">{huddle.description}</p>
-        <p className="mt-2 text-xl font-bold text-palette-dark">Location</p>
-        <p className="text-lg mb-2">{huddle.address}</p>
+        <p className="mt-2 text-xl font-medium font-yantra text-palette-dark">DESCRIPTION</p>
+        <p className="text-lg mb-2 font-karla text-palette-black">{huddle.description}</p>
+        <p className="mt-2 text-xl font-medium font-yantra text-palette-dark">LOCATION</p>
+        <p className="text-lg mb-2 font-karla text-palette-black">{huddle.address}</p>
         <div className="grid grid-cols-3 gap-x-1 gap-y-2 mr-3 mt-2 mb-2 w-full">
           {categories ? (
             categories.map((category, i) => {
@@ -150,8 +150,8 @@ const Details = ({ aws_id, user, huddle }: Props) => {
             <></>
           )}
         </div>
-        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">
-          Created By:{" "}
+        <p className="mt-4 mb-2 text-xl font-medium font-yarna text-palette-dark">
+          CREATED BY:{" "}
         </p>
         <div className="flex mb-2">
           <div className="relative h-12 w-12">
@@ -166,12 +166,12 @@ const Details = ({ aws_id, user, huddle }: Props) => {
               src={creator?.image}
             />
           </div>
-          <p className="self-center ml-3 font-medium text-xl">
+          <p className="self-center ml-3 text-xl text-palette-black font-karla">
             {creator?.username}
           </p>
         </div>
-        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">
-          Who&apos;s going:
+        <p className="mt-4 mb-2 text-xl font-medium font-yarna text-palette-dark">
+          WHO&apos;S GOING:
         </p>
         {users ? (
           users.map((user: any, i: number) => {
@@ -188,7 +188,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                        400px"
                   />
                 </div>
-                <p key={i} className="self-center ml-3 font-medium text-xl">
+                <p key={i} className="self-center ml-3  font-karla text-palette-black text-xl">
                   {user.username}
                 </p>
               </div>

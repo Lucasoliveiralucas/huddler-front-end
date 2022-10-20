@@ -177,7 +177,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       rounded-md
       border-solid
       border-[0.5px]
-      border-palette-dark"
+      border-palette-orange"
     >
       <div className="relative">
         <button
@@ -186,7 +186,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         >
           <FaWindowClose color="#CC0000" />
         </button>
-        <h1 className="text-center text-lg font-medium text-palette-orange mt-0">
+        <h1 className="text-center text-lg font-medium text-palette-orange font-yantra mt-0">
           {"Let's make a new huddle"}
         </h1>
         {error && (
@@ -199,7 +199,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         )}
 
         <form className="flex flex-col" onSubmit={handleSubmit}>
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title" className="font-karla font-medium text-palette-dark">TITLE</label>
           <input
             className="outline-palette-orange outline-1 shadow-sm rounded-md"
             ref={titleRef}
@@ -208,8 +208,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             autoComplete="on"
             required
           />
-          <label htmlFor="categories" className="mt-6">
-            Pick the tags of your huddle
+          <label htmlFor="categories" className="mt-6 font-karla font-medium text-palette-dark">
+            PICK THE TAGS OF YOUR HUDDLE
           </label>
           {allCategories[0] ? (
             <div className="absolute ml-[95%] mt-[22%] w-[22rem] bg-palette-light p-2 rounded-sm shadow-sm">
@@ -251,19 +251,19 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           }
           {/*@ts-ignore */}
           <TagList setAllCategories={setAllCategories} />
-          <label className="mt-2" htmlFor="where">
-            Where?
+          <label className="mt-2 font-karla font-medium text-palette-dark" htmlFor="where">
+            WHERE?
           </label>
           <AutocompleteHuddleForm
             stockValue={data.name}
             locationData={locationData}
             setLocationData={setLocationData}
           />
-          <label className="mt-2" htmlFor="when">
-            When?
+          <label className="mt-2 font-karla font-medium text-palette-dark" htmlFor="when">
+            WHEN?
           </label>
           <input
-            className="outline-palette-orange outline-1 shadow-sm rounded-md"
+            className="outline-palette-orange text-karla text-palette-dark outline-1 shadow-sm rounded-md"
             ref={whenRef}
             type="datetime-local"
             id="dateTime"
@@ -271,8 +271,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             min={nowFormatted()}
             required
           />
-          <label className="mt-2" htmlFor="description">
-            What is your huddle?
+          <label className="mt-2 font-karla font-medium text-palette-dark" htmlFor="description">
+            WHAT IS YOUR HUDDLE?
           </label>
           <textarea
             className="outline-palette-orange outline-1 shadow-sm rounded-md"
@@ -284,8 +284,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           />
           <div className="flex">
             <div className="flex flex-col mt-2">
-              <label htmlFor="images" className="mb-4">
-                Add images to your huddle:
+              <label htmlFor="images" className="mb-4 font-karla font-medium text-palette-dark">
+                ADD IMAGES TO YOUR HUDDLE:
               </label>
               <input
                 className="border-none"

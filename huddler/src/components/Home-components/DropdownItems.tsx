@@ -38,7 +38,7 @@ const DropdownItems: React.FC<DropdownProps> = ({
       {categories.map((category: Category, index: number): JSX.Element => {
         return (
           <div className="h-full w-full py-3 md:text-sm text-2xl md:border-none border-b my-1" key={category.id}>
-          <p           
+          <p    className="font-karla"       
             onClick={(): void => {
               onClickHandler(category);
             }}
