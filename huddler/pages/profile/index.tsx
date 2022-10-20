@@ -68,13 +68,19 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
   const changeDisplayedCategory = async (category: Category) => {
     const data = await getHuddlesInCategory(category.id);
     if (lastRow.name == category.name) {
-      document.getElementById(category.name)?.classList.remove("opacity-60");
+      document.getElementById(category.name)?.classList.remove('bg-orange-600');
+      document
+        .getElementById(category.name)
+        ?.classList.remove('text-palette-light');
+      document.getElementById(category.name)?.classList.remove('border-none');
       setLastRow({
         name: "Recommended",
         huddles: recommended,
       });
     } else {
-      document.getElementById(category.name)?.classList.add("opacity-60");
+      document.getElementById(category.name)?.classList.add('bg-orange-600');
+      document.getElementById(category.name)?.classList.add('text-palette-light');
+      document.getElementById(category.name)?.classList.add('border-none');
       setLastRow({ name: category.name, huddles: data });
     }
   };
@@ -83,12 +89,12 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
   if (!tags) return <div>loading...</div>;
 
   return (
-    <main className="flex flex-col mt-20 lg:mt-8 lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[99vw] gap-1">
-      <div className="hidden lg:flex w-full relative">
-        <div className="fixed min-full h-full">
+    <main className='flex flex-col mt-20 lg:mt-8 lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[99vw] gap-1'>
+      <div className='hidden lg:flex w-full relative'>
+        <div className='fixed min-full h-full'>
           <div
-            className="flex flex-col h-full items-center
-          "
+            className='flex flex-col h-full items-center
+          '
           >
             <Avatar user={user} />
             <UserInfo
@@ -99,11 +105,11 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
                 huddlesUserIsGoing ? huddlesUserIsGoing.length : 0
               }
             />
-            <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
-              <h1 className="text-3xl font-yantra text-palette-dark font-medium self-center mt-10 lg:mt-0">
+            <div className='h-1/9 w-full flex flex-col justify-center mt-8 border gap-6'>
+              <h1 className='text-3xl font-yantra text-palette-dark font-medium self-center mt-10 lg:mt-0'>
                 Upcoming Huddle
               </h1>
-              <div className="self-center mt-2 w-[30rem] ml-8 lg:w-full h-[18rem] lg:h-64 flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
+              <div className='self-center mt-2 w-[30rem] ml-8 lg:w-full h-[18rem] lg:h-64 flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg'>
                 {huddlesUserIsGoing ? (
                   huddlesUserIsGoing.length && (
                     <HuddleCarouselItem
@@ -124,7 +130,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
       </div>
 
       {/* Mobile */}
-      <div className=" lg:hidden w-full pt-4 h-auto flex-col">
+      <div className=' lg:hidden w-full pt-4 h-auto flex-col'>
         <MobileAvatar user={user} />
         <UserInfo
           numOfCreatedHuddles={
@@ -136,17 +142,29 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
         />
       </div>
 
-      <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto ml-0">
-        <h1 className="pt-8 px-4 text-3xl font-yantra text-palette-dark font-bold md:pl-10 lg:pl-0">
+      <div className='h-full w-full col-span-2 2xl:col-span-3 overflow-auto ml-0'>
+        <h1 className='pt-8 px-4 text-3xl font-yantra text-palette-dark font-bold md:pl-10 lg:pl-0'>
           INTERESTS:
         </h1>
         {Array.isArray(tags) && (
-          <div className="flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0">
+          <div className='flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0'>
             {tags.map((tag: Category, i: number) => (
               <h1
                 id={tag.name}
                 onClick={(e) => changeDisplayedCategory(tag)}
-                className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer"
+                className='p-4
+  text-center
+  font-bold
+  py-0.5
+  rounded-2xl
+  border-palette-dark
+  border-[1px]
+  bg-tansparent
+  text-palette-dark
+  cursor-pointer
+  active:translate-x-[1px]
+  active:translate-y-[1px]
+  hover:opacity-50'
                 key={i}
               >
                 {tag.name}
@@ -155,9 +173,10 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
           </div>
         )}
 
-        {Array.isArray(userCreatedHuddlesActive) && userCreatedHuddlesActive.length ? (
+        {Array.isArray(userCreatedHuddlesActive) &&
+        userCreatedHuddlesActive.length ? (
           <>
-            <h1 className="pt-6 lg:pt-2 py-4 text-3xl font-bold">
+            <h1 className='pt-6 lg:pt-2 py-4 text-3xl font-bold'>
               Created huddles:
             </h1>
             <HuddleCarousel
@@ -174,7 +193,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(huddlesUserIsGoing) && huddlesUserIsGoing.length ? (
           <>
-            <h1 className="pt-6 sm:py-6 py-4 text-3xl font-yantra text-palette-dark font-medium">
+            <h1 className='pt-6 sm:py-6 py-4 text-3xl font-yantra text-palette-dark font-medium'>
               Huddles I&lsquo;m going to:
             </h1>
             <HuddleCarousel
@@ -191,7 +210,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(lastRow.huddles) && lastRow.huddles.length ? (
           <>
-            <h1 className="pt-6 sm:py-6 py-4 text-3xl font-bold">
+            <h1 className='pt-6 sm:py-6 py-4 text-3xl font-bold'>
               {lastRow.name} huddles:
             </h1>
             <HuddleCarousel
@@ -203,7 +222,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             />
           </>
         ) : (
-          <h1 className="pt-6 sm:py-6 p-4 text-3xl font-yantra font-extralight">
+          <h1 className='pt-6 sm:py-6 p-4 text-3xl font-yantra font-extralight'>
             {
               " We don't have huddles to recommend you yet. Try adding more interests to your profile."
             }
@@ -256,3 +275,7 @@ export const getServerSideProps = async ({ req, res }: Context) => {
     };
   }
 };
+
+
+
+

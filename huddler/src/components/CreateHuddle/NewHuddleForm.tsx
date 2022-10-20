@@ -386,4 +386,3 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
 export default NewHuddleForm;
 
-
