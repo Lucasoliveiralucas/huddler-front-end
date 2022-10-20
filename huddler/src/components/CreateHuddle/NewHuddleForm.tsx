@@ -47,10 +47,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const [uploadImg, setUploadImg] = useState({});
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>('');
-  const [addedCategories, setAddedCategories] = useState<Category[]>([
-    { id: 0, name: '' },
-  ]);
-  const [allCategories, setAllCategories] = useState([{ id: 0, name: '' }]);
+  const [addedCategories, setAddedCategories] = useState<Category[]>([]);
+  const [allCategories, setAllCategories] = useState([]);
   const [error, setError] = useState('');
   const [locationData, setLocationData] = useState({
     name: '',
@@ -135,9 +133,9 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
   const addCategory = (category: Category) => {
     //@ts-ignore
-    if (allCategories.includes(category)) {
+    if (addedCategories.some((cat) => cat.name === category.name)) {
       categoriesInputRef.current!.value = '';
-      setAllCategories([]);
+      setAllCategories([])
       return;
     }
     addedCategories[0].name == ''
@@ -231,7 +229,6 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   font-bold
   rounded-2xl
   py-0.5
-  px-10
   border-palette-dark
   border-[1px]
   bg-tansparent
@@ -345,11 +342,11 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
               />
             </div>
             {imageSelected && (
-              <figure>
+              <figure className="flex justify-center items-center">
                 <Image
-                  className='ml-10'
-                  width={100}
-                  height={100}
+                  width={200}
+                  height={200}
+                  className="mt-4"
                   id='image-preview'
                   alt='image-preview'
                   src={imagePreview}
