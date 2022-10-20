@@ -20,8 +20,8 @@ const Slider = () => {
   return (
     <>
       <div className="slide-container w-screen bg-black relative">
-        <div className="absolute left-[10vw] top-[10%]">
-          <div className="relative h-[20rem] w-[25rem]">
+        <div className="absolute left-[37.5vw] top-[10%]">
+          <div className="relative h-[25rem] w-[30rem]">
             <Image
               alt="logo"
               src={logo}
