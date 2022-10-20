@@ -47,10 +47,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const [uploadImg, setUploadImg] = useState({});
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>('');
-  const [addedCategories, setAddedCategories] = useState<Category[]>([
-    { id: 0, name: '' },
-  ]);
-  const [allCategories, setAllCategories] = useState([{ id: 0, name: '' }]);
+  const [addedCategories, setAddedCategories] = useState<Category[]>([]);
+  const [allCategories, setAllCategories] = useState([]);
   const [error, setError] = useState('');
   const [locationData, setLocationData] = useState({
     name: '',
