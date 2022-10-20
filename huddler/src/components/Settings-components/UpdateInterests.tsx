@@ -66,7 +66,6 @@ const UpdateInterests = ({ userData }: Props) => {
             setUserCategories={setUserCategories}
             setDisabledButton={setDisabledButton}
           />
-          ;
         </div>
         <div className='flex justify-center'>
           {success ? (
