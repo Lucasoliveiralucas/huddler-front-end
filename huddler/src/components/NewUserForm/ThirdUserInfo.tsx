@@ -33,29 +33,29 @@ function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
     <div className='md:flex 3xl:gap-32'>
       <div className='flex flex-col py-8 md:w-1/2 md:px-10'>
         <form className='flex flex-col'>
-          <h1 className='font-bold text-2xl pb-4 self-center'>User details</h1>
-          <label>Choose a User Name</label>
+          <h1 className='font-bold font-yantra text-palette-dark text-2xl pb-4 self-center'>USER DETAILS</h1>
+          <label className='font-karla text-palette-black'>Choose a user name:</label>
           <input
             className='py-3'
             onChange={(e) =>
               setUserData({ ...userData, username: e.target.value })
             }
           ></input>
-          <label>First Name</label>
+          <label className='font-karla text-palette-black'>First name:</label>
           <input
             className='py-3'
             onChange={(e) =>
               setUserData({ ...userData, first_name: e.target.value })
             }
           ></input>
-          <label>Last Name</label>
+          <label className='font-karla text-palette-black'>Last name:</label>
           <input
             className='py-3'
             onChange={(e) =>
               setUserData({ ...userData, last_name: e.target.value })
             }
           ></input>
-          <label>Tell people who you are and what are your interests:</label>
+          <label className='font-karla text-palette-black'>Tell people who you are and what are your interests:</label>
           <textarea
             className='pb-16'
             onChange={(e) =>
@@ -65,12 +65,12 @@ function UserInfo({ userData, setUserData, setUserImg, handleSubmit }: Props) {
         </form>
       </div>
       <div className='flex flex-col items-center py-8 md:w-1/2 h-full'>
-        <h1 className='font-bold text-xl'>
-          Do you want to upload a profile image?
+        <h1 className='font-bold text-xl font-yarna text-palette-dark'>
+          DO YOU WANT TO UPLOAD A PROFILE PICTURE?
         </h1>
         
           <div className='flex flex-col justify-center items-center gap-5 mt-4 lg:mt-16'>
-            <label>Click on the image to change it</label>
+            <label className='font-karla text-palette-black'>Click on the image to change it</label>
             <input
               type='file'
               className='hidden'

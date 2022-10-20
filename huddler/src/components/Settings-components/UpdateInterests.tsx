@@ -57,8 +57,13 @@ const UpdateInterests = ({ userData }: Props) => {
 
   return (
     <>
+<<<<<<< HEAD
+      <div className='flex flex-col mx-4 items-center mt-10 md:mt-32 lg:mt-0'>
+        <h1 className='text-2xl font-bold font-yantra'>YOUR INTEREST</h1>
+=======
       <div className='flex flex-col mx-3 items-center mt-10 md:mt-32 lg:mt-0'>
         <h1 className='text-2xl font-bold'>Your interests</h1>
+>>>>>>> bc258bf2d3192a51fbf861569a2e3955705a0ae7
         <div className='w-full'>
           {/* @ts-ignore */}
           <CategoriesContainer

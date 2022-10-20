@@ -168,7 +168,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
     // <main className="w-[100%]"
     <main
       id='huddle-form'
-      className='
+      className="
       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
       absolute
       flex-col
@@ -182,7 +182,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       rounded-md
       border-solid
       border-[0.5px]
-      border-palette-dark'
+      border-palette-orange"
     >
       <div className='relative'>
         <button
@@ -191,7 +191,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         >
           <FaWindowClose color='#CC0000' />
         </button>
-        <h1 className='text-center text-lg font-medium text-palette-orange mt-0'>
+        <h1 className="text-center text-lg font-medium text-palette-orange font-yantra mt-0">
           {"Let's make a new huddle"}
         </h1>
         {error && (
@@ -203,11 +203,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           </>
         )}
 
-        <form
-          className='flex flex-col'
-          onSubmit={handleSubmit}
-        >
-          <label htmlFor='title'>Title</label>
+        <form className="flex flex-col" onSubmit={handleSubmit}>
+          <label htmlFor="title" className="font-karla font-medium text-palette-dark">TITLE</label>
           <input
             className='outline-palette-orange outline-1 shadow-sm rounded-md'
             ref={titleRef}
@@ -216,11 +213,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             autoComplete='on'
             required
           />
-          <label
-            htmlFor='categories'
-            className='mt-6'
-          >
-            Pick the tags of your huddle
+          <label htmlFor="categories" className="mt-6 font-karla font-medium text-palette-dark">
+            PICK THE TAGS OF YOUR HUDDLE
           </label>
 
           {
@@ -305,10 +299,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             setLocationData={setLocationData}
           />
           <label
-            className='mt-2'
+            className='mt-2 font-karla font-medium text-palette-dark'
             htmlFor='when'
           >
-            When?
+            WHEN?
           </label>
           <input
             className='outline-palette-orange outline-1 shadow-sm rounded-md'
@@ -319,11 +313,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             min={nowFormatted()}
             required
           />
-          <label
-            className='mt-2'
-            htmlFor='description'
-          >
-            What is your huddle?
+          <label className="mt-2 font-karla font-medium text-palette-dark" htmlFor="description">
+            WHAT IS YOUR HUDDLE?
           </label>
           <textarea
             className='outline-palette-orange outline-1 shadow-sm rounded-md'
@@ -337,7 +328,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             <div className='flex flex-col mt-2'>
               <label
                 htmlFor='images'
-                className='mb-4'
+                className='mb-4 font-karla font-medium text-palette-dark'
               >
                 Add images to your huddle:
               </label>

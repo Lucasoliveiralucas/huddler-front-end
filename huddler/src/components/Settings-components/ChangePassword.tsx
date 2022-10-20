@@ -52,7 +52,7 @@ const ChangePassword = () => {
         </>
       )}
       <form onSubmit={handleSubmit}>
-        <label htmlFor='old-password'>Old password</label>
+        <label htmlFor='old-password' className='font-medium text-palette-dark'>OLD PASSWORD</label>
         <input
           className='block w-80 h-10 rounded-md mb-3'
           type='password'
@@ -62,7 +62,7 @@ const ChangePassword = () => {
           ref={oldPasswordRef}
         />
         <br />
-        <label htmlFor='password'>New password</label>
+        <label htmlFor='password' className='font-medium text-palette-dark'>NEW PASSWORD</label>
         <input
           className='block w-80 h-10 rounded-md mb-3'
           type='password'
@@ -72,7 +72,7 @@ const ChangePassword = () => {
           ref={passwordRef}
         />
         <br />
-        <label htmlFor='confirm-password'>Confirm Password</label>
+        <label htmlFor='confirm-password' className='font-medium text-palette-dark'>CONFIRM PASSWORD</label>
         <input
           className='block w-80 h-10 rounded-md mb-3'
           type='password'

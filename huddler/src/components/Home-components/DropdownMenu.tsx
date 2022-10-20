@@ -73,7 +73,7 @@ const DropdownMenu = ({ setFilterChoice, revert }: Props) => {
       <div className="dropdown-div overflow-x-auto scrollbar-hide lg:flex flex-wrap items-center hidden">
         {/*DESKTOP */}
         <button
-          className={`${showDropdown ? "active" : "noActive"} p-0`}
+          className={`${showDropdown ? "active" : "noActive"} p-0 font-karla text-palette-dark`}
           onClick={(): void => toggleDropdown()}
           onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
             dismissHandler(e)
