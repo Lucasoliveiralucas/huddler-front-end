@@ -38,7 +38,7 @@ const Slider = () => {
         <Fade>
           {fadeImages.map((fadeImage, key) => (
             <div
-              className="each-fade brightness-[0.25]"
+              className="each-fade brightness-50"
               key={key}
               style={{
                 backgroundImage: `url(${fadeImage.url})`,
