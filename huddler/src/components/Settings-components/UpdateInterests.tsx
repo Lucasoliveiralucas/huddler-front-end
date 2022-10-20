@@ -57,7 +57,7 @@ const UpdateInterests = ({ userData }: Props) => {
 
   return (
     <>
-      <div className='flex flex-col items-center mt-10 md:mt-32 lg:mt-0'>
+      <div className='flex flex-col mx-4 items-center mt-10 md:mt-32 lg:mt-0'>
         <h1 className='text-2xl font-bold'>Your interests</h1>
         <div className='w-full'>
           {/* @ts-ignore */}
@@ -77,7 +77,8 @@ const UpdateInterests = ({ userData }: Props) => {
             </>
           ) : (
             <button
-              className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
+              // className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
+              className='leave-button flex text-2xl py-2 px-5 my-4'
               type='submit'
               disabled={disabledButton}
               onClick={onClickUpdateUserInterests}
