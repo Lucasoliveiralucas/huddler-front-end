@@ -84,12 +84,12 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
   if (!tags) return <div>loading...</div>;
 
   return (
-    <main className="flex flex-col mt-16 lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
-      <div className="hidden lg:block">
+    <main className="flex flex-col mt-20 lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
+      <div className="hidden lg:block w-full">
         <div className="fixed min-w-[20%] h-full">
           <div
             className="flex flex-col h-full items-center
-          border-x-[0.2px] shadow-md w-full overflow-auto"
+          border-x-[0.2px] shadow-md w-full"
           >
             <Avatar user={user} />
             <UserInfo
@@ -104,7 +104,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               <h1 className="text-3xl font-yantra text-palette-dark font-medium self-center mt-10 ">
                 Upcoming Huddle
               </h1>
-              <div className="self-center m-6 mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
+              <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
                 {huddlesUserIsGoing ? (
                   huddlesUserIsGoing.length && (
                     <HuddleCarouselItem
@@ -147,16 +147,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               <h1
                 id={tag.name}
                 onClick={(e) => changeDisplayedCategory(tag)}
-                className="
-                p-4
-                text-center
-                font-bold
-                py-0.5
-                rounded-2xl
-                border-[#a35708]
-                border-[1px]
-                bg-tansparent
-                text-palette-dark"
+                className="text-xl bg-palette-dark py-2 px-4 rounded text-white hover:bg-opacity-60 cursor-pointer"
                 key={i}
               >
                 {tag.name}
