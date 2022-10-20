@@ -135,9 +135,9 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
   const addCategory = (category: Category) => {
     //@ts-ignore
-    if (allCategories.includes(category)) {
+    if (addedCategories.some((cat) => cat.name === category.name)) {
       categoriesInputRef.current!.value = '';
-      setAllCategories([]);
+      setAllCategories([])
       return;
     }
     addedCategories[0].name == ''
@@ -237,7 +237,6 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   font-bold
   rounded-2xl
   py-0.5
-  px-10
   border-palette-dark
   border-[1px]
   bg-tansparent
