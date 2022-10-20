@@ -90,8 +90,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         fk_author_id: currentUser.aws_id, //here we'll require the uid from the authentication
       };
       // Post huddle in DB
-      console.log('new huddle', newHuddle);
-      console.log('user', currentUser.aws_id);
+      // console.log('new huddle', newHuddle);
+      // console.log('user', currentUser.aws_id);
       const huddleDateOfCreation = await postHuddle(newHuddle);
 
       // getting id of huddle
@@ -104,7 +104,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       closeHuddleForm();
 
       // //the user that creates the huddle goes by default
-      await postUserGoingToHuddle(currentUser.aws_id, huddleId);
+      await postUserGoingToHuddle(id, huddleId[0].id);
     } catch {
       setError('We could not create the huddle');
     }
@@ -336,7 +336,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             placeholder='Add a description'
             required
           />
-          <div className='flex'>
+          <div className='flex flex-col'>
             <div className='flex flex-col mt-2'>
               <label
                 htmlFor='images'

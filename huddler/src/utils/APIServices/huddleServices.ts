@@ -140,12 +140,3 @@ export const removeUserGoingToHuddle = async (
   }
 };
 
-
-
-
-
-
-
-
-
-
