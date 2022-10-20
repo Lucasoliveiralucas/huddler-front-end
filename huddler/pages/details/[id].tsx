@@ -215,7 +215,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
         >
           {going}
         </button>
-        <div className="border border-palette-orange mx-12 h-[75%] mt-2 px-4 rounded-2xl shadow-lg bg-white bg-opacity-20 object-contain">
+        <div className="border border-palette-orange mx-12  h-[75%] mt-2 px-4 rounded-2xl shadow-lg bg-white bg-opacity-20 object-contain">
           <div className="flex flex-col h-[95%]">
             <div className="overflow-auto ">
               {chatMsg ? (
@@ -259,7 +259,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                 <></>
               )}
             </div>
-            <div className="relative h-24 mt-2 rounded-xl bg-palette-dark bg-opacity-20">
+            <div className="relative h-24 mt-auto mb-0 rounded-xl bg-palette-dark bg-opacity-20">
               <form
                 className="flex p-2 h-full w-full items-center"
                 onSubmit={(e) => submitHandler(e)}
