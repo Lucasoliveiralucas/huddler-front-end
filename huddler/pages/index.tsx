@@ -31,17 +31,14 @@ const LandingPage: NextPage = () => {
   };
 
   return (
-    <div className="w-full h-screen justify-center">
-      <Slider></Slider>
+    <div className="w-screen h-screen justify-center">
+      <Slider />
       <button
         className="orange-button absolute transform top-10 right-10 z-10"
         onClick={toggle}
       >
         {button}
       </button>
-      {/* <h1 className="absolute z-[1] left-[40vw] top-28 text-6xl font-extrabold text-slate-50">
-        HUDDLER
-      </h1> */}
       {click && <Register />}
     </div>
   );

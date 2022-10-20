@@ -19,22 +19,19 @@ const fadeImages = [
 const Slider = () => {
   return (
     <>
-      <div className="slide-container w-screen bg-black relative">
-        <div className="absolute left-[36vw] top-[10%]">
-          <div className="relative h-[25rem] w-[30rem]">
-            <Image
-              alt="logo"
-              src={logo}
-              placeholder="blur"
-              quality={100}
-              sizes="50%"
-              // @ts-ignore
-              objectFit="contain"
-              className="z-10"
-              fill
+      <div className="slide-container w-full relative bg-black">
+        <div className="absolute flex w-full justify-center top-[12%] md:top-[8%] lg:top-[5%]">
+          <Image
+            alt="logo"
+            src={logo}
+            placeholder="blur"
+            width={800}
+            height={150}
+            objectFit="contain"
+            className="z-10"
             />
-          </div>
         </div>
+        
         <Fade>
           {fadeImages.map((fadeImage, key) => (
             <div

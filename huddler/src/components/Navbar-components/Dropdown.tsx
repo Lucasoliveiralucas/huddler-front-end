@@ -57,7 +57,7 @@ const Dropdown = ({ setShowDropDown }: Props) => {
                   </div>
                 ) : (
                   <>
-                    <Link href={menuItem.path}>
+                    <Link href={menuItem.path} >
                       <a
                         className={
                           i === 0
@@ -80,52 +80,6 @@ const Dropdown = ({ setShowDropDown }: Props) => {
         </ul>
       </div>
       {/* Mobile */}
-      <div
-        // ref={dropDownref}
-        // onMouseLeave={() => setShowDropDown(false)}
-        className='mt-20 w-full rounded-[5px] shadow-md md:hidden'
-      >
-        <ul className='w-screen right-0 absolute bg-[#c4915f] rounded-[10px] mt-[5px]'>
-          {serviceDropdown.map((menuItem, i) => {
-            return (
-              <div key={i}>
-                {i === serviceDropdown.length - 1 ? (
-                  <div
-                    className={
-                      i === 0 ? topClass : i === 3 ? bottomClass : defaultClass
-                    }
-                    onClick={() => {
-                      console.log('hereee');
-                      logOut();
-                    }}
-                  >
-                    <p className='text-6xl'>{menuItem.icon}</p>
-                    <p>{menuItem.name}</p>
-                  </div>
-                ) : (
-                  <>
-                    <Link href={menuItem.path}>
-                      <a
-                        className={
-                          i === 0
-                            ? topClass
-                            : i === 3
-                            ? bottomClass
-                            : defaultClass
-                        }
-                        // onClick={i === serviceDropdown.length - 1 && handleLogoutClick}
-                      >
-                        <p className='text-6xl'>{menuItem.icon}</p>
-                        <p>{menuItem.name}</p>
-                      </a>
-                    </Link>
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </ul>
-      </div>
     </div>
   );
 };

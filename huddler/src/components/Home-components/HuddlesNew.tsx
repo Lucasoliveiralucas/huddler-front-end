@@ -12,7 +12,6 @@ type Props = {
 };
 
 function Huddles({ huddles, updateList, id, huddlesUserIsGoing }: Props) {
-  console.log("2", id);
 
   const [active, setActive] = useState<Huddle | {}>();
 
@@ -32,7 +31,7 @@ function Huddles({ huddles, updateList, id, huddlesUserIsGoing }: Props) {
       <div className="flex flex-col">
         {huddles.map((huddle) => (
           <div
-            className="h-56 w-full md:h-48 lg:h-56 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border m-4 relative rounded-lg"
+            className="h-64 w-full md:h-48 lg:h-56 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border m-4 relative rounded-lg"
             key={huddle.id}
           >
             {/* <HuddleCarouselItem */}

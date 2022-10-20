@@ -1,5 +1,6 @@
 import Navbar from "./Navbar-components/Navbar";
 import { useRouter } from "next/router";
+import { MobileMenu } from "./Navbar-components/MobileMenu";
 
 type Props = {
   children: JSX.Element;
@@ -18,6 +19,7 @@ function Layout({ children }: Props) {
         <div className="self-center h-full w-full grid" id="carousel">
           <main>{children}</main>
         </div>
+      <MobileMenu />
       </div>
       {/* <Footer /> */}
     </>

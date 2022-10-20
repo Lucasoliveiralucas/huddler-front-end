@@ -43,7 +43,7 @@ const UserImage = ({
   console.log(userPersonalInfo);
 
   return (
-    <div className='flex flex-col items-center mb-10 xl:mr-36 lg:mr-9 text-[#721D25]'>
+    <div className='flex flex-col items-center md:mb-10 xl:mr-36 lg:mr-9 text-[#721D25]'>
       
       <input
         type='file'
@@ -58,7 +58,7 @@ const UserImage = ({
         className='rounded-full hover:cursor-pointer'
         fill
         alt='user-image'
-        sizes='(max-width: 768px) 0px,
+        sizes='(max-width: 768px) 100px,
                        (max-width: 1200px) 300px,
                        400px'
         onClick={() => imageRef.current!.click()}
