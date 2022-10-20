@@ -34,18 +34,21 @@ const DropdownItems: React.FC<DropdownProps> = ({
 
   return (
     // <div className={`${showDropdown ? "dropdown" : "dropdown active"} flex flex-col md:flex-row z-20 relative`}>
-    <div className="flex flex-col md:flex-row md:w-fit absolute after: px-36 md:px-2 z-40 md:gap-3 w-screen bg-white md:bg-inherit md:ml-24 md:top-20 top-32 md:left-auto left-[0%] text-center">
+    <div className="flex flex-col md:flex-row md:w-fit absolute after: px-36 md:px-2 z-40 md:gap-3 w-screen bg-palette-light md:bg-inherit md:ml-24 md:top-20 top-32 md:left-auto left-[0%] text-center">
       {categories.map((category: Category, index: number): JSX.Element => {
         return (
-          <div className="h-full w-full py-3 md:text-sm text-2xl md:border-none border-b my-1" key={category.id}>
-          <p    className="font-karla"       
-            onClick={(): void => {
-              onClickHandler(category);
-            }}
+          <div
+            className="h-full w-full py-3 md:text-sm text-2xl md:border-none border-b border-palette-dark my-1"
+            key={category.id}
           >
-            {category.name}
+            <p
+              onClick={(): void => {
+                onClickHandler(category);
+              }}
+            >
+              {category.name}
             </p>
-            </div>
+          </div>
         );
       })}
     </div>

@@ -1,22 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import { Category, Huddle } from '../../types';
-import { nowFormatted } from '../../utils/helperFunctions';
-import Image from 'next/future/image';
-import { useRouter } from 'next/router';
-import TagList from '../TagList';
-import AutocompleteHuddleForm from './AutocompleteNewHuddleForm';
+import { useEffect, useRef, useState } from "react";
+import { Category, Huddle } from "../../types";
+import { nowFormatted } from "../../utils/helperFunctions";
+import Image from "next/future/image";
+import { useRouter } from "next/router";
+import TagList from "../TagList";
+import AutocompleteHuddleForm from "./AutocompleteNewHuddleForm";
 import {
   getIdOfHuddleByDateOfCreation,
   postHuddle,
   postHuddleCategory,
   postUserGoingToHuddle,
-} from '../../utils/APIServices/huddleServices';
+} from "../../utils/APIServices/huddleServices";
 import {
   getUploadUrl,
   uploadImgToS3,
-} from '../../utils/APIServices/imageServices';
-import { useAuth } from '../../contexts/AuthContext';
-import { FaWindowClose } from 'react-icons/fa';
+} from "../../utils/APIServices/imageServices";
+import { useAuth } from "../../contexts/AuthContext";
+import { FaWindowClose } from "react-icons/fa";
 
 type Props = {
   id: string;
@@ -46,14 +46,14 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const [imgUrl, setImageUrl] = useState({});
   const [uploadImg, setUploadImg] = useState({});
   const [imageSelected, setImageSelected] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string>('');
+  const [imagePreview, setImagePreview] = useState<string>("");
   const [addedCategories, setAddedCategories] = useState<Category[]>([]);
   const [allCategories, setAllCategories] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [locationData, setLocationData] = useState({
-    name: '',
-    lat: '1.39',
-    lng: '2.154',
+    name: "",
+    lat: "1.39",
+    lng: "2.154",
   });
   const [finalLocation, setFinalLocation] = useState(locationData);
 
@@ -73,7 +73,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
       //
 
-      setError('');
+      setError("");
       const date = Date.now();
       const newHuddle: Huddle = {
         name: titleRef.current!.value,
@@ -82,10 +82,11 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         latitude: +finalLocation.lat,
         address: finalLocation.name,
         description: descriptionRef.current!.value,
-        image: 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/' +
+        image:
+          "https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/" +
           filename,
         date_of_creation: date,
-        link: '',
+        link: "",
         fk_author_id: currentUser.aws_id, //here we'll require the uid from the authentication
       };
       // Post huddle in DB
@@ -105,7 +106,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       // //the user that creates the huddle goes by default
       await postUserGoingToHuddle(id, huddleId[0].id);
     } catch {
-      setError('We could not create the huddle');
+      setError("We could not create the huddle");
     }
   };
 
@@ -119,15 +120,15 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   };
   const closeHuddleForm = () => {
     const body = document.body;
-    const form = document.getElementById('huddle-form');
-    body?.classList.remove('overflow-hidden');
-    form?.classList.remove('animate-fade-in');
-    form?.classList.add('animate-fade-out');
+    const form = document.getElementById("huddle-form");
+    body?.classList.remove("overflow-hidden");
+    form?.classList.remove("animate-fade-in");
+    form?.classList.add("animate-fade-out");
     setTimeout(() => {
       // window.scrollTo(0, 0);
       // body?.classList.add("overflow-hidden");
-      form?.classList.remove('absolute');
-      form?.classList.add('hidden');
+      form?.classList.remove("absolute");
+      form?.classList.add("hidden");
     }, 500);
   };
   let huddleCategories: string[] = [];
@@ -135,20 +136,20 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const addCategory = (category: Category) => {
     //@ts-ignore
     if (addedCategories.some((cat) => cat.name === category.name)) {
-      categoriesInputRef.current!.value = '';
+      categoriesInputRef.current!.value = "";
       setAllCategories([]);
       return;
     }
     !addedCategories.length
       ? setAddedCategories([category])
       : setAddedCategories([...addedCategories, category]);
-    console.log('These are the selected categories,', addedCategories);
-    categoriesInputRef.current!.value = '';
+    console.log("These are the selected categories,", addedCategories);
+    categoriesInputRef.current!.value = "";
     setAllCategories([]);
   };
 
   useEffect(() => {
-    if (locationData.lat !== '1.39')
+    if (locationData.lat !== "1.39")
       setCenter({
         lat: Number(locationData.lat),
         lng: Number(locationData.lng),
@@ -160,16 +161,16 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
     if (center)
       setFinalLocation({
         ...finalLocation,
-        lat: '' + center.lat,
-        lng: '' + center.lng,
+        lat: "" + center.lat,
+        lng: "" + center.lng,
       });
   }, [center]);
 
   return (
     // <main className="w-[100%]"
     <main
-      id='huddle-form'
-      className='
+      id="huddle-form"
+      className="
       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
       absolute
       flex-col
@@ -183,60 +184,57 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       rounded-md
       border-solid
       border-[0.5px]
-      border-palette-orange'
+      border-palette-orange"
     >
-      <div className='relative'>
+      <div className="relative">
         <button
-          className='absolute ml-[98%]'
+          className="absolute ml-[98%]"
           onClick={(e) => closeHuddleForm()}
         >
-          <FaWindowClose color='#CC0000' />
+          <FaWindowClose color="#CC0000" />
         </button>
-        <h1 className='text-center text-lg font-medium text-palette-orange font-yantra mt-0'>
+        <h1 className="text-center text-lg font-medium text-palette-orange font-yantra mt-0">
           {"Let's make a new huddle"}
         </h1>
         {error && (
           <>
-            <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>
+            <div className="text-[#721D25] bg-[#F8D6DB] p-5 rounded-md">
               {error}
             </div>
             <br />
           </>
         )}
 
-        <form
-          className='flex flex-col'
-          onSubmit={handleSubmit}
-        >
+        <form className="flex flex-col" onSubmit={handleSubmit}>
           <label
-            htmlFor='title'
-            className='font-karla font-medium text-palette-dark'
+            htmlFor="title"
+            className="font-karla font-medium text-palette-dark"
           >
             TITLE
           </label>
           <input
-            className='outline-palette-orange outline-1 shadow-sm rounded-md'
+            className="outline-palette-orange outline-1 shadow-sm rounded-md"
             ref={titleRef}
-            type='text'
-            id='title'
-            autoComplete='on'
+            type="text"
+            id="title"
+            autoComplete="on"
             required
           />
           <label
-            htmlFor='categories'
-            className='mt-6 font-karla font-medium text-palette-dark'
+            htmlFor="categories"
+            className="mt-6 font-karla font-medium text-palette-dark"
           >
             PICK THE TAGS OF YOUR HUDDLE
           </label>
 
           {
-            <div className='my-3 mt-2'>
-              <ul className='flex gap-2'>
+            <div className="my-3 mt-2">
+              <ul className="flex gap-2">
                 {addedCategories.map((category, i) => {
                   return (
                     <li
                       key={i}
-                      className='p-4
+                      className="p-4
   text-center
   font-bold
   rounded-2xl
@@ -248,7 +246,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   cursor-pointer
   active:translate-x-[1px]
   active:translate-y-[1px]
-  hover:opacity-50'
+  hover:opacity-50"
                       onClick={() =>
                         setAddedCategories(
                           addedCategories.filter((word) => word != category)
@@ -269,15 +267,15 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           />
           {allCategories[0] ? (
             <div
-              className='absolute w-[22rem] mt-[11rem] mr- bg-palette-light p-2  rounded-2xl
+              className="absolute w-[22rem] mt-[11rem] mr- bg-palette-light p-2  rounded-2xl
   border-palette-dark
-  border-[1px] shadow-sm'
+  border-[1px] shadow-sm"
             >
-              <ul className='grid grid-cols-3 gap-2'>
+              <ul className="grid grid-cols-3 gap-2">
                 {allCategories.map((category, i) => (
                   <li
                     key={i}
-                    className='p-4
+                    className="p-4
   text-center
   font-bold
   py-0.5
@@ -288,7 +286,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   cursor-pointer
   active:translate-x-[1px]
   active:translate-y-[1px]
-  hover:opacity-50'
+  hover:opacity-50"
                     onClick={() => addCategory(category)}
                   >
                     {category.name}
@@ -299,10 +297,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           ) : (
             <></>
           )}
-          <label
-            className='mt-2'
-            htmlFor='where'
-          >
+          <label className="mt-2" htmlFor="where">
             Where?
           </label>
           <AutocompleteHuddleForm
@@ -311,68 +306,65 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             setLocationData={setLocationData}
           />
           <label
-            className='mt-2 font-karla font-medium text-palette-dark'
-            htmlFor='when'
+            className="mt-2 font-karla font-medium text-palette-dark"
+            htmlFor="when"
           >
             WHEN?
           </label>
           <input
-            className='outline-palette-orange outline-1 shadow-sm rounded-md'
+            className="outline-palette-orange outline-1 shadow-sm rounded-md"
             ref={whenRef}
-            type='datetime-local'
-            id='dateTime'
-            autoComplete='on'
+            type="datetime-local"
+            id="dateTime"
+            autoComplete="on"
             min={nowFormatted()}
             required
           />
           <label
-            className='mt-2 font-karla font-medium text-palette-dark'
-            htmlFor='description'
+            className="mt-2 font-karla font-medium text-palette-dark"
+            htmlFor="description"
           >
             WHAT IS YOUR HUDDLE?
           </label>
           <textarea
-            className='outline-palette-orange outline-1 shadow-sm rounded-md'
+            className="outline-palette-orange outline-1 shadow-sm rounded-md"
             ref={descriptionRef}
-            id='description'
-            autoComplete='on'
-            placeholder='Add a description'
+            id="description"
+            autoComplete="on"
+            placeholder="Add a description"
             required
           />
-          <div className='flex flex-col'>
-            <div className='flex flex-col mt-2'>
+          <div className="flex flex-col">
+            <div className="flex flex-col mt-2">
               <label
-                htmlFor='images'
-                className='mb-4 font-karla font-medium text-palette-dark'
+                htmlFor="images"
+                className="mb-4 font-karla font-medium text-palette-dark"
               >
                 Add images to your huddle:
               </label>
               <input
-                className='border-none'
+                className="border-none"
                 ref={imagesRef}
-                type='file'
-                accept='.jpg, jpeg, .png, .gif'
+                type="file"
+                accept=".jpg, jpeg, .png, .gif"
                 onChange={onSelectFile}
-                id='images'
+                id="images"
               />
             </div>
             {imageSelected && (
-              <figure className='flex justify-center items-center'>
+              <figure className="flex justify-center items-center">
                 <Image
                   width={200}
                   height={200}
-                  className='mt-4'
-                  id='image-preview'
-                  alt='image-preview'
+                  className="mt-4"
+                  id="image-preview"
+                  alt="image-preview"
                   src={imagePreview}
                 />
               </figure>
             )}
           </div>
-          <button
-            className='orange-button mt-6'
-            type='submit'
-          >
+          <button className="orange-button mt-6" type="submit">
             Submit
           </button>
           {/* <button
@@ -388,5 +380,3 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 };
 
 export default NewHuddleForm;
-
-
