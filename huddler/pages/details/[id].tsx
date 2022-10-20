@@ -113,16 +113,20 @@ const Details = ({ aws_id, user, huddle }: Props) => {
     // @ts-ignore
     e.target[0].value = "";
   };
+
+  // CSS styling variables
+  const hidden = 'hidden md:flex';
+
   return (
-    <div className="flex h-screen w-screen" id="0">
+    <div className="flex flex-col md:flex-row h-screen w-screen" id="0">
       <div
         id="huddle-details 1-left"
-        className="overflow-y-auto flex flex-col w-[40vw] h-screen pt-24 px-8 bg-white bg-opacity-20 shadow-xl"
+        className="md:overflow-y-auto flex flex-col md:w-[40vw] h-screen pt-24 px-8 bg-white bg-opacity-20 shadow-xl"
       >
         <p className="text-3xl font-extrabold text-palette-orange">
           {huddle.name}
         </p>
-        <p className="pt-2 text-neutral-700">
+        <p className="pt-2 text-neutral-700 hidden md:flex">
           {" "}
           {dateTime.monthDayYear} at {dateTime.time}
         </p>
@@ -130,7 +134,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
           src={huddle.image}
           width={500}
           height={500}
-          className="rounded-lg h-[13rem] w-[18rem] my-4"
+          className={`rounded-lg h-[13rem] w-[18rem] my-4 + ${hidden}`}
           alt={huddle.name}
         />{" "}
         <p className="mt-2 text-xl font-bold text-palette-dark">Description</p>
@@ -150,10 +154,10 @@ const Details = ({ aws_id, user, huddle }: Props) => {
             <></>
           )}
         </div>
-        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">
+        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark hidden md:flex">
           Created By:{" "}
         </p>
-        <div className="flex mb-2">
+        <div className="hidden md:flex mb-2 ">
           <div className="relative h-12 w-12">
             <Image
               className="flex rounded-full "
@@ -170,13 +174,13 @@ const Details = ({ aws_id, user, huddle }: Props) => {
             {creator?.username}
           </p>
         </div>
-        <p className="mt-4 mb-2 text-xl font-bold text-palette-dark">
+        <p className="mt-4 mb-2 text-xl font-bold hidden md:flex text-palette-dark">
           Who&apos;s going:
         </p>
         {users ? (
           users.map((user: any, i: number) => {
             return (
-              <div key={i} className="flex mb-4">
+              <div key={i} className="hidden md:flex mb-4">
                 <div className="relative h-12 w-12">
                   <Image
                     className="flex rounded-full"
@@ -209,7 +213,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
               setGoing("Join");
             }
           }}
-          className={`mr-14 ml-auto mt-24 h-12 justify-center ${
+          className={`mr-14 ml-auto mt-2 md:mt-24 h-12 justify-center ${
             going === "Leave" ? "leave-button" : "orange-button"
           }`}
         >
@@ -270,7 +274,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
                   placeholder="Send a message"
                 ></input>
                 <button
-                  className="bg-palette-dark h-[80%] w-[12%] bg-opacity-40 px-6 py-2 rounded-lg ml-4 text-orange-100 font-bold self-center"
+                  className="bg-palette-dark md:h-[80%] h-[60%] w-[12%] bg-opacity-40 px-4 py-2 rounded-lg ml-4 text-orange-100 font-bold self-center"
                   type="submit"
                 >
                   Send
