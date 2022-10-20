@@ -85,7 +85,7 @@ const Dropdown = ({ setShowDropDown }: Props) => {
         // onMouseLeave={() => setShowDropDown(false)}
         className='mt-20 w-full rounded-[5px] shadow-md md:hidden'
       >
-        <ul className=' w-screen absolute bg-palette-dark -right-[75%] rounded-[10px] mt-[5px]'>
+        <ul className='w-screen right-0 absolute bg-[#c4915f] rounded-[10px] mt-[5px]'>
           {serviceDropdown.map((menuItem, i) => {
             return (
               <div key={i}>
