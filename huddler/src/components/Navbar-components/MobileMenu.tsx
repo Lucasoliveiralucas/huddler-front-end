@@ -16,7 +16,7 @@ export const MobileMenu = () => {
         <div className="bg-palette-dark fixed bottom-0 h-12 w-full md:hidden flex justify-around text-white items-center text-3xl">
             {serviceDropdown.map((item) => {
                 return (
-                    <Link href={item.path}>
+                    <Link href={item.path} key={item.name}>
                         <div>
                             {item.icon}
                         </div>
