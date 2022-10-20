@@ -33,7 +33,7 @@ const LandingPage: NextPage = () => {
 
   return (
 
-    <div className="w-full h-screen justify-center">
+    <div className="w-full h-screen flex justify-center bg-black">
       <Slider></Slider>
       <button
         className="orange-button absolute transform top-10 right-10 z-10"
@@ -41,7 +41,7 @@ const LandingPage: NextPage = () => {
       >
         {button}
       </button>
-      <h1 className="absolute z-[1] left-[40vw] top-28 text-6xl font-extrabold text-slate-50">
+      <h1 className="absolute z-[1] md:left-[40vw] top-64 md:top-28 text-5xl md:text-6xl font-extrabold text-slate-50">
         HUDDLER
       </h1>
       {click && <Register />}

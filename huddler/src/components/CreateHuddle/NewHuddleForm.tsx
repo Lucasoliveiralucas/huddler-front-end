@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useRef, useState } from 'react';
 import { Category, Huddle } from '../../types';
 import { nowFormatted } from '../../utils/helperFunctions';
@@ -259,7 +260,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
               </ul>
             </div>
           }
-          {/*@ts-ignore */}
+
           <TagList
             categoriesInputRef={categoriesInputRef}
             setAllCategories={setAllCategories}
