@@ -65,7 +65,7 @@ function HuddleCarouselItem({
   return (
     <div className="flex flex-col">
       <div className="flex flex-row">
-        <div className="basis-1/4 relative">
+        <div className="basis-1/4 relative lg:h-[180px]">
           <picture>
             <img
               src={huddle.image}
@@ -79,14 +79,14 @@ function HuddleCarouselItem({
           <div id="title" className="flex flex-row justify-between">
             {/* @ts-ignore */}
             <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
-              <h1 className="font-extrabold text-palette-dark text-2xl cursor-pointer">
+              <h1 className="font-extrabold text-palette-dark text-xl cursor-pointer hover:text-palette-orange hover:underline">
                 {huddle.name}
               </h1>
             </Link>
             <div className="">
               {going ? (
                 <button
-                  className="justify-center leave-button mr-6"
+                  className="justify-center leave-button mr-6 lg:mr-4"
                   onClick={(e) => {
                     setGoing(!going);
                     toggleGoingToHuddle(false);

@@ -13,8 +13,6 @@ import {
 import { getHuddlesInCategory } from "../../src/utils/APIServices/categoryServices";
 import HuddleCarouselItem from "../../src/components/Profile components/HuddleCarouselItem";
 import { withSSRContext } from "aws-amplify";
-import { GetServerSideProps } from "next/types";
-import { NextRequest, NextResponse } from "next/server";
 import { NextApiResponse } from "next/types";
 import { NextApiRequest } from "next/types";
 import {
@@ -85,12 +83,12 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
   if (!tags) return <div>loading...</div>;
 
   return (
-    <main className="flex flex-col mt-20 lg:grid lg:grid-cols-3 3xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[100vw]">
-      <div className="hidden lg:block w-full">
-        <div className="fixed min-w-[20%] h-full">
+    <main className="flex flex-col mt-20 lg:mt-8 lg:grid lg:grid-cols-3 2xl:grid-cols-4 h-full py-8 lg:bg-palette-light max-w-[99vw] gap-1">
+      <div className="hidden lg:flex w-full relative">
+        <div className="fixed min-full h-full">
           <div
             className="flex flex-col h-full items-center
-          border-x-[0.2px] shadow-md w-full"
+          "
           >
             <Avatar user={user} />
             <UserInfo
@@ -102,10 +100,10 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               }
             />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
-              <h1 className="text-3xl font-yantra text-palette-dark font-medium self-center mt-10 ">
+              <h1 className="text-3xl font-yantra text-palette-dark font-medium self-center mt-10 lg:mt-0">
                 Upcoming Huddle
               </h1>
-              <div className="self-center mt-3 w-[30rem] h-[18rem] flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
+              <div className="self-center mt-2 w-[30rem] ml-8 lg:w-full h-[18rem] lg:h-64 flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg">
                 {huddlesUserIsGoing ? (
                   huddlesUserIsGoing.length && (
                     <HuddleCarouselItem
@@ -138,7 +136,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
         />
       </div>
 
-      <div className="h-full w-full col-span-2 3xl:col-span-3 overflow-auto ml-0 lg:ml-48 2xl:ml-0">
+      <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto ml-0">
         <h1 className="pt-8 px-4 text-3xl font-yantra text-palette-dark font-bold md:pl-10 lg:pl-0">
           INTERESTS:
         </h1>
@@ -159,7 +157,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(userCreatedHuddlesActive) && userCreatedHuddlesActive.length ? (
           <>
-            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+            <h1 className="pt-6 lg:pt-2 py-4 text-3xl font-bold">
               Created huddles:
             </h1>
             <HuddleCarousel
@@ -176,7 +174,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(huddlesUserIsGoing) && huddlesUserIsGoing.length ? (
           <>
-            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-yantra text-palette-dark font-medium">
+            <h1 className="pt-6 sm:py-6 py-4 text-3xl font-yantra text-palette-dark font-medium">
               Huddles I&lsquo;m going to:
             </h1>
             <HuddleCarousel
@@ -193,7 +191,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(lastRow.huddles) && lastRow.huddles.length ? (
           <>
-            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+            <h1 className="pt-6 sm:py-6 py-4 text-3xl font-bold">
               {lastRow.name} huddles:
             </h1>
             <HuddleCarousel

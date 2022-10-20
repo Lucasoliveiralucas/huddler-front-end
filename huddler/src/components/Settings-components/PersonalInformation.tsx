@@ -105,7 +105,7 @@ const PersonalInfo = ({ userData }: Props) => {
   };
 
   return (
-    <div className='flex flex-col lg:mt-24'>
+    <div className='flex flex-col '>
       {error && (
         <>
           <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>
@@ -115,7 +115,7 @@ const PersonalInfo = ({ userData }: Props) => {
         </>
       )}
 
-      <div className='flex flex-col lg:flex-row items-center gap-2 h-screen'>
+      <div className='flex flex-col md:self-center lg:flex-row items-center gap-6 md:mt-32'>
         <div className='flex flex-col'>
           <UserImage
             setDisabledButton={setDisabledButton}
@@ -134,7 +134,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.username}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='email' className='ml-1 after:text-lg text-[#721D25]'>Email</label>
+          <label htmlFor='email' className='ml-1 lg:text-lg text-[#721D25]'>Email</label>
           <input
             ref={emailRef}
             id='email'

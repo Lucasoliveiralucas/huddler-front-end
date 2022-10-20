@@ -1,4 +1,5 @@
 import Map from '../Home-components/Map';
+import MobileMap from '../Home-components/MobileMap';
 import { useState } from 'react';
 import { User } from '../../types';
 import { postUpdatedUserInfo } from '../../utils/APIServices/userServices';
@@ -37,7 +38,15 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
   return (
     <>
       {error && <div className='bg-red-600'>{error}</div>}
-      <div className='mr-5 flex flex-col items-center mt-10 md:mt-32 lg:mt-0'>
+      <div className='flex flex-col items-center mt-10 md:mt-24 '>
+        <div w-full>
+        <MobileMap
+          currentPage='settings'
+          //@ts-ignore
+          setLocation={setLocation}
+          user={userData}
+        />
+        </div>
         {success ? (
           <>
             <div className='text-[#145725] bg-[#D5EDDB] p-5 rounded-md'>
@@ -48,7 +57,7 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
         ) : (
           <button
             // className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
-            className='leave-button text-2xl mt-2 py-2 px-5'
+            className='leave-button flex text-2xl mt-2 py-2 px-5 '
             onClick={changeLocation}
           >
             Update Location
@@ -56,12 +65,6 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
         )}
       </div>
 
-      <Map
-        currentPage='settings'
-        //@ts-ignore
-        setLocation={setLocation}
-        user={userData}
-      />
     </>
   );
 };
