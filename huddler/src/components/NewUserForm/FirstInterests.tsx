@@ -17,11 +17,11 @@ function Interests({
     <>
       <div className='flex flex-col'>
         <div className='flex justify-center text-3xl font-bold'>
-          <h1>Welcome new Huddler!</h1>
+          <h1 className='font-yantra font-medium text-palette-dark'>WELCOME NEW HUDDLER!</h1>
         </div>
 
         <div className='flex flex-col py-8 md:px-8'>
-          <h1 className='self-center text-2xl'>Choose your interests:</h1>
+          <h1 className='self-center text-2xl font-karla text-palette-black'>Choose your interests:</h1>
           {/* @ts-ignore */}
           <CategoriesContainer
             setDisabledButton={setDisabledButton}

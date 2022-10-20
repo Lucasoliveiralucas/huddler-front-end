@@ -126,7 +126,7 @@ const PersonalInfo = ({ userData }: Props) => {
           />
         </div>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='name' className='ml-1 lg:text-lg text-[#721D25]'>User name</label>
+          <label htmlFor='name' className='ml-1 lg:text-lg font-medium text-palette-dark'>USER NAME</label>
           <input
             ref={nameRef}
             className='block w-80 h-10 rounded-md mb-3'
@@ -134,7 +134,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.username}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='email' className='ml-1 lg:text-lg text-[#721D25]'>Email</label>
+          <label htmlFor='email' className='ml-1 after:text-lg font-medium text-palette-dark'>EMAIL</label>
           <input
             ref={emailRef}
             id='email'
@@ -143,7 +143,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.email || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='first-name' className='ml-1 lg:text-lg text-[#721D25]'>First name</label>
+          <label htmlFor='first-name' className='ml-1 lg:text-lg font-medium text-palette-dark'>FIRST NAME</label>
           <input
             ref={firstNameRef}
             id='first-name'
@@ -152,7 +152,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.first_name || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='last-name' className='ml-1 lg:text-lg text-[#721D25]'>Last name</label>
+          <label htmlFor='last-name' className='ml-1 lg:text-lg font-medium text-palette-dark'>LAST NAME</label>
           <input
             ref={lastNameRef}
             id='last-name'
@@ -161,7 +161,7 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.last_name || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='description' className='ml-1 lg:text-lg text-[#721D25]'>Description</label>
+          <label htmlFor='description' className='ml-1 lg:text-lg font-medium text-palette-dark'>DESCRIPTION</label>
           <textarea
             ref={descriptionRef}
             id='description'

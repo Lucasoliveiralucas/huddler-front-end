@@ -105,9 +105,9 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
                 huddlesUserIsGoing ? huddlesUserIsGoing.length : 0
               }
             />
-            <div className='h-1/9 w-full flex flex-col justify-center mt-8 border gap-6'>
-              <h1 className='text-3xl font-yantra text-palette-dark font-medium self-center mt-10 lg:mt-0'>
-                Upcoming Huddle
+            <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
+              <h1 className="text-3xl font-karla text-palette-dark self-center mt-10 lg:mt-0">
+                UPCOMING HUDDLE
               </h1>
               <div className='self-center mt-2 w-[30rem] ml-8 lg:w-full h-[18rem] lg:h-64 flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg'>
                 {huddlesUserIsGoing ? (
@@ -142,9 +142,9 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
         />
       </div>
 
-      <div className='h-full w-full col-span-2 2xl:col-span-3 overflow-auto ml-0'>
-        <h1 className='pt-8 px-4 text-3xl font-yantra text-palette-dark font-bold md:pl-10 lg:pl-0'>
-          INTERESTS:
+      <div className="h-full w-full col-span-2 2xl:col-span-3 overflow-auto ml-0">
+        <h1 className="pt-8 px-4 text-3xl font-yantra  text-palette-dark font-medium md:pl-10 lg:pl-0">
+          Interests:
         </h1>
         {Array.isArray(tags) && (
           <div className='flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0'>
@@ -176,13 +176,13 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
         {Array.isArray(userCreatedHuddlesActive) &&
         userCreatedHuddlesActive.length ? (
           <>
-            <h1 className='pt-6 lg:pt-2 py-4 text-3xl font-bold'>
+            <h1 className='pt-6 lg:pt-2 py-4 text-3xl font-bold font-yantra text-palette-dark'>
               Created huddles:
             </h1>
             <HuddleCarousel
               setUpdate={setUpdate}
               update={update}
-              huddles={userCreatedHuddlesActive}
+              huddles={sortHuddlesByDate(userCreatedHuddlesActive)}
               huddlesUserIsGoing={huddlesUserIsGoing}
               id={aws_id}
             />
@@ -222,7 +222,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             />
           </>
         ) : (
-          <h1 className='pt-6 sm:py-6 p-4 text-3xl font-yantra font-extralight'>
+          <h1 className="pt-6 sm:py-6 p-4 text-3xl font-karla font-extralight">
             {
               " We don't have huddles to recommend you yet. Try adding more interests to your profile."
             }

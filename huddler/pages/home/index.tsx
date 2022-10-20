@@ -61,7 +61,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
             id="1"
           >
             <button
-              className="mr-4"
+              className="mr-4 font-karla text-palette-dark"
               onClick={() => {
                 setRevertCatBtn(!revertCatBtn);
                 setFilterChoice(recommended);
@@ -70,7 +70,7 @@ function Home({ recommended, huddles, user, goingTo }: Props) {
               Recommended
             </button>
             <button
-              className="mr-4"
+              className="mr-4 font-karla text-palette-dark"
               onClick={() => {
                 setRevertCatBtn(!revertCatBtn);
                 setToAllHuddles();

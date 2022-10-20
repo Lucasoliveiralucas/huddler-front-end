@@ -39,7 +39,7 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
     <>
       {error && <div className='bg-red-600'>{error}</div>}
       <div className='flex flex-col items-center mt-10 md:mt-24 '>
-        <div w-full>
+        <div className='relative w-screen md:w-full'>
         <MobileMap
           currentPage='settings'
           //@ts-ignore
@@ -57,7 +57,7 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
         ) : (
           <button
             // className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
-            className='leave-button flex text-2xl mt-2 py-2 px-5 '
+            className='leave-button font-yantra flex text-2xl py-2 px-5 my-4'
             onClick={changeLocation}
           >
             Update Location

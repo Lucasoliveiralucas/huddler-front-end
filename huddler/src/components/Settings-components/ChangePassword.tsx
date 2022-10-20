@@ -34,7 +34,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className='flex flex-col items-center mt-10 md:mt-32'>
+    <div className='flex flex-col items-center mt-10 md:mt-26'>
       {error && (
         <>
           <div className='text-[#721D25] bg-[#F8D6DB] p-5 rounded-md'>
@@ -52,9 +52,9 @@ const ChangePassword = () => {
         </>
       )}
       <form onSubmit={handleSubmit}>
-        <label htmlFor='old-password'>Old password</label>
+        <label htmlFor='old-password' className='font-medium text-palette-dark'>OLD PASSWORD</label>
         <input
-          className='block'
+          className='block w-80 h-10 rounded-md mb-3'
           type='password'
           id='old-password'
           min={6}
@@ -62,9 +62,9 @@ const ChangePassword = () => {
           ref={oldPasswordRef}
         />
         <br />
-        <label htmlFor='password'>New password</label>
+        <label htmlFor='password' className='font-medium text-palette-dark'>NEW PASSWORD</label>
         <input
-          className='block'
+          className='block w-80 h-10 rounded-md mb-3'
           type='password'
           id='password'
           min={6}
@@ -72,9 +72,9 @@ const ChangePassword = () => {
           ref={passwordRef}
         />
         <br />
-        <label htmlFor='confirm-password'>Confirm Password</label>
+        <label htmlFor='confirm-password' className='font-medium text-palette-dark'>CONFIRM PASSWORD</label>
         <input
-          className='block'
+          className='block w-80 h-10 rounded-md mb-3'
           type='password'
           id='confirm-password'
           min={6}
@@ -84,7 +84,7 @@ const ChangePassword = () => {
         />
         <button
           // className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
-          className='leave-button'
+          className='leave-button mt-8'
           type='submit'
           disabled={disabledButton}
         >

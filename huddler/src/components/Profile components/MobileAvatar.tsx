@@ -25,7 +25,7 @@ function MobileAvatar({ user }: Props) {
           fill
         />
       </div>
-      <h1 className="p-4 text-[2rem] font-bold">
+      <h1 className="p-4 text-[2rem] font-bold text-palette-dark font-yantra">
         Welcome back, {user.username}
       </h1>
     </div>

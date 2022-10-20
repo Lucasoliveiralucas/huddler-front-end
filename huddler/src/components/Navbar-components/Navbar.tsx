@@ -89,7 +89,7 @@ function Navbar() {
             md:w-40
             relative
             text-center
-            font-bold
+            font-medium
             py-2
             text-sm
             md:text-lg

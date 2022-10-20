@@ -48,10 +48,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   const [uploadImg, setUploadImg] = useState({});
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>('');
-  const [addedCategories, setAddedCategories] = useState<Category[]>([
-    { id: 0, name: '' },
-  ]);
-  const [allCategories, setAllCategories] = useState([{ id: 0, name: '' }]);
+  const [addedCategories, setAddedCategories] = useState<Category[]>([]);
+  const [allCategories, setAllCategories] = useState([]);
   const [error, setError] = useState('');
   const [locationData, setLocationData] = useState({
     name: '',
@@ -85,14 +83,15 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         latitude: +finalLocation.lat,
         address: finalLocation.name,
         description: descriptionRef.current!.value,
-        image: `${process.env.NEXT_PUBLIC_AWS_UPLOAD_IMAGE}/filename`,
+        image: 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/' +
+          filename,
         date_of_creation: date,
         link: '',
         fk_author_id: currentUser.aws_id, //here we'll require the uid from the authentication
       };
       // Post huddle in DB
-      console.log('new huddle', newHuddle);
-      console.log('user', currentUser.aws_id);
+      // console.log('new huddle', newHuddle);
+      // console.log('user', currentUser.aws_id);
       const huddleDateOfCreation = await postHuddle(newHuddle);
 
       // getting id of huddle
@@ -105,7 +104,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       closeHuddleForm();
 
       // //the user that creates the huddle goes by default
-      await postUserGoingToHuddle(currentUser.aws_id, huddleId);
+      await postUserGoingToHuddle(id, huddleId[0].id);
     } catch {
       setError('We could not create the huddle');
     }
@@ -136,12 +135,12 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 
   const addCategory = (category: Category) => {
     //@ts-ignore
-    if (allCategories.includes(category)) {
+    if (addedCategories.some((cat) => cat.name === category.name)) {
       categoriesInputRef.current!.value = '';
       setAllCategories([]);
       return;
     }
-    addedCategories[0].name == ''
+    !addedCategories.length
       ? setAddedCategories([category])
       : setAddedCategories([...addedCategories, category]);
     console.log('These are the selected categories,', addedCategories);
@@ -185,7 +184,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       rounded-md
       border-solid
       border-[0.5px]
-      border-palette-dark'
+      border-palette-orange'
     >
       <div className='relative'>
         <button
@@ -194,7 +193,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         >
           <FaWindowClose color='#CC0000' />
         </button>
-        <h1 className='text-center text-lg font-medium text-palette-orange mt-0'>
+        <h1 className='text-center text-lg font-medium text-palette-orange font-yantra mt-0'>
           {"Let's make a new huddle"}
         </h1>
         {error && (
@@ -210,7 +209,12 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           className='flex flex-col'
           onSubmit={handleSubmit}
         >
-          <label htmlFor='title'>Title</label>
+          <label
+            htmlFor='title'
+            className='font-karla font-medium text-palette-dark'
+          >
+            TITLE
+          </label>
           <input
             className='outline-palette-orange outline-1 shadow-sm rounded-md'
             ref={titleRef}
@@ -221,9 +225,9 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           />
           <label
             htmlFor='categories'
-            className='mt-6'
+            className='mt-6 font-karla font-medium text-palette-dark'
           >
-            Pick the tags of your huddle
+            PICK THE TAGS OF YOUR HUDDLE
           </label>
 
           {
@@ -238,7 +242,6 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   font-bold
   rounded-2xl
   py-0.5
-  px-10
   border-palette-dark
   border-[1px]
   bg-tansparent
@@ -309,10 +312,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             setLocationData={setLocationData}
           />
           <label
-            className='mt-2'
+            className='mt-2 font-karla font-medium text-palette-dark'
             htmlFor='when'
           >
-            When?
+            WHEN?
           </label>
           <input
             className='outline-palette-orange outline-1 shadow-sm rounded-md'
@@ -324,10 +327,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             required
           />
           <label
-            className='mt-2'
+            className='mt-2 font-karla font-medium text-palette-dark'
             htmlFor='description'
           >
-            What is your huddle?
+            WHAT IS YOUR HUDDLE?
           </label>
           <textarea
             className='outline-palette-orange outline-1 shadow-sm rounded-md'
@@ -337,11 +340,11 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             placeholder='Add a description'
             required
           />
-          <div className='flex'>
+          <div className='flex flex-col'>
             <div className='flex flex-col mt-2'>
               <label
                 htmlFor='images'
-                className='mb-4'
+                className='mb-4 font-karla font-medium text-palette-dark'
               >
                 Add images to your huddle:
               </label>
@@ -355,11 +358,11 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
               />
             </div>
             {imageSelected && (
-              <figure>
+              <figure className='flex justify-center items-center'>
                 <Image
-                  className='ml-10'
-                  width={100}
-                  height={100}
+                  width={200}
+                  height={200}
+                  className='mt-4'
                   id='image-preview'
                   alt='image-preview'
                   src={imagePreview}
@@ -386,4 +389,5 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 };
 
 export default NewHuddleForm;
+
 

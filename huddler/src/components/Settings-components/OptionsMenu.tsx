@@ -43,7 +43,7 @@ const OptionsMenu = ({ setOption }: Props) => {
 
   return (
     // <div className='fixed left-6'>
-    <ul className='flex flex-col justify-center mt-14 md:mr-10 xl:mr-48 lg:mr-10 shadow-md border-solid border-[0.2px] rounded-[15px] border-gray-300'>
+    <ul className='flex flex-col self-center justify-center mt-14 md:mr-0 lg:mr-10 shadow-md  border-[0.2px] rounded-[15px]  font-medium border-solid border-palette-orange'>
       <li
         className={
           selected.information
