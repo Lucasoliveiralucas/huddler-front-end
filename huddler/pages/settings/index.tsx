@@ -32,23 +32,26 @@ const SettingsPage = () => {
   }, [currentUser]);
 
   return isAuth && currentUser ? (
-    <main className='flex font-yantra text-palette-dark flex-col md:flex-row justify-center items-center md:items-start lg:items-center'>
-      <OptionsMenu setOption={setOption} />
-
-      {option === 'information' && userData && (
-        <PersonalInformation userData={userData} />
-      )}
-      {option === 'password' && <ChangePassword />}
-      {option === 'location' && (
-        <UpdateLocation
+    <main id="1" className='flex flex-col mt-14 font-yantra text-palette-dark md:h-screen md:flex-row md:mt-0 justify-center items-center lg:items-center'>
+      <div id="2" className='flex md:items-end md:mt-30'>
+        <OptionsMenu setOption={setOption} />
+      </div>
+      <div id="3 right" className='md:ml-8 md:w-[60vw]'>
+        {option === 'information' && userData && (
+          <PersonalInformation userData={userData} />
+          )}
+        {option === 'password' && <ChangePassword />}
+        {option === 'location' && (
+          <UpdateLocation
           // currentUserLongitude={userData.default_longitude!}
-          // currentUserLatitude={userData.default_latitude!}
-          userData={userData}
-          setUserData={setUserData}
-        />
-      )}
-      {option === 'interests' && <UpdateInterests userData={userData} />}
-      {option === 'delete' && <DeleteUser userData={userData} />}
+            // currentUserLatitude={userData.default_latitude!}
+            userData={userData}
+            setUserData={setUserData}
+            />
+            )}
+        {option === 'interests' && <UpdateInterests userData={userData} />}
+        {option === 'delete' && <DeleteUser userData={userData} />}
+      </div>
     </main>
   ) : null;
 };

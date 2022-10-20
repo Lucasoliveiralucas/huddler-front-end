@@ -27,7 +27,7 @@ export default function MobileMap({
   const [createBox, setCreateBox] = useState(false);
   const [map, setMap] = useState({});
   const [mapSize, setMapSize] = useState({
-    width: "100vw",
+    width: "100%",
     height: "77vh",
   });
   const [containerSize, setContainerSize] = useState(mapSize);

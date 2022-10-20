@@ -77,7 +77,7 @@ function Navbar() {
   return (
     <>
       <div className="navbar h-20 shadow-md w-full bg-palette-light text-white flex items-center justify-between fixed top-0 px-1 md:px-12 z-40">
-        <Link href={"/home"} rel="prefetch" as="image">
+        <Link href={"/home"}>
           <a className="w-48 mr-10">
             <Image src={huddler_logo} alt="logo" priority={true} />
           </a>
@@ -106,15 +106,19 @@ function Navbar() {
           </button>
 
           <div className="w-20 h-20 relative">
-            { currentUser &&
+            {currentUser && (
               <Image
-                src={currentUser.hasOwnProperty('image') ? currentUser.image : DefaultUserImage}
+                src={
+                  currentUser.hasOwnProperty("image")
+                    ? currentUser.image
+                    : DefaultUserImage
+                }
                 alt="user-image"
                 fill
                 className=" rounded-full cursor-pointer p-3"
                 onClick={() => handleClickOnImg()}
               />
-            }
+            )}
             {showDropDown && <Dropdown setShowDropDown={setShowDropDown} />}
           </div>
         </div>

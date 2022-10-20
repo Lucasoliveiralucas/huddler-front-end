@@ -104,7 +104,7 @@ export default function Map({
           id="huddle-form"
           className="hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark"
         >
-          <NewHuddleForm
+          {/* <NewHuddleForm
             center={center}
             setCenter={setCenter}
             id={user.aws_id}
@@ -113,7 +113,7 @@ export default function Map({
               lat: "" + center.lat,
               lng: "" + center.lng,
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className="shadow-xl rounded-md ">
