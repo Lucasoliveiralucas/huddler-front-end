@@ -13,7 +13,8 @@ type Props = {
 const UpdateInterests = ({ userData }: Props) => {
   let [userCategories, setUserCategories] = useState<Category[]>();
   let [disabledButton, setDisabledButton] = useState(true);
-  const [success, setSuccess] = useState("");
+  let [initial, setInitial] = useState<Category[]>()
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     loadUserCategories();
@@ -22,21 +23,22 @@ const UpdateInterests = ({ userData }: Props) => {
   const loadUserCategories = async () => {
     const categories = await getUserCategories(userData.aws_id);
     setUserCategories([...categories]);
+    setInitial([...categories])
   };
 
-  const initialCategories = userCategories && [...userCategories];
-
+  // const initialCategories = userCategories && [...userCategories];
+  console.log('initial categories', initial)
   const onClickUpdateUserInterests = () => {
     const toDelete: Category[] = [];
     const toAdd: Category[] = [];
 
     // Detect and update if user added or deleted categories from the initial categories
     userCategories!.forEach((category) => {
-      if (!initialCategories!.some((cat) => cat.name === category.name)) {
+      if (!initial!.some((cat) => cat.name === category.name)) {
         toAdd.push(category);
       }
     });
-    initialCategories!.forEach((category) => {
+    initial!.forEach((category) => {
       if (!userCategories!.some((cat) => cat.name === category.name))
         toDelete.push(category);
     });

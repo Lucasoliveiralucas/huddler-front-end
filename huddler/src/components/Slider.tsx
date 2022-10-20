@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { Fade, Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import logo from "../../public/huddler-white-w-logo.png";
+import logo from "../../public/huddler-orange-w-logo.png";
 
 const fadeImages = [
   {
@@ -20,7 +20,7 @@ const Slider = () => {
   return (
     <>
       <div className="slide-container w-screen bg-black relative">
-        <div className="absolute left-[37.5vw] top-[10%]">
+        <div className="absolute left-[36vw] top-[10%]">
           <div className="relative h-[25rem] w-[30rem]">
             <Image
               alt="logo"
@@ -38,7 +38,7 @@ const Slider = () => {
         <Fade>
           {fadeImages.map((fadeImage, key) => (
             <div
-              className="each-fade brightness-[0.25]"
+              className="each-fade brightness-50"
               key={key}
               style={{
                 backgroundImage: `url(${fadeImage.url})`,

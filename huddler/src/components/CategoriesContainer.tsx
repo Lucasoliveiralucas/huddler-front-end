@@ -57,7 +57,6 @@ const CategoriesContainer = ({
     category: Category
   ) => {
 
-    setDisabledButton(false);
     if (e.currentTarget.dataset.selected === 'false') {
       e.currentTarget.className = selectedClass;
       interests.push(category);
@@ -67,16 +66,17 @@ const CategoriesContainer = ({
       interests.splice(interests.indexOf(category), 1);
       e.currentTarget.dataset.selected = 'false';
     }
+    setDisabledButton(false);
 
     if (chosenCategories) {
       //@ts-ignore (it thinks it's undefined because of the question mark in props. We may or may not pass it depending of where it comes )
       setChosenCategories(interests);
       if (!chosenCategories.length) setDisabledButton(true);
       console.log('these are CategoriesPicked', chosenCategories);
-    } else if (userCategories) {
+    } else {
       //@ts-ignore
       setUserCategories(interests);
-      if (!userCategories.length) setDisabledButton(true);
+      if (!userCategories?.length) setDisabledButton(true);
       console.log('these are userCategories', userCategories);
     }
 
