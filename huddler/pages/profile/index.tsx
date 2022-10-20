@@ -156,7 +156,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(userCreatedHuddles) && userCreatedHuddles.length ? (
           <>
-            <h1 className="pt-6 lg:pt-2 p-4 text-3xl font-bold">
+            <h1 className="pt-6 lg:pt-2 py-4 text-3xl font-bold">
               Created huddles:
             </h1>
             <HuddleCarousel
@@ -173,7 +173,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(huddlesUserIsGoing) && huddlesUserIsGoing.length ? (
           <>
-            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-yantra text-palette-dark font-medium">
+            <h1 className="pt-6 sm:py-6 py-4 text-3xl font-yantra text-palette-dark font-medium">
               Huddles I&lsquo;m going to:
             </h1>
             <HuddleCarousel
@@ -190,7 +190,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
 
         {Array.isArray(lastRow.huddles) && lastRow.huddles.length ? (
           <>
-            <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
+            <h1 className="pt-6 sm:py-6 py-4 text-3xl font-bold">
               {lastRow.name} huddles:
             </h1>
             <HuddleCarousel
