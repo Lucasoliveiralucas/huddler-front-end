@@ -172,7 +172,9 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       items-center
       p-8
       bg-[rgb(248,241,229)]
-      w-[50vw]
+      w-[75vw]
+      md:w-[60vw]
+      lg:w-[50vw]
       shadow-md
       rounded-md
       border-solid
