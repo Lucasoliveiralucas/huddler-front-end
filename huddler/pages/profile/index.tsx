@@ -182,7 +182,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             <HuddleCarousel
               setUpdate={setUpdate}
               update={update}
-              huddles={userCreatedHuddlesActive}
+              huddles={sortHuddlesByDate(userCreatedHuddlesActive)}
               huddlesUserIsGoing={huddlesUserIsGoing}
               id={aws_id}
             />

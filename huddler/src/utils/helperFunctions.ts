@@ -63,7 +63,7 @@ export const recommendedForUser = async (
     console.log(
       'User has not created huddles and is not going to any. Return all huddles in categories'
     );
-    return getActiveHuddles(huddlesInCategoriesArr);
+    return sortHuddlesByDate(getActiveHuddles(huddlesInCategoriesArr));
   }
 
   const recommend: Huddle[] = [];
@@ -76,7 +76,7 @@ export const recommendedForUser = async (
         recommend.push(huddle);
       }
     });
-    activeRecommend = getActiveHuddles(recommend);
+    activeRecommend = sortHuddlesByDate(getActiveHuddles(recommend));
     console.log(
       'User has created huddles, but is not going to any. Recommendations ',
       activeRecommend
@@ -91,7 +91,7 @@ export const recommendedForUser = async (
         recommend.push(huddle);
       }
     });
-    activeRecommend = getActiveHuddles(recommend);
+    activeRecommend = sortHuddlesByDate(getActiveHuddles(recommend));
     console.log(
       'User has not created huddles, but is going to some. Recommendations ',
       activeRecommend
@@ -114,7 +114,7 @@ export const recommendedForUser = async (
       finalRecommendation.push(huddle);
     }
   });
-  activeRecommend = getActiveHuddles(finalRecommendation);
+  activeRecommend = sortHuddlesByDate(getActiveHuddles(finalRecommendation));
 
   console.log(
     'User has created huddles and is going to other people huddles. Recommendations',
@@ -152,8 +152,7 @@ export const getSession = async () => {
 
 export const sortHuddlesByDate = (huddlesToSort: Huddle[]) => {
   return huddlesToSort.sort((a, b) => {
-    //@ts-ignore
-    return new Date(a.day_time) - new Date(b.day_time);
+    return new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf();
   });
 };
 
