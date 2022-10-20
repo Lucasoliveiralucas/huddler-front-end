@@ -56,6 +56,7 @@ const CategoriesContainer = ({
     e: React.MouseEvent<HTMLElement>,
     category: Category
   ) => {
+
     setDisabledButton(false);
     if (e.currentTarget.dataset.selected === 'false') {
       e.currentTarget.className = selectedClass;
@@ -70,10 +71,12 @@ const CategoriesContainer = ({
     if (chosenCategories) {
       //@ts-ignore (it thinks it's undefined because of the question mark in props. We may or may not pass it depending of where it comes )
       setChosenCategories(interests);
+      if (!chosenCategories.length) setDisabledButton(true);
       console.log('these are CategoriesPicked', chosenCategories);
     } else if (userCategories) {
       //@ts-ignore
       setUserCategories(interests);
+      if (!userCategories.length) setDisabledButton(true);
       console.log('these are userCategories', userCategories);
     }
 
@@ -113,4 +116,5 @@ const CategoriesContainer = ({
 };
 
 export default CategoriesContainer;
+
 

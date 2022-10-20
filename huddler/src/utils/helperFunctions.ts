@@ -59,11 +59,16 @@ export const recommendedForUser = async (
   // console.log('user created huddles', userCreated);
 
   // 4. If there are no huddles created or that the user is going we return as recommended all the huddles in the categories he is interested to
-  if (!userCreated.length && !userGoingTo.length) return huddlesInCategoriesArr;
+  if (!userCreated.length && !userGoingTo.length) {
+    console.log(
+      'User has not created huddles and is not going to any. Return all huddles in categories'
+    );
+    return getActiveHuddles(huddlesInCategoriesArr);
+  }
 
   const recommend: Huddle[] = [];
   const finalRecommendation: Huddle[] = [];
-
+  let activeRecommend = [];
   // 5. If he has created but not goint to any, we return early those he did not created
   if (userCreated.length && !userGoingTo.length) {
     huddlesInCategoriesArr.forEach((huddle: Huddle) => {
@@ -71,11 +76,12 @@ export const recommendedForUser = async (
         recommend.push(huddle);
       }
     });
+    activeRecommend = getActiveHuddles(recommend);
     console.log(
-      'User has not created huddles, but is going to some. These are the recommendations ',
-      recommend
+      'User has created huddles, but is not going to any. Recommendations ',
+      activeRecommend
     );
-    return recommend;
+    return activeRecommend;
   }
 
   // 6. If he has not created but going to some, we return early those he is not going to
@@ -85,11 +91,12 @@ export const recommendedForUser = async (
         recommend.push(huddle);
       }
     });
+    activeRecommend = getActiveHuddles(recommend);
     console.log(
-      'User has created huddles, but is not goint to any. These are the recommendations ',
-      recommend
+      'User has not created huddles, but is going to some. Recommendations ',
+      activeRecommend
     );
-    return recommend;
+    return activeRecommend;
   }
 
   // 7. If he is going to some, and also has created, we need to recommend only those he has not created and not going to.
@@ -107,9 +114,13 @@ export const recommendedForUser = async (
       finalRecommendation.push(huddle);
     }
   });
+  activeRecommend = getActiveHuddles(finalRecommendation);
 
-  // console.log('finalRecommendation', finalRecommendation);
-  return finalRecommendation;
+  console.log(
+    'User has created huddles and is going to other people huddles. Recommendations',
+    activeRecommend
+  );
+  return activeRecommend;
 };
 
 // 3. Dates handler
@@ -146,10 +157,12 @@ export const sortHuddlesByDate = (huddlesToSort: Huddle[]) => {
   });
 };
 
-export const getActiveHuddles = (huddlesToFileter: Huddle[]) => {
-  return huddlesToFileter.filter(
+export const getActiveHuddles = (huddlesToFilter: Huddle[]) => {
+  return huddlesToFilter.filter(
     //@ts-ignore
     (huddle) => new Date(huddle.day_time) > Date.now()
   );
 };
+
+
 
