@@ -100,12 +100,12 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       const huddleId = await getIdOfHuddleByDateOfCreation(date);
 
       //posting the categories to new huddle
-      addedCategories.forEach(async (el) => {
-        await postHuddleCategory(huddleId[0].id, el.id as number);
+      addedCategories.forEach((el) => {
+        postHuddleCategory(huddleId[0].id, el.id as number);
       });
       closeHuddleForm();
 
-      //the user that creates the huddle goes by default
+      // //the user that creates the huddle goes by default
       await postUserGoingToHuddle(currentUser.aws_id, huddleId);
     } catch {
       setError("We could not create the huddle");

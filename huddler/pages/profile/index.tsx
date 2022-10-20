@@ -50,6 +50,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
       fetcher
     ) || [];
 
+  const userCreatedHuddlesActive = userCreatedHuddles?.length ? getActiveHuddles(userCreatedHuddles) : [];
   const getter = async () => {
     const huddlesUserIsGoing = await getUserGoingHuddles(aws_id);
 
@@ -94,7 +95,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             <Avatar user={user} />
             <UserInfo
               numOfCreatedHuddles={
-                userCreatedHuddles ? userCreatedHuddles.length : 0
+                userCreatedHuddlesActive ? userCreatedHuddlesActive.length : 0
               }
               huddlesUserIsGoing={
                 huddlesUserIsGoing ? huddlesUserIsGoing.length : 0
@@ -129,7 +130,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
         <MobileAvatar user={user} />
         <UserInfo
           numOfCreatedHuddles={
-            userCreatedHuddles ? userCreatedHuddles.length : 0
+            userCreatedHuddlesActive ? userCreatedHuddlesActive.length : 0
           }
           huddlesUserIsGoing={
             huddlesUserIsGoing ? huddlesUserIsGoing.length : 0
@@ -165,7 +166,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
           </div>
         )}
 
-        {Array.isArray(userCreatedHuddles) && userCreatedHuddles.length ? (
+        {Array.isArray(userCreatedHuddlesActive) && userCreatedHuddlesActive.length ? (
           <>
             <h1 className="pt-6 sm:py-6 p-4 text-3xl font-bold">
               Created huddles:
@@ -173,7 +174,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             <HuddleCarousel
               setUpdate={setUpdate}
               update={update}
-              huddles={userCreatedHuddles}
+              huddles={userCreatedHuddlesActive}
               huddlesUserIsGoing={huddlesUserIsGoing}
               id={aws_id}
             />
