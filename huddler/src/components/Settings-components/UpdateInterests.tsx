@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Category, User } from '../../types';
+import { useEffect, useState } from "react";
+import { Category, User } from "../../types";
 import {
   postUserCategory,
   deleteOneUserCategory,
   getUserCategories,
-} from '../../utils/APIServices/userServices';
-import CategoriesContainer from '../CategoriesContainer';
+} from "../../utils/APIServices/userServices";
+import CategoriesContainer from "../CategoriesContainer";
 
 type Props = {
   userData: User;
@@ -13,7 +13,7 @@ type Props = {
 const UpdateInterests = ({ userData }: Props) => {
   let [userCategories, setUserCategories] = useState<Category[]>();
   let [disabledButton, setDisabledButton] = useState(true);
-  const [success, setSuccess] = useState('');
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     loadUserCategories();
@@ -41,25 +41,25 @@ const UpdateInterests = ({ userData }: Props) => {
         toDelete.push(category);
     });
 
-    console.log('to add', toAdd);
+    console.log("to add", toAdd);
 
     toAdd.forEach((category) => {
       postUserCategory(userData.aws_id, category.id as number);
     });
 
-    console.log('to delete', toDelete);
+    console.log("to delete", toDelete);
     toDelete.forEach((category) => {
       deleteOneUserCategory(userData.aws_id, category.id as number);
     });
-    setSuccess('Success! You updated your interests');
+    setSuccess("Success! You updated your interests");
     return;
   };
 
   return (
     <>
-      <div className='flex flex-col mx-3 items-center mt-10 md:mt-32 lg:mt-0'>
-        <h1 className='text-2xl font-bold font-yantra'>YOUR INTEREST</h1>
-        <div className='w-full'>
+      <div className="flex flex-col mx-3 items-center mt-10 md:mt-32 lg:mt-0">
+        <h1 className="text-2xl font-bold font-yantra">YOUR INTEREST</h1>
+        <div className="w-full">
           {/* @ts-ignore */}
           <CategoriesContainer
             userCategories={userCategories}
@@ -67,10 +67,10 @@ const UpdateInterests = ({ userData }: Props) => {
             setDisabledButton={setDisabledButton}
           />
         </div>
-        <div className='flex justify-center'>
+        <div className="flex justify-center">
           {success ? (
             <>
-              <div className='text-[#145725] bg-[#D5EDDB] p-5 rounded-md'>
+              <div className="text-[#145725] bg-[#D5EDDB] p-5 rounded-md">
                 {success}
               </div>
               <br />
@@ -78,8 +78,8 @@ const UpdateInterests = ({ userData }: Props) => {
           ) : (
             <button
               // className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
-              className='leave-button flex text-2xl py-2 px-5 my-4'
-              type='submit'
+              className="leave-button flex text-2xl py-2 px-5 my-4"
+              type="submit"
               disabled={disabledButton}
               onClick={onClickUpdateUserInterests}
             >
@@ -93,4 +93,3 @@ const UpdateInterests = ({ userData }: Props) => {
 };
 
 export default UpdateInterests;
-

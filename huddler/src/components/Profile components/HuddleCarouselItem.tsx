@@ -56,9 +56,15 @@ function HuddleCarouselItem({
     getter();
   }, []);
   const toggleGoingToHuddle = async (isGoing: boolean) => {
-    isGoing
-      ? await postUserGoingToHuddle(id, huddle.id)
-      : await removeUserGoingToHuddle(id, huddle.id);
+    const item = document.getElementById(huddle.description);
+    console.log(item);
+
+    if (isGoing) await postUserGoingToHuddle(id, huddle.id);
+    else {
+      item?.classList.remove("animate-slide-in");
+      item?.classList.add("animate-slide-out");
+      await removeUserGoingToHuddle(id, huddle.id);
+    }
 
     setUpdate(!update);
   };

@@ -24,8 +24,9 @@ function HuddleCarousel({
     >
       {huddles.map((huddle) => (
         <div
-          className="w-[95%] shrink-0 md:w-1/3 h-68 lg:h-60 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
+          className="w-[95%] animate-slide-in shrink-0 md:w-1/3 h-68 lg:h-60 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
           key={huddle.id}
+          id={huddle.description}
         >
           <HuddleCarouselItem
             setUpdate={setUpdate}

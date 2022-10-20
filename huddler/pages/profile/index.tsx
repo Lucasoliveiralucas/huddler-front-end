@@ -106,7 +106,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               }
             />
             <div className="h-1/9 w-full flex flex-col justify-center mt-8 border gap-6">
-              <h1 className="text-3xl font-karla text-palette-dark self-center mt-10 lg:mt-0">
+              {/* <h1 className="text-3xl font-karla text-palette-dark self-center mt-10 lg:mt-0">
                 UPCOMING HUDDLE
               </h1>
               <div className='self-center mt-2 w-[30rem] ml-8 lg:w-full h-[18rem] lg:h-64 flex-shrink-0 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg'>
@@ -123,7 +123,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
                 ) : (
                   <></>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

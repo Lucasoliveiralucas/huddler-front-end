@@ -16,19 +16,19 @@ module.exports = {
           "100%": { opacity: "100%", transform: "translateY(0px)" },
         },
         slideout: {
-          "0%": { transform: "scale(1)" },
-          "100%": { transform: "scale(0)" },
+          "0%": { transform: "scale(1)", width: "25%" },
+          "100%": { transform: "scale(0)", width: "0%", display: "none" },
         },
         slidein: {
-          "0%": { transform: "scale(0)" },
-          "100%": { transform: "scale(1)" },
+          "0%": { transform: "scale(0)", width: "0%" },
+          "100%": { transform: "scale(1)", width: "25%" },
         },
       },
       animation: {
         "fade-out": "fadeout 500ms linear",
         "fade-in": "fadein 500ms linear",
-        "slide-out": "slideout 500ms linear",
-        "slide-in": "slidein 500ms linear",
+        "slide-out": "slideout 250ms linear",
+        "slide-in": "slidein 250ms linear",
       },
       colors: {
         "palette-light": "#f0e3ca",
@@ -39,13 +39,13 @@ module.exports = {
       screens: {
         "3xl": "1800px",
       },
-      fontFamily : {
-        "nanum" : ['Nanum Gothic', 'sans-serif'],
-        "karla" : ['Karla',  'sans-serif'],
-        "publicSans" : ['Public Sans',  'sans-serif'],
-        "didact" : ['Didact Gothic',  'sans-serif'],
-        "yantra" : ['Yantramanav',  'sans-serif']
-      }
+      fontFamily: {
+        nanum: ["Nanum Gothic", "sans-serif"],
+        karla: ["Karla", "sans-serif"],
+        publicSans: ["Public Sans", "sans-serif"],
+        didact: ["Didact Gothic", "sans-serif"],
+        yantra: ["Yantramanav", "sans-serif"],
+      },
     },
   },
   plugins: [],
