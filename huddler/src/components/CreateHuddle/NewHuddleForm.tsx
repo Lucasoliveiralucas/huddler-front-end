@@ -58,10 +58,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
     lng: '2.154',
   });
   const [finalLocation, setFinalLocation] = useState(locationData);
-  
+
   const titleRef = useRef<HTMLInputElement>(null);
   const whenRef = useRef<HTMLInputElement>(null);
-  const categoriesInputRef = useRef<HTMLInputElement>(null)
+  const categoriesInputRef = useRef<HTMLInputElement>(null);
   const imagesRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -134,13 +134,18 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
   let huddleCategories: string[] = [];
 
   const addCategory = (category: Category) => {
-    if (addedCategories.includes(category)) return;
+    //@ts-ignore
+    if (allCategories.includes(category)) {
+      categoriesInputRef.current!.value = '';
+      setAllCategories([]);
+      return;
+    }
     addedCategories[0].name == ''
       ? setAddedCategories([category])
       : setAddedCategories([...addedCategories, category]);
     console.log('These are the selected categories,', addedCategories);
     categoriesInputRef.current!.value = '';
-    setAllCategories([])
+    setAllCategories([]);
   };
 
   useEffect(() => {
@@ -219,31 +224,28 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           >
             Pick the tags of your huddle
           </label>
-          {allCategories[0] ? (
-            <div className='absolute ml-[95%] mt-[22%] w-[22rem] bg-palette-light p-2 rounded-sm shadow-sm'>
-              <ul className='grid grid-cols-3 gap-2'>
-                {allCategories.map((category, i) => (
-                  <li
-                    key={i}
-                    className='text-lg font-medium bg-palette-dark py-2 px-2 rounded text-white hover:bg-opacity-60 cursor-pointer'
-                    onClick={() => addCategory(category)}
-                  >
-                    {category.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <></>
-          )}
+
           {
             <div className='my-3 mt-2'>
-              <ul className='grid grid-cols-3 gap-2'>
+              <ul className='flex gap-2'>
                 {addedCategories.map((category, i) => {
                   return (
                     <li
                       key={i}
-                      className='cursor-pointer bg-white bg-opacity-60 rounded-md text-center'
+                      className='p-4
+  text-center
+  font-bold
+  rounded-2xl
+  py-0.5
+  px-10
+  border-palette-dark
+  border-[1px]
+  bg-tansparent
+  text-palette-dark
+  cursor-pointer
+  active:translate-x-[1px]
+  active:translate-y-[1px]
+  hover:opacity-50'
                       onClick={() =>
                         setAddedCategories(
                           addedCategories.filter((word) => word != category)
@@ -258,7 +260,42 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             </div>
           }
           {/*@ts-ignore */}
-          <TagList categoriesInputRef={categoriesInputRef} setAllCategories={setAllCategories} />
+          <TagList
+            categoriesInputRef={categoriesInputRef}
+            setAllCategories={setAllCategories}
+          />
+          {allCategories[0] ? (
+            <div
+              className='absolute w-[22rem] mt-[11rem] mr- bg-palette-light p-2  rounded-2xl
+  border-palette-dark
+  border-[1px] shadow-sm'
+            >
+              <ul className='grid grid-cols-3 gap-2'>
+                {allCategories.map((category, i) => (
+                  <li
+                    key={i}
+                    className='p-4
+  text-center
+  font-bold
+  py-0.5
+  rounded-2xl
+  bg-tansparent
+  text-palette-light
+  bg-orange-600
+  cursor-pointer
+  active:translate-x-[1px]
+  active:translate-y-[1px]
+  hover:opacity-50'
+                    onClick={() => addCategory(category)}
+                  >
+                    {category.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <></>
+          )}
           <label
             className='mt-2'
             htmlFor='where'
@@ -348,4 +385,5 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 };
 
 export default NewHuddleForm;
+
 
