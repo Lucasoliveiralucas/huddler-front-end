@@ -78,7 +78,7 @@ export default function MobileMap({
     }
   }, []);
   return (
-    <div className="mt-0">
+    <div className="mt-0 relative">
       <div className="absolute top-0 right-0 px-3 z-10">
         <div className="z-10 mt-3 w-45">
           <PlacesAutocomplete
