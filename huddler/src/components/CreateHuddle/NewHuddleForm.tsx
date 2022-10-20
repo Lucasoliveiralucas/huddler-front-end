@@ -82,7 +82,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         latitude: +finalLocation.lat,
         address: finalLocation.name,
         description: descriptionRef.current!.value,
-        image: `${process.env.NEXT_PUBLIC_AWS_UPLOAD_IMAGE}/filename`,
+        image: `${process.env.NEXT_PUBLIC_AWS_UPLOAD_IMAGE}/${filename}`,
         date_of_creation: date,
         link: '',
         fk_author_id: currentUser.aws_id, //here we'll require the uid from the authentication
@@ -135,7 +135,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
     //@ts-ignore
     if (addedCategories.some((cat) => cat.name === category.name)) {
       categoriesInputRef.current!.value = '';
-      setAllCategories([])
+      setAllCategories([]);
       return;
     }
     !addedCategories.length
@@ -168,7 +168,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
     // <main className="w-[100%]"
     <main
       id='huddle-form'
-      className="
+      className='
       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
       absolute
       flex-col
@@ -182,7 +182,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       rounded-md
       border-solid
       border-[0.5px]
-      border-palette-orange"
+      border-palette-orange'
     >
       <div className='relative'>
         <button
@@ -191,7 +191,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         >
           <FaWindowClose color='#CC0000' />
         </button>
-        <h1 className="text-center text-lg font-medium text-palette-orange font-yantra mt-0">
+        <h1 className='text-center text-lg font-medium text-palette-orange font-yantra mt-0'>
           {"Let's make a new huddle"}
         </h1>
         {error && (
@@ -203,8 +203,16 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
           </>
         )}
 
-        <form className="flex flex-col" onSubmit={handleSubmit}>
-          <label htmlFor="title" className="font-karla font-medium text-palette-dark">TITLE</label>
+        <form
+          className='flex flex-col'
+          onSubmit={handleSubmit}
+        >
+          <label
+            htmlFor='title'
+            className='font-karla font-medium text-palette-dark'
+          >
+            TITLE
+          </label>
           <input
             className='outline-palette-orange outline-1 shadow-sm rounded-md'
             ref={titleRef}
@@ -213,7 +221,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             autoComplete='on'
             required
           />
-          <label htmlFor="categories" className="mt-6 font-karla font-medium text-palette-dark">
+          <label
+            htmlFor='categories'
+            className='mt-6 font-karla font-medium text-palette-dark'
+          >
             PICK THE TAGS OF YOUR HUDDLE
           </label>
 
@@ -313,7 +324,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
             min={nowFormatted()}
             required
           />
-          <label className="mt-2 font-karla font-medium text-palette-dark" htmlFor="description">
+          <label
+            className='mt-2 font-karla font-medium text-palette-dark'
+            htmlFor='description'
+          >
             WHAT IS YOUR HUDDLE?
           </label>
           <textarea
@@ -342,11 +356,11 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
               />
             </div>
             {imageSelected && (
-              <figure className="flex justify-center items-center">
+              <figure className='flex justify-center items-center'>
                 <Image
                   width={200}
                   height={200}
-                  className="mt-4"
+                  className='mt-4'
                   id='image-preview'
                   alt='image-preview'
                   src={imagePreview}
