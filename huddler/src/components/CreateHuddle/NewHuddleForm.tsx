@@ -138,7 +138,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
       setAllCategories([])
       return;
     }
-    addedCategories[0].name == ''
+    !addedCategories.length
       ? setAddedCategories([category])
       : setAddedCategories([...addedCategories, category]);
     console.log('These are the selected categories,', addedCategories);
