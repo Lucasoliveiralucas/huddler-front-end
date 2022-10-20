@@ -82,7 +82,8 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         latitude: +finalLocation.lat,
         address: finalLocation.name,
         description: descriptionRef.current!.value,
-        image: 'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/' +
+        image:
+          "https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/" +
           filename,
         date_of_creation: date,
         link: "",
@@ -379,8 +380,3 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 };
 
 export default NewHuddleForm;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 24d8fe9 (fix: merge fix)
