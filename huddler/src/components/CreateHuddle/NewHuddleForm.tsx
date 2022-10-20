@@ -358,6 +358,7 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
                 <Image
                   width={200}
                   height={200}
+                  className="mt-4"
                   id='image-preview'
                   alt='image-preview'
                   src={imagePreview}
