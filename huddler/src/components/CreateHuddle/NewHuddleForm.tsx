@@ -354,11 +354,10 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
               />
             </div>
             {imageSelected && (
-              <figure>
+              <figure className="flex justify-center items-center">
                 <Image
-                  className='ml-10'
-                  width={100}
-                  height={100}
+                  width={200}
+                  height={200}
                   id='image-preview'
                   alt='image-preview'
                   src={imagePreview}
