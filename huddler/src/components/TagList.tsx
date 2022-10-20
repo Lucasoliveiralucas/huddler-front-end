@@ -4,8 +4,9 @@ import { getAllCategories } from '../utils/APIServices/categoryServices';
 
 type Props = {
   setAllCategories: React.Dispatch<React.SetStateAction<Category[]>>;
+  categoriesInputRef: any;
 };
-const TagList = ({ setAllCategories }: Props) => {
+const TagList = ({ setAllCategories, categoriesInputRef }: Props) => {
   //should compare string in input to categories and display ones that match
   const [comparator, setComparator] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
@@ -39,6 +40,7 @@ const TagList = ({ setAllCategories }: Props) => {
   return (
     <div>
       <input
+        ref={categoriesInputRef}
         placeholder='Add Tags...'
         type='text'
         className='outline-palette-orange outline-1 shadow-sm rounded-md w-[100%]'
