@@ -5,6 +5,7 @@ import { getHuddlesInCategory } from './APIServices/categoryServices';
 import {
   getUserCategories,
   getUserCreatedHuddles,
+  getUserGoingHuddles,
 } from './APIServices/userServices';
 
 // 1. Fetcher
@@ -176,4 +177,24 @@ export const filterOutRepeated = (huddlesToFilter: Huddle[]) => {
     (huddle, i, self) => i === self.findIndex((hud) => hud.id === huddle.id)
   );
 };
+
+export const userGoingNotCreated = async (userCreated: Huddle[], aws_id: string) => {
+  const huddlesUserIsGoing = await getUserGoingHuddles(aws_id);
+  const sortedHuddles = sortHuddlesByDate(huddlesUserIsGoing);
+  const activeHuddles = getActiveHuddles(sortedHuddles);
+  const userGoingNotCreated: Huddle[] = [];
+  activeHuddles.forEach((huddle: Huddle) => {
+    if (
+      !userCreated!.some((hud: Huddle) => hud.id === huddle.id)
+    ) {
+      userGoingNotCreated.push(huddle);
+    }
+  });
+
+  return userGoingNotCreated;
+}
+
+
+
+
 
