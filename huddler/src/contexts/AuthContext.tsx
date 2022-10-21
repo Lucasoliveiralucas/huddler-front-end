@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: Props) => {
 
   const signEventDetector = (user: User, username: string, email: string) => {
     if (user.username !== undefined) {
-      console.log("User already logged in");
+      console.log("User that already had account");
       setIsAuthenticated(true);
       setCurrentUser(user);
       // console.log('user to storeeee ', user)

@@ -31,7 +31,7 @@ const Slider = () => {
               // @ts-ignore
               objectFit="contain"
               className="z-10"
-              fill
+              // fill
             />
           </div>
         </div>
