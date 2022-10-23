@@ -5,6 +5,7 @@ import { getHuddlesInCategory } from './APIServices/categoryServices';
 import {
   getUserCategories,
   getUserCreatedHuddles,
+  getUserGoingHuddles,
 } from './APIServices/userServices';
 
 // 1. Fetcher
@@ -32,7 +33,10 @@ export const recommendedForUser = async (
   aws_id: string,
   userGoingTo: Huddle[]
 ) => {
-  // console.log('huddles going to', userGoingTo)
+  let activeHuddles: Huddle[] = [];
+  let uniqueHuddles: Huddle[] = [];
+  let toRecommend: Huddle[] = [];
+  let finalRecommendation: Huddle[] = [];
 
   // 1. We receive as prop the categories the user is going
   // 2. Get all the huddles in all categories the user is inteterested to
@@ -63,40 +67,45 @@ export const recommendedForUser = async (
     console.log(
       'User has not created huddles and is not going to any. Return all huddles in categories'
     );
-    return sortHuddlesByDate(getActiveHuddles(huddlesInCategoriesArr));
+
+    activeHuddles = getActiveHuddles(huddlesInCategoriesArr);
+    uniqueHuddles = filterOutRepeated(activeHuddles);
+    toRecommend = sortHuddlesByDate(uniqueHuddles);
+    return toRecommend;
   }
 
-  const recommend: Huddle[] = [];
-  const finalRecommendation: Huddle[] = [];
-  let activeRecommend = [];
   // 5. If he has created but not goint to any, we return early those he did not created
   if (userCreated.length && !userGoingTo.length) {
     huddlesInCategoriesArr.forEach((huddle: Huddle) => {
       if (!userCreated!.some((hud: Huddle) => hud.id === huddle.id)) {
-        recommend.push(huddle);
+        toRecommend.push(huddle);
       }
     });
-    activeRecommend = sortHuddlesByDate(getActiveHuddles(recommend));
+    activeHuddles = getActiveHuddles(toRecommend);
+    uniqueHuddles = filterOutRepeated(activeHuddles);
+    finalRecommendation = sortHuddlesByDate(uniqueHuddles);
     console.log(
       'User has created huddles, but is not going to any. Recommendations ',
-      activeRecommend
+      finalRecommendation
     );
-    return activeRecommend;
+    return finalRecommendation;
   }
 
   // 6. If he has not created but going to some, we return early those he is not going to
   if (!userCreated.length && userGoingTo.length) {
     huddlesInCategoriesArr.forEach((huddle: Huddle) => {
       if (!userGoingTo!.some((hud: Huddle) => hud.id === huddle.id)) {
-        recommend.push(huddle);
+        toRecommend.push(huddle);
       }
     });
-    activeRecommend = sortHuddlesByDate(getActiveHuddles(recommend));
+    activeHuddles = getActiveHuddles(toRecommend);
+    uniqueHuddles = filterOutRepeated(activeHuddles);
+    finalRecommendation = sortHuddlesByDate(uniqueHuddles);
     console.log(
       'User has not created huddles, but is going to some. Recommendations ',
-      activeRecommend
+      finalRecommendation
     );
-    return activeRecommend;
+    return finalRecommendation;
   }
 
   // 7. If he is going to some, and also has created, we need to recommend only those he has not created and not going to.
@@ -104,23 +113,24 @@ export const recommendedForUser = async (
   //7.1
   huddlesInCategoriesArr.forEach((huddle: Huddle) => {
     if (!userCreated!.some((hud: Huddle) => hud.id === huddle.id)) {
-      recommend.push(huddle);
+      toRecommend.push(huddle);
     }
   });
 
   //7.2
-  recommend.forEach((huddle: Huddle) => {
+  toRecommend.forEach((huddle: Huddle) => {
     if (!userGoingTo!.some((hud: Huddle) => hud.id === huddle.id)) {
       finalRecommendation.push(huddle);
     }
   });
-  activeRecommend = sortHuddlesByDate(getActiveHuddles(finalRecommendation));
-
+  activeHuddles = getActiveHuddles(finalRecommendation);
+  uniqueHuddles = filterOutRepeated(activeHuddles);
+  const sortedRecommendation = sortHuddlesByDate(uniqueHuddles);
   console.log(
     'User has created huddles and is going to other people huddles. Recommendations',
-    activeRecommend
+    sortedRecommendation
   );
-  return activeRecommend;
+  return sortedRecommendation;
 };
 
 // 3. Dates handler
@@ -158,10 +168,33 @@ export const sortHuddlesByDate = (huddlesToSort: Huddle[]) => {
 
 export const getActiveHuddles = (huddlesToFilter: Huddle[]) => {
   return huddlesToFilter.filter(
-    //@ts-ignore
-    (huddle) => new Date(huddle.day_time) > Date.now()
+    (huddle) => new Date(huddle.day_time).valueOf() > Date.now()
   );
 };
+
+export const filterOutRepeated = (huddlesToFilter: Huddle[]) => {
+  return huddlesToFilter.filter(
+    (huddle, i, self) => i === self.findIndex((hud) => hud.id === huddle.id)
+  );
+};
+
+export const userGoingNotCreated = async (userCreated: Huddle[], aws_id: string) => {
+  const huddlesUserIsGoing = await getUserGoingHuddles(aws_id);
+  const sortedHuddles = sortHuddlesByDate(huddlesUserIsGoing);
+  const activeHuddles = getActiveHuddles(sortedHuddles);
+  const userGoingNotCreated: Huddle[] = [];
+  activeHuddles.forEach((huddle: Huddle) => {
+    if (
+      !userCreated!.some((hud: Huddle) => hud.id === huddle.id)
+    ) {
+      userGoingNotCreated.push(huddle);
+    }
+  });
+
+  return userGoingNotCreated;
+}
+
+
 
 
 

@@ -29,9 +29,9 @@ const Slider = () => {
             height={150}
             objectFit="contain"
             className="z-10"
-            />
+          />
         </div>
-        
+
         <Fade>
           {fadeImages.map((fadeImage, key) => (
             <div

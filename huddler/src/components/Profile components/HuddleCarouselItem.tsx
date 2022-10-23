@@ -76,7 +76,7 @@ function HuddleCarouselItem({
             <img
               src={huddle.image}
               alt={huddle.name}
-              className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
+              className="absolute h-[200px] md:h-full object-cover rounded-tl-md rounded-br-lg"
             />
           </picture>
         </div>
