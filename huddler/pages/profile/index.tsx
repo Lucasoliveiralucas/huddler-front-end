@@ -51,19 +51,8 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
     fetcher
   );
 
-  // const { data: userCreatedHuddles, error: userHuddleError } =
-  //   useSWR(
-  //     `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/huddles_user_created?user-id=${aws_id}`,
-  //     fetcher
-  //   ) || [];
-
-  //   const userCreatedHuddlesActive = userCreatedHuddles?.length
-  //     ? getActiveHuddles(userCreatedHuddles)
-  //     : [];
 
   const getter = async () => {
-    // console.log('goingTo', goingTo)
-
     try {
       const userCreatedHuddles = await getUserCreatedHuddles(aws_id);
       const userCreatedHuddlesActive = getActiveHuddles(userCreatedHuddles);
@@ -133,6 +122,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
                   <div className='flex flex-col'>
                     <p>{huddlesUserIsGoing[0].name}</p>
                     <p>{huddlesUserIsGoing[0].day_time}</p>
+                    {/* @ts-ignore */}
                     <Link href={{ pathname: `/details/${huddlesUserIsGoing[0].id}`, query: huddlesUserIsGoing[0] }}>
                       <h1 className="font-bold text-palette-dark text-lg cursor-pointer hover:text-palette-orange hover:underline">
                         Event Page
@@ -196,13 +186,13 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             <h1 className='pt-2 text-3xl font-bold font-yantra text-palette-dark'>
               Created huddles:
             </h1>
-            <HuddleCarousel
+            {huddlesUserIsGoing && <HuddleCarousel
               setUpdate={setUpdate}
               update={update}
               huddles={sortHuddlesByDate(userCreatedHuddlesActive)}
               huddlesUserIsGoing={huddlesUserIsGoing}
               id={aws_id}
-            />
+            />}
           </>
         ) : (
           <></>
@@ -230,13 +220,13 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             <h1 className='pt-4 text-3xl text-palette-dark font-medium'>
               {lastRow.name} huddles:
             </h1>
-            <HuddleCarousel
+            {huddlesUserIsGoing && <HuddleCarousel
               setUpdate={setUpdate}
               update={update}
               huddles={lastRow.huddles}
               huddlesUserIsGoing={huddlesUserIsGoing}
               id={aws_id}
-            />
+            />}
           </>
         ) : (
           <h1 className='pt-6 sm:py-6 p-4 text-3xl font-karla font-extralight'>

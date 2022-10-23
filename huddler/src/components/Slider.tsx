@@ -19,8 +19,8 @@ const fadeImages = [
 const Slider = () => {
   return (
     <>
-      <div className="slide-container w-full relative bg-black">
-        <div className="absolute flex w-full justify-center top-[12%] md:top-[8%] lg:top-[5%]">
+      <div className="slide-container w-full b-8 relative bg-black">
+        <div className="hidden-mob absolute flex w-full justify-center top-[12%] md:top-[8%] lg:top-[5%]">
           <Image
             alt="logo"
             src={logo}

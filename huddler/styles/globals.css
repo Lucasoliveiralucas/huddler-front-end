@@ -91,6 +91,12 @@
   display: none !important;
 }
 
+@media (max-height: 700px) {
+  .hidden-mob {
+    display: hidden;
+  }
+}
+
 /* .gmnoprint {
   right: 0 !important;
 } */
