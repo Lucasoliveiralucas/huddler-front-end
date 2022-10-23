@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { Fade, Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import logo from "../../public/huddler-orange-w-logo.png";
@@ -17,10 +17,11 @@ const fadeImages = [
 ];
 
 const Slider = () => {
+
   return (
     <>
       <div className="slide-container w-full b-8 relative bg-black">
-        <div className="hidden-mob absolute flex w-full justify-center top-[12%] md:top-[8%] lg:top-[5%]">
+        <div className=" hidden absolute tall:flex w-full justify-center top-[12%] md:top-[8%] lg:top-[5%]">
           <Image
             alt="logo"
             src={logo}

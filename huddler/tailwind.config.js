@@ -38,6 +38,7 @@ module.exports = {
       },
       screens: {
         "3xl": "1800px",
+        "tall": { 'raw': '(min-height: 700px)' },
       },
       fontFamily: {
         nanum: ["Nanum Gothic", "sans-serif"],
