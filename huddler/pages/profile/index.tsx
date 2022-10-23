@@ -201,7 +201,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               setUpdate={setUpdate}
               update={update}
               huddles={sortHuddlesByDate(userCreatedHuddlesActive)}
-              huddlesUserIsGoing={huddlesUserIsGoing}
+              huddlesUserIsGoing={huddlesUserIsGoing!}
               id={aws_id}
             />
           </>
@@ -218,7 +218,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               setUpdate={setUpdate}
               update={update}
               huddles={huddlesUserIsGoing}
-              huddlesUserIsGoing={huddlesUserIsGoing}
+              huddlesUserIsGoing={huddlesUserIsGoing!}
               id={aws_id}
             />
           </>
@@ -235,7 +235,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
               setUpdate={setUpdate}
               update={update}
               huddles={lastRow.huddles}
-              huddlesUserIsGoing={huddlesUserIsGoing}
+              huddlesUserIsGoing={huddlesUserIsGoing!}
               id={aws_id}
             />
           </>
