@@ -194,6 +194,11 @@ export const userGoingNotCreated = async (userCreated: Huddle[], aws_id: string)
   return userGoingNotCreated;
 }
 
+export const truncate = (word:string) => {
+  return word.length > 35 ? word.slice(0, 32) + '...' : word;
+  // return word;
+}
+
 
 
 
