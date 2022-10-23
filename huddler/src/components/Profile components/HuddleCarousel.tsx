@@ -24,7 +24,7 @@ function HuddleCarousel({
     >
       {huddles.map((huddle) => (
         <div
-          className="min-w-[30rem] max-w-[30rem] animate-slide-in h-64 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
+          className="min-w-[95vw] max-w-[95vw] md:min-w-[30rem] md:max-w-[30rem] animate-slide-in h-64 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
           key={huddle.id}
           id={huddle.description}
         >

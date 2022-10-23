@@ -147,7 +147,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
       </div>
 
       {/* Mobile */}
-      <div className=' lg:hidden w-full pt-4 h-auto flex-col'>
+      <div className=' lg:hidden w-full h-auto flex-col'>
         <MobileAvatar user={user} />
         <UserInfo
           numOfCreatedHuddles={

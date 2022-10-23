@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/future/image";
 import { Huddle, User } from "../../types";
-import { dateFormatter, fetcher } from "../../utils/helperFunctions";
+import { dateFormatter, fetcher, truncate } from "../../utils/helperFunctions";
 import {
   getHuddleCategories,
   getUsersGoingToHuddle,
@@ -86,13 +86,13 @@ function HuddleCarouselItem({
             {/* @ts-ignore */}
             <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>
               <h1 className="font-bold text-palette-dark text-lg cursor-pointer hover:text-palette-orange hover:underline">
-                {huddle.name}
+                {truncate(huddle.name)}
               </h1>
             </Link>
             <div className="">
               {going ? (
                 <button
-                  className="justify-center leave-button mr-6 lg:mr-2"
+                  className="justify-center leave-button mr-1 lg:mr-2"
                   onClick={(e) => {
                     setGoing(!going);
                     toggleGoingToHuddle(false);
@@ -102,7 +102,7 @@ function HuddleCarouselItem({
                 </button>
               ) : (
                 <button
-                  className="justify-center orange-button mr-6 lg:me-2"
+                  className="justify-center orange-button mr-1 lg:mr-2"
                   onClick={(e) => {
                     setGoing(!going);
                     toggleGoingToHuddle(true);
@@ -134,12 +134,12 @@ function HuddleCarouselItem({
         </div>
       </div>
 
-      <div id="tags" className="grid grid-cols-5 gap-2 mx-2 pb-1">
+      <div id="tags" className="grid grid-cols-4 gap-2 mx-2 pb-1">
         {data.categories.map((category, i) => {
           return (
             <>
               {
-                i < 5 && <p
+                i < 4 && <p
                   className="text-center font-bold py-0.5 rounded-2xl border-palette-dark border-[1px] bg-tansparent text-palette-dark"
                   key={category.id}
                 >
