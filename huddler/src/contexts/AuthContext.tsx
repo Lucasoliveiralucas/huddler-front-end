@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }: Props) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [cognitoUser, setCognitoUser] = useState<any>();
+  const [cognitoUser, setCognitoUser] = useState<User>();
   const router = useRouter();
 
   
@@ -45,9 +45,7 @@ export const AuthProvider = ({ children }: Props) => {
       const { username, attributes } = cognitoUser;
       // we only use cognito user when changing password and probably deleteing account
       setCognitoUser(cognitoUser);
-
       const userFromDb = await getUserById(username);
-
       const user = { ...userFromDb[0] };
       setTimeout(signEventDetector, 5, user, username, attributes.email);
     } catch (error) {
@@ -88,7 +86,7 @@ export const AuthProvider = ({ children }: Props) => {
     return;
   };
 
-  const changePassword = async (user: any, oldPsw: any, newPsw: any) => {
+  const changePassword = async (user: User, oldPsw: string, newPsw: string) => {
     console.log("Password is being changed");
     return await Auth.changePassword(user, oldPsw, newPsw);
   };

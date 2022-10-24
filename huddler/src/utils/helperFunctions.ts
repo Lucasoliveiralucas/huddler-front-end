@@ -12,6 +12,13 @@ import {
 // 2. Recommended Huddles
 // 3. Dates handler
 // 4. Sort by name, any array of objects that contains the field name
+// 5. Get authenticated user
+// 6. Sort huddles by date
+// 7. Get non-expired huddles
+// 8. Filter out duplicated huddles in same array
+// 9. Filter out duplicated huddles in two arrays
+// 10. Get the huddles a user is going and he has not created
+// 11. Truncate Function
 
 // 1. Fetcher
 export const fetcher = async (...args: string[]) => {
@@ -119,29 +126,41 @@ export const sortByName = (arrOfObj: Category[]) => {
   return arrOfObj.sort((a, b) => a.name.localeCompare(b.name));
 };
 
+// 5. Get authenticated user
 export const getSession = async () => {
   const res = await Auth.currentAuthenticatedUser();
   return res.CognitoUser.username;
 };
 
+// 6. Sort huddles by date
 export const sortHuddlesByDate = (huddlesToSort: Huddle[]) => {
   return huddlesToSort.sort((a, b) => {
     return new Date(a.day_time).valueOf() - new Date(b.day_time).valueOf();
   });
 };
 
+// 7. Get non-expired huddles
 export const getActiveHuddles = (huddlesToFilter: Huddle[]) => {
   return huddlesToFilter.filter(
     (huddle) => new Date(huddle.day_time).valueOf() > Date.now()
   );
 };
 
+// 8. Filter out duplicated huddles in same array
 export const filterOutDuplicates = (huddlesToFilter: Huddle[]) => {
   return huddlesToFilter.filter(
     (huddle, i, self) => i === self.findIndex((hud) => hud.id === huddle.id)
   );
 };
 
+// 9. Filter out duplicated huddles in two arrays
+const filterOutContaining = (arrToFilter: Huddle[], containsArr: Huddle[]) =>
+  arrToFilter.filter(
+    (category) => !containsArr.some((cat) => category.id === cat.id)
+  );
+
+
+// 10. Get the huddles a user is going and he has not created
 export const userGoingNotCreated = async (
   userCreated: Huddle[],
   aws_id: string
@@ -158,10 +177,17 @@ export const userGoingNotCreated = async (
   return sortedHuddles;
 };
 
-const filterOutContaining = (arrToFilter: Huddle[], containsArr: Huddle[]) =>
-  arrToFilter.filter(
-    (category) => !containsArr.some((cat) => category.id === cat.id)
-  );
+// 11. Truncate Function
+export const truncate = (word: string) => {
+  return word.length > 35 ? word.slice(0, 32) + '...' : word;
+};
+
+
+
+
+
+
+
 
 
 

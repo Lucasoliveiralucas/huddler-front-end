@@ -16,38 +16,51 @@ const SettingsPage = () => {
   const { currentUser } = useAuth();
   const [userData, setUserData] = useState<User>(currentUser);
   const [option, setOption] = useState('information');
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    const checkAuth = sessionStorage.getItem('user')
-    if (!JSON.parse(checkAuth!)) {setIsAuth(false); router.replace('/');
-  } else {setIsAuth(true)}}, []);
+    const checkAuth = sessionStorage.getItem('user');
+    if (!JSON.parse(checkAuth!)) {
+      setIsAuth(false);
+      router.replace('/');
+    } else {
+      setIsAuth(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (currentUser) {
       setUserData(currentUser);
-      // console.log('this is current user', currentUser);
     }
   }, [currentUser]);
 
   return isAuth && currentUser ? (
-    <main id="1" className='flex flex-col mt-14 pb-10 md:pb-0 font-yantra text-palette-dark md:h-screen md:flex-row md:mt-0 justify-center items-center lg:items-center'>
-      <div id="2" className='flex md:items-end md:mt-30'>
+    <main
+      id='1'
+      className='flex flex-col mt-14 pb-10 md:pb-0 font-yantra text-palette-dark md:h-screen md:flex-row md:mt-0 justify-center items-center lg:items-center'
+    >
+      <div
+        id='2'
+        className='flex md:items-end md:mt-30'
+      >
         <OptionsMenu setOption={setOption} />
       </div>
-      <div id="3 right" className='md:ml-8 md:w-[60vw]'>
+      <div
+        id='3 right'
+        className='md:ml-8 md:w-[60vw]'
+      >
         {option === 'information' && userData && (
           <PersonalInformation userData={userData} />
-          )}
+        )}
         {option === 'password' && <ChangePassword />}
         {option === 'location' && (
           <UpdateLocation
-          // currentUserLongitude={userData.default_longitude!}
+            // currentUserLongitude={userData.default_longitude!}
             // currentUserLatitude={userData.default_latitude!}
             userData={userData}
             setUserData={setUserData}
-            />
-            )}
+          />
+        )}
         {option === 'interests' && <UpdateInterests userData={userData} />}
         {option === 'delete' && <DeleteUser userData={userData} />}
       </div>

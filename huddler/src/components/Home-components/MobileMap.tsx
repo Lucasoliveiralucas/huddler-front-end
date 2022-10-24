@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { GoogleMap, MarkerF } from "@react-google-maps/api";
-import PlacesAutocomplete from "./PlacesAutocomplete";
-import { Huddle, User } from "../../types";
-import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
-import { MapInfoWindow } from "./MapInfoWindow";
+import { useEffect, useState } from 'react';
+import { GoogleMap, MarkerF } from '@react-google-maps/api';
+import PlacesAutocomplete from './PlacesAutocomplete';
+import { Huddle, User } from '../../types';
+import NewHuddleForm from '../CreateHuddle/NewHuddleForm';
+import { MapInfoWindow } from './MapInfoWindow';
 
 type Props = {
   huddles?: Huddle[];
@@ -22,13 +22,13 @@ export default function MobileMap({
   updateList,
 }: Props) {
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
-  const [locationName, setLocationName] = useState("");
+  const [locationName, setLocationName] = useState('');
   const [selected, setSelected] = useState(false);
   const [createBox, setCreateBox] = useState(false);
   const [map, setMap] = useState({});
   const [mapSize, setMapSize] = useState({
-    width: "100%",
-    height: "77vh",
+    width: '100%',
+    height: '77vh',
   });
   const [containerSize, setContainerSize] = useState(mapSize);
   // later change center to user real life location
@@ -38,21 +38,21 @@ export default function MobileMap({
   });
 
   const toggleCreate = () => {
-    const form = document.getElementById("huddle-form");
+    const form = document.getElementById('huddle-form');
     if (createBox) {
-      form?.classList.remove("animate-fade-in");
-      form?.classList.add("animate-fade-out");
+      form?.classList.remove('animate-fade-in');
+      form?.classList.add('animate-fade-out');
       setTimeout(() => {
-        form?.classList.remove("flex");
-        form?.classList.add("hidden");
+        form?.classList.remove('flex');
+        form?.classList.add('hidden');
       }, 500);
       setCreateBox(false);
       return;
     }
-    form?.classList.remove("hidden");
-    form?.classList.add("flex");
-    form?.classList.remove("animate-fade-out");
-    form?.classList.add("animate-fade-in");
+    form?.classList.remove('hidden');
+    form?.classList.add('flex');
+    form?.classList.remove('animate-fade-out');
+    form?.classList.add('animate-fade-in');
     setCreateBox(true);
   };
   useEffect(() => {
@@ -66,21 +66,21 @@ export default function MobileMap({
       });
   }, [center]);
   useEffect(() => {
-    if (currentPage === "newuser") {
+    if (currentPage === 'newuser') {
       setMapSize({
-        width: "85.5vw",
-        height: "50vh",
+        width: '85.5vw',
+        height: '50vh',
       });
       setContainerSize({
-        width: "85.5vw",
-        height: "50vh",
+        width: '85.5vw',
+        height: '50vh',
       });
     }
   }, []);
   return (
-    <div className="mt-0 relative">
-      <div className="absolute top-0 right-0 px-3 z-10">
-        <div className="z-10 mt-3 w-45">
+    <div className='mt-0 relative'>
+      <div className='absolute top-0 right-0 px-3 z-10'>
+        <div className='z-10 mt-3 w-45'>
           <PlacesAutocomplete
             hook={setCenter}
             setSelected={setSelected}
@@ -103,7 +103,7 @@ export default function MobileMap({
                     />
                 </div> */}
       </div>
-      <div className="shadow-xl rounded-md ">
+      <div className='shadow-xl rounded-md '>
         <GoogleMap
           zoom={12}
           mapContainerStyle={containerSize}
@@ -129,7 +129,7 @@ export default function MobileMap({
             huddles.map((huddle: Huddle) => {
               return (
                 <MarkerF
-                  key={huddle.id + ""}
+                  key={huddle.id + ''}
                   position={{
                     lat: Number(huddle.latitude),
                     lng: Number(huddle.longitude),

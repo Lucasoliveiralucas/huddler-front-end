@@ -36,5 +36,10 @@ export interface Huddle {
   fk_huddle_id?: number;
 }
 
-
+export interface ChatMsg {
+  fk_huddle_id: number;
+  message: string;
+  username: string;
+  timezone?: string;
+}
 

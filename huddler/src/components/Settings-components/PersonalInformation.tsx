@@ -4,7 +4,7 @@ import UserImage from './UpdateUserImage';
 import { postUpdatedUserInfo } from '../../utils/APIServices/userServices';
 import { useRouter } from 'next/router';
 import {
-            // @ts-ignore
+  // @ts-ignore
   deleteOldImg,
   getUploadUrl,
   uploadImgToS3,
@@ -74,25 +74,21 @@ const PersonalInfo = ({ userData }: Props) => {
 
       //Check if a new image has been added
       if (addedImg) {
-
         // Delete old Image
-        console.log('imageurl BEFORE editing : '+ userPersonalInfo.image);
-        const oldImageInfoPath: any = userPersonalInfo.image
-        const oldImageInfo = /[^/]*$/.exec(oldImageInfoPath);
-          // @ts-ignore
-        const oldImage = oldImageInfo[0];
+        console.log('imageurl BEFORE editing : ' + userPersonalInfo.image);
+        const oldImageInfoPath = userPersonalInfo.image;
+        const oldImageInfo = /[^/]*$/.exec(oldImageInfoPath as string);
+        const oldImage = oldImageInfo![0];
         deleteOldImg(oldImage);
 
         // Upload new image to S3
         const data = await getUploadUrl();
         const uploadUrl = data.uploadURL;
         const filename = data.filename;
-        const fileURL =
-          'https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/' +
-          filename;
+        const fileURL = `${process.env.NEXT_PUBLIC_AWS_IMAGES}${filename}`;
 
         userPersonalInfo.image = fileURL;
-        console.log('imageurl AFTER editing : '+ userPersonalInfo.image);
+        console.log('imageurl AFTER editing : ' + userPersonalInfo.image);
         await uploadImgToS3(uploadUrl, newImg);
       }
 
@@ -126,7 +122,12 @@ const PersonalInfo = ({ userData }: Props) => {
           />
         </div>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='name' className='ml-1 lg:text-lg font-medium text-palette-dark'>USER NAME</label>
+          <label
+            htmlFor='name'
+            className='ml-1 lg:text-lg font-medium text-palette-dark'
+          >
+            USER NAME
+          </label>
           <input
             ref={nameRef}
             className='block w-80 h-10 rounded-md mb-3'
@@ -134,7 +135,12 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.username}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='email' className='ml-1 after:text-lg font-medium text-palette-dark'>EMAIL</label>
+          <label
+            htmlFor='email'
+            className='ml-1 after:text-lg font-medium text-palette-dark'
+          >
+            EMAIL
+          </label>
           <input
             ref={emailRef}
             id='email'
@@ -143,7 +149,12 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.email || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='first-name' className='ml-1 lg:text-lg font-medium text-palette-dark'>FIRST NAME</label>
+          <label
+            htmlFor='first-name'
+            className='ml-1 lg:text-lg font-medium text-palette-dark'
+          >
+            FIRST NAME
+          </label>
           <input
             ref={firstNameRef}
             id='first-name'
@@ -152,7 +163,12 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.first_name || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='last-name' className='ml-1 lg:text-lg font-medium text-palette-dark'>LAST NAME</label>
+          <label
+            htmlFor='last-name'
+            className='ml-1 lg:text-lg font-medium text-palette-dark'
+          >
+            LAST NAME
+          </label>
           <input
             ref={lastNameRef}
             id='last-name'
@@ -161,7 +177,12 @@ const PersonalInfo = ({ userData }: Props) => {
             placeholder={`  ${userPersonalInfo.last_name || ''}`}
             onChange={() => setDisabledButton(false)}
           />
-          <label htmlFor='description' className='ml-1 lg:text-lg font-medium text-palette-dark'>DESCRIPTION</label>
+          <label
+            htmlFor='description'
+            className='ml-1 lg:text-lg font-medium text-palette-dark'
+          >
+            DESCRIPTION
+          </label>
           <textarea
             ref={descriptionRef}
             id='description'
@@ -181,7 +202,9 @@ const PersonalInfo = ({ userData }: Props) => {
             ) : (
               <button
                 className={` ${
-                  disabledButton === true ? 'leave-button mb-8' : 'orange-button mb-8'
+                  disabledButton === true
+                    ? 'leave-button mb-8'
+                    : 'orange-button mb-8'
                 }`}
                 type='submit'
                 disabled={disabledButton}

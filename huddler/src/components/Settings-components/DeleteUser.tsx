@@ -5,8 +5,9 @@ import {
   deleteUser,
 } from '../../utils/APIServices/userServices';
 import { useAuth } from '../../contexts/AuthContext';
+import { User } from '../../types';
 type Props = {
-  userData: any;
+  userData: User;
 };
 
 const DeleteUser = ({ userData }: Props) => {
@@ -41,7 +42,7 @@ const DeleteUser = ({ userData }: Props) => {
         <div>
           <button
             className='border-none orange-button hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-xl mt-2 py-2 px-5'
-          // className='leave-button flex text-2xl py-2 px-5 my-4'
+            // className='leave-button flex text-2xl py-2 px-5 my-4'
             // className='border-none bg-palette-dark hover:bg-opacity-60 hover:cursor-pointer rounded-md shadow-md text-white text-2xl mt-2 py-2 px-5'
             onClick={handleDelete}
           >

@@ -58,7 +58,9 @@ const OptionsMenu = ({ setOption }: Props) => {
       </li>
       <li
         className={
-          selected.password ? defaultClass + ' bg-palette-orange text-white' : defaultClass
+          selected.password
+            ? defaultClass + ' bg-palette-orange text-white'
+            : defaultClass
         }
         onClick={handleOption}
         id='password'
@@ -68,7 +70,9 @@ const OptionsMenu = ({ setOption }: Props) => {
       </li>
       <li
         className={
-          selected.location ? defaultClass + ' bg-palette-orange text-white' : defaultClass
+          selected.location
+            ? defaultClass + ' bg-palette-orange text-white'
+            : defaultClass
         }
         onClick={handleOption}
         id='location'

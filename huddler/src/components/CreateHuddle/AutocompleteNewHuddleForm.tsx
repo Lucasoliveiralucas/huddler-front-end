@@ -17,6 +17,7 @@ const libraries: (
 type Description = {
   description: string;
 };
+
 type Props = {
   stockValue: string;
   setLocationData: React.Dispatch<

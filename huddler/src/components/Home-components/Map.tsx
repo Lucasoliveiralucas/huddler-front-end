@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
-import PlacesAutocomplete from "./PlacesAutocomplete";
-import { Huddle, User } from "../../types";
-import NewHuddleForm from "../CreateHuddle/NewHuddleForm";
-import { MapInfoWindow } from "./MapInfoWindow";
-import { getUserById } from "../../utils/APIServices/userServices";
-import { withSSRContext } from "aws-amplify";
+import { useEffect, useState } from 'react';
+import { GoogleMap, useJsApiLoader, MarkerF } from '@react-google-maps/api';
+import PlacesAutocomplete from './PlacesAutocomplete';
+import { Huddle, User } from '../../types';
+import NewHuddleForm from '../CreateHuddle/NewHuddleForm';
+import { MapInfoWindow } from './MapInfoWindow';
+import { getUserById } from '../../utils/APIServices/userServices';
+import { withSSRContext } from 'aws-amplify';
 
-import { NextApiResponse, NextApiRequest } from "next/types";
+import { NextApiResponse, NextApiRequest } from 'next/types';
 
 type Props = {
   huddles?: Huddle[];
@@ -26,13 +26,13 @@ export default function Map({
   user,
 }: Props) {
   const [showHuddle, setShowHuddle] = useState<Huddle | undefined>(undefined);
-  const [locationName, setLocationName] = useState("");
+  const [locationName, setLocationName] = useState('');
   const [selected, setSelected] = useState(false);
   const [createBox, setCreateBox] = useState(false);
   const [map, setMap] = useState({});
   const [mapSize, setMapSize] = useState({
-    width: "40vw",
-    height: "40vw",
+    width: '40vw',
+    height: '40vw',
   });
   const [containerSize, setContainerSize] = useState(mapSize);
   // later change center to user real life location
@@ -42,21 +42,21 @@ export default function Map({
   });
 
   const toggleCreate = () => {
-    const form = document.getElementById("huddle-form");
+    const form = document.getElementById('huddle-form');
     if (createBox) {
-      form?.classList.remove("animate-fade-in");
-      form?.classList.add("animate-fade-out");
+      form?.classList.remove('animate-fade-in');
+      form?.classList.add('animate-fade-out');
       setTimeout(() => {
-        form?.classList.remove("flex");
-        form?.classList.add("hidden");
+        form?.classList.remove('flex');
+        form?.classList.add('hidden');
       }, 500);
       setCreateBox(false);
       return;
     }
-    form?.classList.remove("hidden");
-    form?.classList.add("flex");
-    form?.classList.remove("animate-fade-out");
-    form?.classList.add("animate-fade-in");
+    form?.classList.remove('hidden');
+    form?.classList.add('flex');
+    form?.classList.remove('animate-fade-out');
+    form?.classList.add('animate-fade-in');
     setCreateBox(true);
   };
   useEffect(() => {
@@ -79,21 +79,21 @@ export default function Map({
         : setCenter({ lat: 41.39, lng: 2.15 });
     };
     getter();
-    if (currentPage === "newuser") {
+    if (currentPage === 'newuser') {
       setMapSize({
-        width: "",
-        height: "",
+        width: '',
+        height: '',
       });
       setContainerSize({
-        width: "45vw",
-        height: "50vh",
+        width: '45vw',
+        height: '50vh',
       });
     }
   }, []);
   return (
-    <div className="mt-0">
-      <div className="absolute pl-3 z-10 mt-24">
-        <div className="z-10 mt-3 w-60">
+    <div className='mt-0'>
+      <div className='absolute pl-3 z-10 mt-24'>
+        <div className='z-10 mt-3 w-60'>
           <PlacesAutocomplete
             hook={setCenter}
             setSelected={setSelected}
@@ -101,8 +101,8 @@ export default function Map({
           />
         </div>
         <div
-          id="huddle-form"
-          className="hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark"
+          id='huddle-form'
+          className='hidden flex-col items-center p-4 mt-4 bg-[rgb(248,241,229)] w-[20rem] shadow-md rounded-md border-solid border-[0.5px] border-palette-dark'
         >
           {/* <NewHuddleForm
             center={center}
@@ -116,7 +116,7 @@ export default function Map({
           /> */}
         </div>
       </div>
-      <div className="shadow-xl rounded-md ">
+      <div className='shadow-xl rounded-md '>
         <GoogleMap
           zoom={12}
           mapContainerStyle={containerSize}
@@ -142,7 +142,7 @@ export default function Map({
             huddles.map((huddle: Huddle) => {
               return (
                 <MarkerF
-                  key={huddle.id + ""}
+                  key={huddle.id + ''}
                   position={{
                     lat: Number(huddle.latitude),
                     lng: Number(huddle.longitude),
@@ -168,3 +168,4 @@ export default function Map({
     </div>
   );
 }
+

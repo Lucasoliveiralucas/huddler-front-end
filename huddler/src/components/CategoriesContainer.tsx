@@ -4,8 +4,7 @@ import { getAllCategories } from '../utils/APIServices/categoryServices';
 import { getUserCategories } from '../utils/APIServices/userServices';
 import { sortByName } from '../utils/helperFunctions';
 
-const notSelectedClass =
-  ` p-4
+const notSelectedClass = ` p-4
   text-center
   font-bold
   py-0.5
@@ -18,7 +17,8 @@ const notSelectedClass =
   active:translate-x-[1px]
   active:translate-y-[1px]
   hover:opacity-50`;
-const selectedClass = notSelectedClass + ' bg-orange-600 text-palette-light border-none';
+const selectedClass =
+  notSelectedClass + ' bg-orange-600 text-palette-light border-none';
 
 type Props = {
   chosenCategories?: Category[];
@@ -56,7 +56,6 @@ const CategoriesContainer = ({
     e: React.MouseEvent<HTMLElement>,
     category: Category
   ) => {
-
     if (e.currentTarget.dataset.selected === 'false') {
       e.currentTarget.className = selectedClass;
       interests.push(category);
@@ -116,5 +115,4 @@ const CategoriesContainer = ({
 };
 
 export default CategoriesContainer;
-
 

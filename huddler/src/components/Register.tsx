@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
 function Register({ signOut }: any) {
   return (
@@ -15,3 +15,4 @@ function Register({ signOut }: any) {
   );
 }
 export default withAuthenticator(Register);
+

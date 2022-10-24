@@ -15,7 +15,7 @@ export const uploadImgToS3 = async (uploadUrlForS3: string, file: File | {}) => 
   return await fetch(uploadUrlForS3, {
     method: 'PUT',
     mode: 'cors',
-          //@ts-ignore
+    //@ts-ignore
     body: file,
   })
     .then((res) => res.text())

@@ -1,13 +1,13 @@
-import { InfoWindowF } from "@react-google-maps/api";
-import React, { useEffect, useState } from "react";
-import { Huddle } from "../../types";
-import Image from "next/future/image";
+import { InfoWindowF } from '@react-google-maps/api';
+import React, { useEffect, useState } from 'react';
+import { Huddle } from '../../types';
+import Image from 'next/future/image';
 import {
   getUsersGoingToHuddle,
   postUserGoingToHuddle,
   removeUserGoingToHuddle,
-} from "../../utils/APIServices/huddleServices";
-import { dateFormatter } from "../../utils/helperFunctions";
+} from '../../utils/APIServices/huddleServices';
+import { dateFormatter } from '../../utils/helperFunctions';
 
 type Props = {
   showHuddle: Huddle | undefined;
@@ -52,31 +52,31 @@ export const MapInfoWindow = ({
           }}
           onCloseClick={() => setShowHuddle(undefined)}
         >
-          <div className="animation-fadein font-medium">
-            <h1 className="font-extrabold text-palette-orange mb-1 text-lg">
+          <div className='animation-fadein font-medium'>
+            <h1 className='font-extrabold text-palette-orange mb-1 text-lg'>
               {showHuddle.name}
             </h1>
             {dateTime ? (
-              <h1 className="mb-1">
+              <h1 className='mb-1'>
                 On {dateTime.monthDayYear} at {dateTime.time}
               </h1>
             ) : (
               <></>
             )}
             <Image
-              alt="img"
+              alt='img'
               src={showHuddle.image}
               height={200}
               width={200}
-              className="rounded-lg"
+              className='rounded-lg'
             />
-            <h2 className="mt-1">attendants: {goingToHuddle}</h2>
-            <h3 className="h-12 w-48 overflow-auto mt-3">
+            <h2 className='mt-1'>attendants: {goingToHuddle}</h2>
+            <h3 className='h-12 w-48 overflow-auto mt-3'>
               {showHuddle.description}
             </h3>
             {checkedIn ? (
               <button
-                className="float-right flex mt-3 leave-button"
+                className='float-right flex mt-3 leave-button'
                 onClick={() => {
                   const val = goingToHuddle ? goingToHuddle - 1 : 0;
                   setGoingToHuddle(val);
@@ -91,7 +91,7 @@ export const MapInfoWindow = ({
               </button>
             ) : (
               <button
-                className="float-right flex mt-3 orange-button"
+                className='float-right flex mt-3 orange-button'
                 onClick={() => {
                   const val = goingToHuddle ? goingToHuddle - 1 : 0;
                   setGoingToHuddle(val);
@@ -113,3 +113,4 @@ export const MapInfoWindow = ({
     </div>
   );
 };
+

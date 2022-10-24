@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Category } from '../types';
 import { getAllCategories } from '../utils/APIServices/categoryServices';
 
+//Parent is newHuddleForm
 type Props = {
   setAllCategories: React.Dispatch<React.SetStateAction<Category[]>>;
-  categoriesInputRef: any;
+  categoriesInputRef: React.MutableRefObject<HTMLInputElement | null>;
 };
 const TagList = ({ setAllCategories, categoriesInputRef }: Props) => {
   //should compare string in input to categories and display ones that match

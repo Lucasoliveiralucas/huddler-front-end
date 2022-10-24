@@ -4,9 +4,7 @@ import { fetcher } from '../helperFunctions';
 // GET Functions
 
 export const getAllUsers = async () =>
-  await fetcher(
-    'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/getusers'
-  );
+  await fetcher(`${process.env.NEXT_PUBLIC_AWS_URL}getusers`);
 //Returns: Array of User Objects
 
 export const getUserById = async (aws_id: string) => {
@@ -186,6 +184,7 @@ export const deleteAllUserCategories = async (aws_id: string) => {
     console.log('Error deleting all categories in DB  ', e);
   }
 };
+
 
 
 

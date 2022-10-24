@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { getHuddlesInCategory } from "../../utils/APIServices/categoryServices";
-import { Huddle, Category } from "../../types";
+import React, { useEffect, useState } from 'react';
+import { getHuddlesInCategory } from '../../utils/APIServices/categoryServices';
+import { Huddle, Category } from '../../types';
 
 type DropdownProps = {
   categories: Category[];
@@ -34,15 +34,15 @@ const DropdownItems: React.FC<DropdownProps> = ({
 
   return (
     // <div className={`${showDropdown ? "dropdown" : "dropdown active"} flex flex-col md:flex-row z-20 relative`}>
-    <div className="flex flex-col md:flex-row md:w-fit absolute after: px-36 md:px-2 z-40 md:gap-3 w-screen bg-palette-light md:bg-inherit md:ml-24 md:top-20 top-32 md:left-auto left-[0%] text-center">
-      {categories.map((category: Category, index: number): JSX.Element => {
+    <div className='flex flex-col md:flex-row md:w-fit absolute after: px-36 md:px-2 z-40 md:gap-3 w-screen bg-palette-light md:bg-inherit md:ml-24 md:top-20 top-32 md:left-auto left-[0%] text-center'>
+      {categories.map((category: Category) => {
         return (
           <div
-            className="h-full w-full py-3 md:text-sm text-2xl md:border-none border-b border-palette-dark my-1"
+            className='h-full w-full py-3 md:text-sm text-2xl md:border-none border-b border-palette-dark my-1'
             key={category.id}
           >
             <p
-              onClick={(): void => {
+              onClick={() => {
                 onClickHandler(category);
               }}
             >
@@ -56,3 +56,4 @@ const DropdownItems: React.FC<DropdownProps> = ({
 };
 
 export default DropdownItems;
+

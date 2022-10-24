@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Avatar from '../../src/components/Profile components/Avatar';
-import UserInfo from '../../src/components/Profile components/UserInfo';
+import UserInfo from '../../src/components/Profile components/UserSidebar';
 import useSWR from 'swr';
 import HuddleCarousel from '../../src/components/Profile components/HuddleCarousel';
 import {
@@ -51,7 +51,6 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
     `${process.env.NEXT_PUBLIC_AWS_URL}users_categories?user-id=${aws_id}`,
     fetcher
   );
-
 
   const getter = async () => {
     try {
@@ -114,23 +113,26 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             }
           />
           <div className='h-1/9 w-full flex flex-col justify-center mt-8 border px-3'>
-            <h1 className="text-3xl font-karla text-palette-dark self-center mt-4 lg:mt-0">
+            <h1 className='text-3xl font-karla text-palette-dark self-center mt-4 lg:mt-0'>
               UPCOMING HUDDLE
             </h1>
             <div className='mt-2 border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border rounded-lg flex justify-center'>
-              {huddlesUserIsGoing && (
-                huddlesUserIsGoing.length && (
-                  <div className='flex flex-col'>
-                    <p>{huddlesUserIsGoing[0].name}</p>
-                    <p>{huddlesUserIsGoing[0].day_time}</p>
-                    {/* @ts-ignore */}
-                    <Link href={{ pathname: `/details/${huddlesUserIsGoing[0].id}`, query: huddlesUserIsGoing[0] }}>
-                      <h1 className="font-bold text-palette-dark text-lg cursor-pointer hover:text-palette-orange hover:underline">
-                        Event Page
-                      </h1>
-                    </Link>
-                  </div>
-                )
+              {huddlesUserIsGoing && huddlesUserIsGoing.length && (
+                <div className='flex flex-col'>
+                  <p>{huddlesUserIsGoing[0].name}</p>
+                  <p>{huddlesUserIsGoing[0].day_time}</p>
+                  <Link
+                    href={{
+                      pathname: `/details/${huddlesUserIsGoing[0].id}`,
+                      //@ts-ignore
+                      query: huddlesUserIsGoing[0],
+                    }}
+                  >
+                    <h1 className='font-bold text-palette-dark text-lg cursor-pointer hover:text-palette-orange hover:underline'>
+                      Event Page
+                    </h1>
+                  </Link>
+                </div>
               )}
             </div>
           </div>
@@ -156,7 +158,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
         </h1>
         {Array.isArray(tags) && (
           <div className='flex flex-wrap gap-4 p-4 md:pl-10 lg:pl-0'>
-            {tags.map((tag: Category, i: number) => (
+            {tags.map((tag: Category) => (
               <h1
                 id={tag.name}
                 onClick={(e) => changeDisplayedCategory(tag)}
@@ -173,7 +175,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
   active:translate-x-[1px]
   active:translate-y-[1px]
   hover:opacity-50'
-                key={i}
+                key={tag.name}
               >
                 {tag.name}
               </h1>
@@ -182,18 +184,20 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
         )}
 
         {Array.isArray(userCreatedHuddlesActive) &&
-          userCreatedHuddlesActive.length ? (
+        userCreatedHuddlesActive.length ? (
           <>
             <h1 className='pt-2 text-3xl font-bold font-yantra text-palette-dark'>
               Created huddles:
             </h1>
-            {huddlesUserIsGoing && <HuddleCarousel
-              setUpdate={setUpdate}
-              update={update}
-              huddles={sortHuddlesByDate(userCreatedHuddlesActive)}
-              huddlesUserIsGoing={huddlesUserIsGoing!}
-              id={aws_id}
-            />}
+            {huddlesUserIsGoing && (
+              <HuddleCarousel
+                setUpdate={setUpdate}
+                update={update}
+                huddles={sortHuddlesByDate(userCreatedHuddlesActive)}
+                huddlesUserIsGoing={huddlesUserIsGoing!}
+                id={aws_id}
+              />
+            )}
           </>
         ) : (
           <></>
@@ -221,13 +225,15 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
             <h1 className='pt-4 text-3xl text-palette-dark font-medium'>
               {lastRow.name} huddles:
             </h1>
-            {huddlesUserIsGoing && <HuddleCarousel
-              setUpdate={setUpdate}
-              update={update}
-              huddles={lastRow.huddles}
-              huddlesUserIsGoing={huddlesUserIsGoing!}
-              id={aws_id}
-            />}
+            {huddlesUserIsGoing && (
+              <HuddleCarousel
+                setUpdate={setUpdate}
+                update={update}
+                huddles={lastRow.huddles}
+                huddlesUserIsGoing={huddlesUserIsGoing!}
+                id={aws_id}
+              />
+            )}
           </>
         ) : (
           <h1 className='pt-6 sm:py-6 p-4 text-3xl font-karla font-extralight'>
@@ -252,10 +258,13 @@ export const getServerSideProps = async ({ req, res }: Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {
-    const huddles: Huddle[] = await getAllHuddles()
+    const huddles: Huddle[] = await getAllHuddles();
     const { username } = await Auth.currentUserInfo();
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
-    const recommended: Huddle[] = await recommendedByInterests(username, goingTo);
+    const recommended: Huddle[] = await recommendedByInterests(
+      username,
+      goingTo
+    );
     const user: User[] = await getUserById(username);
     if (!user.length) {
       res.writeHead(302, { Location: '/' });
@@ -281,5 +290,4 @@ export const getServerSideProps = async ({ req, res }: Context) => {
     };
   }
 };
-
 

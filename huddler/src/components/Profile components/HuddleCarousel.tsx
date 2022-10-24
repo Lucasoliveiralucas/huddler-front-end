@@ -1,6 +1,6 @@
-import React from "react";
-import { Huddle } from "../../types";
-import HuddleCarouselItem from "./HuddleCarouselItem";
+import React from 'react';
+import { Huddle } from '../../types';
+import HuddleCarouselItem from './HuddleCarouselItem';
 
 type Props = {
   huddles: Huddle[];
@@ -19,12 +19,12 @@ function HuddleCarousel({
 }: Props) {
   return Array.isArray(huddles) ? (
     <div
-      className="pl-1 h-64 flex overflow-x-auto gap-4 lg:gap-2"
-      id="carousel"
+      className='pl-1 h-64 flex overflow-x-auto gap-4 lg:gap-2'
+      id='carousel'
     >
       {huddles.map((huddle) => (
         <div
-          className="min-w-[95vw] max-w-[95vw] md:min-w-[30rem] md:max-w-[30rem] animate-slide-in h-64 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg"
+          className='min-w-[95vw] max-w-[95vw] md:min-w-[30rem] md:max-w-[30rem] animate-slide-in h-64 shadow-md border-palette-dark hover:border-palette-orange bg-white bg-opacity-50 border relative rounded-lg'
           key={huddle.id}
           id={huddle.description}
         >
@@ -39,7 +39,7 @@ function HuddleCarousel({
       ))}
     </div>
   ) : (
-    <div className="pl-1 h-64 lg:h-72 flex"></div>
+    <div className='pl-1 h-64 lg:h-72 flex'></div>
   );
 }
 

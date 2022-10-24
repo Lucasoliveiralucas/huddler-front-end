@@ -57,7 +57,7 @@ const Dropdown = ({ setShowDropDown }: Props) => {
                   </div>
                 ) : (
                   <>
-                    <Link href={menuItem.path} >
+                    <Link href={menuItem.path}>
                       <a
                         className={
                           i === 0
@@ -85,5 +85,4 @@ const Dropdown = ({ setShowDropDown }: Props) => {
 };
 
 export default Dropdown;
-
 

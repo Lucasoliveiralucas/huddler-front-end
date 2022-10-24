@@ -12,8 +12,8 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
   const [success, setSuccess] = useState('');
   const [location, setLocation] = useState({
     name: '',
-    lat: userData.default_latitude,
-    lng: userData.default_longitude,
+    lat: userData.default_latitude!,
+    lng: userData.default_longitude!,
   });
   console.log('location', location);
 
@@ -40,12 +40,11 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
       {error && <div className='bg-red-600'>{error}</div>}
       <div className='flex flex-col items-center mt-10 md:mt-24 '>
         <div className='relative w-screen md:w-full'>
-        <MobileMap
-          currentPage='settings'
-          //@ts-ignore
-          setLocation={setLocation}
-          user={userData}
-        />
+          <MobileMap
+            currentPage='settings'
+            setLocation={setLocation}
+            user={userData}
+          />
         </div>
         {success ? (
           <>
@@ -64,7 +63,6 @@ const UpdateLocation = ({ userData, setUserData }: Props) => {
           </button>
         )}
       </div>
-
     </>
   );
 };

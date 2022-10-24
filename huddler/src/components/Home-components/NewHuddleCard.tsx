@@ -13,7 +13,7 @@ import Link from "next/link";
 type Props = {
   huddle: Huddle;
   huddlesUserIsGoing: Huddle[];
-  updateList: any;
+  updateList: Function;
   id: string;
 };
 
