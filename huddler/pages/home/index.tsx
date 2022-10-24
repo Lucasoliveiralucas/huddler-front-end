@@ -13,7 +13,6 @@ import {
   getUserGoingHuddles,
 } from "../../src/utils/APIServices/userServices";
 import DropdownMenu from "../../src/components/Home-components/DropdownMenu";
-import { GetServerSideProps } from "next";
 
 type Props = {
   recommended: Huddle[];

@@ -53,12 +53,12 @@ function NewHuddleCard({ huddle, huddlesUserIsGoing, id }: Props) {
             <img
               src={huddle.image}
               alt={huddle.name}
-              className="absolute h-full object-cover rounded-tl-md rounded-br-lg"
+              className="absolute h-[200px] md:h-full object-cover rounded-tl-md rounded-br-lg"
             />
           </picture>
         </div>
 
-        <div className="basis-3/4 flex flex-col mt-4 ml-4">
+        <div className="basis-3/4 flex flex-col md:mt-4 ml-4">
           <div id="title" className="flex flex-row justify-between">
             {/* @ts-ignore */}
             <Link href={{ pathname: `/details/${huddle.id}`, query: huddle }}>

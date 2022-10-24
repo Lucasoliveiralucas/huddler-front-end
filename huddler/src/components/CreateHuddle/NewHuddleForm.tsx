@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useRef, useState } from "react";
 import { Category, Huddle } from "../../types";
 import { nowFormatted } from "../../utils/helperFunctions";
