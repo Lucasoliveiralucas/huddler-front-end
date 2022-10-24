@@ -27,9 +27,7 @@ export const fetcher = async (...args: string[]) => {
 
 // 2. Recommended Huddles
 
-//For now this functions returns all the huddles that are in user categories. Eventually we should do some kind of sorting or also recommend by location. Now we don't have enough huddles in each categories to test it.
-
-export const recommendedForUser = async (
+export const recommendedByInterests = async (
   aws_id: string,
   userGoingTo: Huddle[]
 ) => {
@@ -38,7 +36,7 @@ export const recommendedForUser = async (
   let toRecommend: Huddle[] = [];
   let finalRecommendation: Huddle[] = [];
 
-  // 1. Get all the huddles in all categories the user is inteterested to
+  // Get all the huddles in all categories the user is inteterested to
   const userCategories = await getUserCategories(aws_id);
   const promises = userCategories.map((category: Category) =>
     getHuddlesInCategory(category.id as number)
@@ -46,11 +44,10 @@ export const recommendedForUser = async (
   const huddlesInUserCategoriesNested = await Promise.all(promises);
   const huddlesInUserCategories = huddlesInUserCategoriesNested.flat();
 
-  // 2. Get all the huddles the user has created
+  // Get all the huddles the user has created
   const userCreated = await getUserCreatedHuddles(aws_id);
-  console.log('USercreated length', userCreated);
-  console.log('user Goint To length', userGoingTo);
-  // 3. If there are no huddles created or that the user is going we return as recommended all the huddles in the categories he is interested to
+
+  // If there are no huddles created or that the user is going we return as recommended all the huddles in the categories he is interested to
   if (!userCreated.length && !userGoingTo.length) {
     activeHuddles = getActiveHuddles(huddlesInUserCategories);
     uniqueHuddles = filterOutDuplicates(activeHuddles);
@@ -61,7 +58,7 @@ export const recommendedForUser = async (
     return toRecommend;
   }
 
-  // 4. If he has created but not going to any, we return early those he did not created
+  // If he has created but not going to any, we return early those he did not created
   if (userCreated.length && !userGoingTo.length) {
     toRecommend = filterOutContaining(huddlesInUserCategories, userCreated);
     activeHuddles = getActiveHuddles(toRecommend);
@@ -74,7 +71,7 @@ export const recommendedForUser = async (
     return finalRecommendation;
   }
 
-  // 5. If he has not created but going to some, we return early those he is not going to
+  //If he has not created but going to some, we return early those he is not going to
   if (!userCreated.length && userGoingTo.length) {
     toRecommend = filterOutContaining(huddlesInUserCategories, userGoingTo);
     activeHuddles = getActiveHuddles(toRecommend);
@@ -87,7 +84,7 @@ export const recommendedForUser = async (
     return finalRecommendation;
   }
 
-  // 6. If he is going to some, and also has created, we need to recommend only those he has not created and not going to.
+  //If he is going to some, and also has created, we need to recommend only those he has not created and not going to.
   toRecommend = filterOutContaining(huddlesInUserCategories, userCreated);
   finalRecommendation = filterOutContaining(toRecommend, userGoingTo);
   activeHuddles = getActiveHuddles(finalRecommendation);

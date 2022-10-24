@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Map from "../../src/components/Home-components/Map";
 import { getAllHuddles } from "../../src/utils/APIServices/huddleServices";
-import { fetcher, recommendedForUser } from "../../src/utils/helperFunctions";
+import { fetcher, recommendedByInterests } from "../../src/utils/helperFunctions";
 import { Huddle, User } from "../../src/types";
 import HuddlesNew from "../../src/components/Home-components/HuddlesNew";
 import { AiOutlineArrowUp } from "react-icons/ai";
@@ -138,13 +138,11 @@ export const getServerSideProps = async ({ req, res }: Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {
-    const huddles: Huddle[] = await fetcher(
-      "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted"
-    );
+    const huddles: Huddle[] = await getAllHuddles();
     const { username } = await Auth.currentUserInfo();
     const user: User[] = await getUserById(username);
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
-    const recommended: Huddle[] = await recommendedForUser(username, goingTo);
+    const recommended: Huddle[] = await recommendedByInterests(username, goingTo);
     if (!user.length) {
       res.writeHead(302, { Location: "/" });
       res.end();

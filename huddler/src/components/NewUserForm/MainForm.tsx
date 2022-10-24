@@ -59,8 +59,7 @@ function MainForm() {
     const data = await getUploadUrl();
     const uploadUrl = data.uploadURL;
     const filename = data.filename;
-    const fileURL =
-      "https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/" + filename;
+    const fileURL = `${process.env.NEXT_PUBLIC_AWS_IMAGES}${filename}`;
 
     setUserData({ ...userData, image: fileURL });
     await uploadImgToS3(uploadUrl, userImg);

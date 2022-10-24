@@ -22,22 +22,19 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
         });
 
         try {
-          fetch(
-            "https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/messages",
-            {
-              method: "POST",
-              mode: "no-cors",
-              body: JSON.stringify({
-                huddle_id: Number(room),
-                message: msg,
-                username: username,
-              }),
-              headers: {
-                "Content-type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-              },
-            }
-          );
+          fetch(`${process.env.NEXT_PUBLIC_AWS_URL}messages`, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+              huddle_id: Number(room),
+              message: msg,
+              username: username,
+            }),
+            headers: {
+              'Content-type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            },
+          });
           room
             ? socket.to(room).emit("update-input", {
                 huddle_id: Number(room),
@@ -60,3 +57,4 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default SocketHandler;
+

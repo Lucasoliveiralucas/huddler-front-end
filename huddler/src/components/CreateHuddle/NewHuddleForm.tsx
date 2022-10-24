@@ -82,11 +82,9 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
         latitude: +finalLocation.lat,
         address: finalLocation.name,
         description: descriptionRef.current!.value,
-        image:
-          "https://uploadertesthuddler12345.s3.eu-west-1.amazonaws.com/" +
-          filename,
+        image: `${process.env.NEXT_PUBLIC_AWS_IMAGES}${filename}`,
         date_of_creation: date,
-        link: "",
+        link: '',
         fk_author_id: currentUser.aws_id, //here we'll require the uid from the authentication
       };
       // Post huddle in DB
@@ -380,3 +378,4 @@ const NewHuddleForm = ({ data, setCenter, center, id }: Props) => {
 };
 
 export default NewHuddleForm;
+

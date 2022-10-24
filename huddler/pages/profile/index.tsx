@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import HuddleCarousel from '../../src/components/Profile components/HuddleCarousel';
 import {
   fetcher,
-  recommendedForUser,
+  recommendedByInterests,
   userGoingNotCreated,
 } from '../../src/utils/helperFunctions';
 import { Category, Huddle, User } from '../../src/types';
@@ -25,6 +25,7 @@ import {
   getActiveHuddles,
 } from '../../src/utils/helperFunctions';
 import { GrDuplicate } from 'react-icons/gr';
+import { getAllHuddles } from '../../src/utils/APIServices/huddleServices';
 
 type Props = {
   aws_id: string;
@@ -46,7 +47,7 @@ function Profile({ aws_id, user, goingTo, recommended, huddles }: Props) {
   });
   //Get user id from auth for the tag hook
   const { data: tags, error: tagsError } = useSWR(
-    `https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/users_categories?user-id=${aws_id}`,
+    `${process.env.NEXT_PUBLIC_AWS_URL}users_categories?user-id=${aws_id}`,
     fetcher
   );
 
@@ -262,12 +263,10 @@ export const getServerSideProps = async ({ req, res }: Context) => {
   const { Auth } = withSSRContext({ req });
 
   try {
-    const huddles: Huddle[] = await fetcher(
-      'https://u4pwei0jaf.execute-api.eu-west-3.amazonaws.com/test/HuddlesFormatted'
-    );
+    const huddles: Huddle[] = await getAllHuddles()
     const { username } = await Auth.currentUserInfo();
     const goingTo: Huddle[] = await getUserGoingHuddles(username);
-    const recommended: Huddle[] = await recommendedForUser(username, goingTo);
+    const recommended: Huddle[] = await recommendedByInterests(username, goingTo);
     const user: User[] = await getUserById(username);
     if (!user.length) {
       res.writeHead(302, { Location: '/' });
@@ -293,4 +292,5 @@ export const getServerSideProps = async ({ req, res }: Context) => {
     };
   }
 };
+
 

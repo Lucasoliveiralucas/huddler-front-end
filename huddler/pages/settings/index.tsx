@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import PersonalInformation from '../../src/components/Settings-components/PersonalInformation';
 import ChangePassword from '../../src/components/Settings-components/ChangePassword';
 import UpdateLocation from '../../src/components/Settings-components/UpdateLocation';
