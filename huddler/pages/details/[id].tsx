@@ -53,7 +53,7 @@ const Details = ({ aws_id, user, huddle }: Props) => {
     const socketInitializer = async () => {
       await fetch(`/api/chat/chat`);
       // socket = io();
-
+      //yes
       socket.on("connect", () => {
         console.log("connected");
       });
